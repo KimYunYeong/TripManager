@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>공공데이터 API 사용 예제</title>
+  </head>
+  <body>
+  	<div id="map" style="width:750px;height:350px;"></div>
+
+  	<!-- <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=aff3b9a6d4769ccaaae5a4bc658b568d"></script> -->
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=aff3b9a6d4769ccaaae5a4bc658b568d&libraries=services"></script>
+
+    <p id="sample_data"></p>
+      <script>
+    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    		    mapOption = {
+    		        center: new kakao.maps.LatLng(37.56726, 126.98075), // 지도의 중심좌표
+    		        level: 3, // 지도의 확대 레벨
+    		        // mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+    		    };
+
+    		// 지도를 생성한다
+    		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+
+          // 정상적으로 검색이 완료됐으면
+          if (status === kakao.maps.services.Status.OK) {
+
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new kakao.maps.Marker({
+              map: map,
+              position: coords
+            });
+
+
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new kakao.maps.InfoWindow({
+              content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+            });
+            infowindow.open(map, marker);
+
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+          }
+        });
+
+
+
+        var select="&ADMST_ZONE_NM=남구";
+        // var encode = encodeURI(url);
+        // var zone = encodeURI("남구");
+
+        var neisKey="7a9e4347c06348499c79843d24bcec11";
+        const url1 = 'https://open.neis.go.kr/hub/acaInsTiInfo?KEY='+neisKey+'&Type=json&pIndex=1&pSize=1000&ATPT_OFCDC_SC_CODE=T10'+select;
+        const url = encodeURI(url1);
+        console.log(url);
+        dataPane = document.getElementById("sample_data");
+        fetch(url)
+        .then(res => res.json())
+        .then(resJson => {
+          dataPane.innerText = JSON.stringify(resJson, null, 1);
+        })
+
+
+      // fetch(url)
+      // .then(res => res.json())
+      // .then(resJson => {
+      //    const data = (resJson.acaInsTiInfo[1].row);
+      //     // const data = JSON.parse(resJson.acaInsTiInfo[1].row);
+      //     console.log(data);
+      //     dataPane.innerText = JSON.stringify(data, null, 1);
+      // })
+
+
+
+        // area = document.getElementById("ATPT_OFCDC_SC_NM"); parser blocking당함
+        // var data = JSON.parse(dataPane);
+        // document.getElementById(dataPane).innerHTML = data.acaInsTiInfo.row.ATPT_OFCDC_SC_NM;
+        // fetch(url)
+        // .then(res => res.json())
+        // .then(resJson => {
+        //   area.innerText = JSON.stringify(resJson, null, 1);
+        // })
+      </script>
+
+  </body>
+</html>
