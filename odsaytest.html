@@ -8,6 +8,12 @@
 		<script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
 		<!-- 대중교통 이용 길찾기 함수 정의-->
 		<script>
+			
+		</script>
+	</head>
+	<body>
+		<div id="map" style="width:100%;height:800px;"></div>
+		<script>
 			var mapOptions = {
 				center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
 				zoom: 10
@@ -136,11 +142,6 @@
 					}
 				}
 			}
-		</script>
-	</head>
-	<body>
-		<div id="map" style="width:100%;height:800px;"></div>
-		<script>
 			//길찾기 API 호출
 			//searchPubTransPathAJAX(sx, sy, ex, ey);
 		</script>
