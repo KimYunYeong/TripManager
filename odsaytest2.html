@@ -8,8 +8,8 @@
     <body>
         <p id="sample_data"></p>
         <script>
-            var sx = 126.93737555322481;
-            var sy = 37.55525165729346;
+            var sx = 127.93737555322481;
+            var sy = 38.55525165729346;
             var ex = 126.88265238619182;
             var ey = 37.481440035175375;
 
@@ -21,7 +21,7 @@
                 fetch(url)
                     .then(res => res.json())
                     .then(resJson => {
-                        dataPane.innerText = JSON.stringify(resJson, null, 1);
+                        dataPane.innerText = 'startx = ' + startx + '\nstarty = ' + starty + '\nendx = ' + endx + '\nendy = ' + endy + '\n' + JSON.stringify(resJson, null, 1);
                     })
             }
             test(sx, sy, ex, ey);
