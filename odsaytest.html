@@ -16,7 +16,9 @@
             };
 
             var map = new Tmapv2.Map('map', mapOptions);
+            /*
             map.addListener("click", onClick);
+
             var clicked = 0;
             var sx = 0, sy = 0, ex = 0, ey = 0;
 
@@ -32,6 +34,11 @@
                     clicked = 0;
                 }
             }
+            */
+            var sx = 126.93737555322481;
+            var sy = 37.55525165729346;
+            var ex = 126.88265238619182;
+            var ey = 37.481440035175375;
 
             function searchPubTransPathAJAX(startx, starty, endx, endy) {
                 var xhr = new XMLHttpRequest();
@@ -118,7 +125,7 @@
                 }
             }
             //길찾기 API 호출
-            //searchPubTransPathAJAX(sx, sy, ex, ey);
+            searchPubTransPathAJAX(sx, sy, ex, ey);
         </script>
     </body>
 </html>
