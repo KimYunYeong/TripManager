@@ -20,8 +20,9 @@
 			var lonlat;
 			var markers = [];
 			function onClick(e){
+				lonlat = e.latLng;
 				if (sx < 0 || ex > 0){
-					removeMarkers();
+					//removeMarkers();
 					sx = lonlat.lat();
 					sy = lonlat.lng();
 					ex = -1;
@@ -32,8 +33,6 @@
 					searchPubTransPathAJAX(sx, sy, ex, ey);
 				}
 					
-
-				lonlat = e.latLng;
 				//Marker 객체 생성.
 				/*
 				marker = new Tmapv2.Marker({
