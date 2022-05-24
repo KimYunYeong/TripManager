@@ -46,7 +46,7 @@ function inputapi(v){
             }
         }
     };
-
+    
     xhr.send('');
 }
 
@@ -54,23 +54,17 @@ dinput3.addEventListener("click",function(){
     document.querySelector(".search_btn2").setAttribute('onclick',"location.href='./area.html" + "?" + dinput.value + "#" + dinput3.value + "'");
 });
 
-
-
-
-
-
 function searchlink(){
     document.querySelector(".search_btn").setAttribute('onclick',"location.href='./keyword.html" + "?" +document.querySelector(".search_input").value + "'");
 }
 
 document.querySelector(".search_input").addEventListener("keyup",function(){searchlink();});
 
-
 function recommendapi(a){
     var xhr = new XMLHttpRequest();
     var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
     var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
-    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('1000'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10000'); /**/
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
     queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P'); /**/
     queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
@@ -83,15 +77,19 @@ function recommendapi(a){
             var xml = this.responseXML;
             var names = xml.getElementsByTagName('title');
             var image = xml.getElementsByTagName('firstimage');
+            var x = xml.getElementsByTagName('mapx');
+            var y = xml.getElementsByTagName('mapy');
             document.querySelector(".background_overlay").style.backgroundImage = "url(" + image[0].innerHTML + ")";
             document.querySelector(".recommend_box img").setAttribute("src",image[0].innerHTML);
             document.querySelector(".recommend_name").textContent = names[0].textContent;
             for(var i =0; i<1000; i++){
-                document.querySelectorAll(".area_recommend h3")[i].textContent = names[i].textContent;
+                j=Math.floor(Math.random()*100+i);
+                document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent;
+                document.querySelectorAll(".area_recommend h3")[i].textContent = "x좌표 : "+ x[j].textContent+" y좌표 : " + y[j].textContent;
             }
         }
     };
-
     xhr.send('');
+
 }
 recommendapi(6);
