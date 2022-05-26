@@ -104,15 +104,15 @@
                     pathList.appendChild(list);
                     switch (result["path"][t]["pathType"]) {
                         case 1:
-                            title.innerText = "지하철 (총 ";
+                            title.innerText = "지하철 ";
                             break;
                         case 2:
-                            title.innerText = "버스 (총 ";
+                            title.innerText = "버스 ";
                             break;
                         case 3:
-                            title.innerText = "지하철 + 버스 (총 ";
+                            title.innerText = "지하철 + 버스 ";
                     }
-                    title.innerText += result["path"][t]["info"]["totalTime"] + "분)";
+                    title.innerText += "(총 " + result["path"][t]["info"]["totalTime"] + "분)";
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
