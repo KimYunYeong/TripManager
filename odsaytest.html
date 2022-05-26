@@ -95,55 +95,61 @@
             }
 
             function setPathList(json) {
-                //for (var i = 0; i < json["path"].length; i++) {
-                    
-                //}
-                // pathType => 1: subway, 2: bus, 3: subway + bus
-                // trafficType => 1: subway, 2: bus, 3: walk
                 var result = json["result"];
-                var title = document.getElementById('path_title');
-                var list = document.getElementById('path');
-                switch (result["path"][0]["pathType"]) {
-                    case 1:
-                        title.innerText = "지하철";
-                        break;
-                    case 2:
-                        title.innerText = "버스";
-                        break;
-                    case 3:
-                        title.innerText = "지하철 + 버스";
-                }
-                for (var i = 0; i < result["path"][0]["subPath"].length; i++) {
-                    switch (result["path"][0]["subPath"][i]["trafficType"]) {
-                        case 1: //지하철
-                            
+                var pathList = document.getElementById('path_list');
+                for (var t = 0; t < json["path"].length; t++) {
+                    var title = document.createElement('h3');
+                    var list = document.createElement('ul');
+                    pathList.appendChild(title);
+                    pathList.appendChild(list);
+                    switch (result["path"][0]["pathType"]) {
+                        case 1:
+                            title.innerText = "지하철";
                             break;
-                        case 2: //버스
-                            var lane = "";
-                            for (var j = 0; j < result["path"][0]["subPath"][i]["lane"].length; j++) {
-                                if (j != 0)
-                                    lane += ", ";
-                                lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
-                            }
-                            list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
-                            var subPath = document.createElement("ul");
-                            var bus = document.getElementById("bus");
-                            bus.appendChild(subPath);
-                            for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
-                                subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                        case 2:
+                            title.innerText = "버스";
                             break;
-                        case 3: //도보
-                            list.innerHTML += "<li>도보 " + result["path"][0]["subPath"][i]["distance"] + "m (" +
-                                result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                        case 3:
+                            title.innerText = "지하철 + 버스";
                     }
+                    for (var i = 0; i < result["path"][0]["subPath"].length; i++) {
+                        switch (result["path"][0]["subPath"][i]["trafficType"]) {
+                            case 1: //지하철
+                                var lane = result["path"][0]["subPath"][i]["lane"][j]["name"];
+                                list.innerHTML += "<li id='subway'>지하철 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                var subPath = document.createElement("ul");
+                                var subway = document.getElementById("subway");
+                                subway.appendChild(subPath);
+                                for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
+                                    subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                break;
+                            case 2: //버스
+                                var lane = "";
+                                for (var j = 0; j < result["path"][0]["subPath"][i]["lane"].length; j++) {
+                                    if (j != 0)
+                                        lane += ", ";
+                                    lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
+                                }
+                                list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                var subPath = document.createElement("ul");
+                                var bus = document.getElementById("bus");
+                                bus.appendChild(subPath);
+                                for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
+                                    subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                break;
+                            case 3: //도보
+                                list.innerHTML += "<li>도보 " + result["path"][0]["subPath"][i]["distance"] + "m (" +
+                                    result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                        }
+                    }
+                    pathList.innerHTML += "<br>";
                 }
             }
         </script>
     </head>
     <body>
         <div id="map" style="width:100%;height:400px;"></div>
-        <h3 id="path_title"></h3>
-        <ul id="path"></ul>
+        <div id="path_list"></div>
         <script>
             var mapOptions = {
                 center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
