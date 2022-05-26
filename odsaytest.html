@@ -121,13 +121,14 @@
                         case 2: //버스
                             var lane = "";
                             var subPath = document.createElement("ul");
-                            list.appendChild(subPath);
+                            var bus = document.getElementById("bus");
+                            bus.appendChild(subPath);
                             for (var j = 0; j < result["path"][0]["subPath"][i]["lane"].length; j++) {
                                 if (j != 0)
                                     lane += ", ";
                                 lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
                             }
-                            list.innerHTML += "<li>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                            list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
                             for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
                                 subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                             break;
