@@ -126,8 +126,8 @@
                                 lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
                             }
                             list.innerHTML += "<li>버스 " + lane + "(" + result["path"][0]["subPath"][i]["sectionTime"] + "분)<ul>";
-                            for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["station"].length; k++)
-                                list.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["station"][k]["stationName"] + "</li>";
+                            for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
+                                list.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                             list.innerHTML += "</ul></li>";
                             break;
                         case 3: //도보
