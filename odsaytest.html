@@ -115,7 +115,7 @@
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
-                                var lane = result["path"][t]["subPath"][i]["lane"][j]["name"];
+                                var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
                                 list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var subway = document.getElementById("subway" + t);
