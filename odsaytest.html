@@ -116,9 +116,9 @@
                         switch (result["path"][0]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][j]["name"];
-                                list.innerHTML += "<li id='subway'>지하철 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
-                                var subway = document.getElementById("subway");
+                                var subway = document.getElementById("subway" + t);
                                 subway.appendChild(subPath);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                                     subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
@@ -130,9 +130,9 @@
                                         lane += ", ";
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
-                                list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
-                                var bus = document.getElementById("bus");
+                                var bus = document.getElementById("bus" + t);
                                 bus.appendChild(subPath);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                                     subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
