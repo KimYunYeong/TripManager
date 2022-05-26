@@ -125,10 +125,10 @@
                                     lane += ", ";
                                 lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
                             }
-                            list.innerHTML += "<li>버스 " + lane + "(" + result["path"][0]["subPath"][i]["sectionTime"] + "분)<ul>";
+                            list.innerHTML += "<li>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)<ol>";
                             for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
                                 list.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
-                            list.innerHTML += "</ul></li>";
+                            list.innerHTML += "</ol></li>";
                             break;
                         case 3: //도보
                             list.innerHTML += "<li>도보 " + result["path"][0]["subPath"][i]["distance"] + "m (" +
