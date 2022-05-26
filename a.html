@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" a href="./toursearch.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&amp;family=Jua&amp;display=swap" rel="stylesheet">
-    <link rel="icon" href="./assets/travel_icon.png">
     <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
+    <script type="text/javascript"
+	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+    <script type="text/javascript" src="./map.js"></script>
+    
 </head>
-<body>
-<article class="search_page">
+<body onload="initTmap()"><!-- 맵 생성 실행 -->
+	<div id="map_div"></div>
+    <p id="latlng"></p>
+    <button onClick="getRP()">경로요청 실행</button>
+    <article class="search_page">
     <div class="background_overlay"></div>
     <div class="recommend_box">
         <div class="recommend_place">
@@ -146,14 +149,11 @@
                 <div class="area_recommend">
                     <strong>추천 여행지</strong></br>
                     <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-
-        </div>
+                </div>
+                
 
     </div>
-</article>   
-<script type="text/javascript"
-	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+</article>
 <script src="./a.js"></script>
 </body>
 </html>
