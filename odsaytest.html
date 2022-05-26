@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -7,23 +8,6 @@
         <!-- 티맵 Application Key 입력  -->
         <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
         <script>
-            /*
-            var clicked = 0;
-            var sx = 0, sy = 0, ex = 0, ey = 0;
-
-            function onClick(e) {
-                if (clicked == 0) {
-                    sx = e.latLng.lat();
-                    sy = e.latLng.lng();
-                    clicked = 1;
-                } else {
-                    ex = e.latLng.lat();
-                    ey = e.latLng.lng();
-                    searchPubTransPathAJAX(sx, sy, ex, ey);
-                    clicked = 0;
-                }
-            }
-            */
             function searchPubTransPathAJAX(startx, starty, endx, endy) {
                 var xhr = new XMLHttpRequest();
                 //ODsay apiKey 입력
@@ -35,6 +19,8 @@
                         console.log(JSON.parse(xhr.responseText)); // <- xhr.responseText 로 결과를 가져올 수 있음
                         //노선그래픽 데이터 호출
                         callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
+                        //노선 데이터 출력
+                        setPathList(JSON.parse(xhr.responseText));
                     }
                 }
             }
@@ -74,7 +60,6 @@
             // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
             function drawTmapPolyLine(data) {
                 var lineArray;
-
                 for (var i = 0; i < data.result.lane.length; i++) {
                     for (var j = 0; j < data.result.lane[i].section.length; j++) {
                         lineArray = null;
@@ -108,10 +93,55 @@
                     }
                 }
             }
+
+            function setPathList(json) {
+                //for (var i = 0; i < json["path"].length; i++) {
+                    
+                //}
+                // pathType => 1: subway, 2: bus, 3: subway + bus
+                // trafficType => 1: subway, 2: bus, 3: walk
+                var result = json["result"];
+                var title = document.getElementById('path_title');
+                var list = document.getElementById('path');
+                switch (result["path"][0]["pathType"]) {
+                    case 1:
+                        title.innerText = "지하철";
+                        break;
+                    case 2:
+                        title.innerText = "버스";
+                        break;
+                    case 3:
+                        title.innerText = "지하철 + 버스";
+                }
+                for (var i = 0; i < result["path"][0]["subPath"].length; i++) {
+                    switch (result["path"][0]["subPath"][i]["trafficType"]) {
+                        case 1: //지하철
+                            
+                            break;
+                        case 2: //버스
+                            var lane = "";
+                            for (var j = 0; j < result["path"][0]["subPath"][i]["lane"].length; j++) {
+                                if (j != 0)
+                                    lane += ", ";
+                                lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
+                            }
+                            list.innerHTML += "<li>버스 " + lane + "(" + result["path"][0]["subPath"][i]["sectionTime"] + "분)<ul>";
+                            for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"].length; k++)
+                                list.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"][k]["stationName"] + "</li>";
+                            list.innerHTML += "</ul></li>";
+                            break;
+                        case 3: //도보
+                            list.innerHTML += "<li>도보 " + result["path"][0]["subPath"][i]["distance"] + "m (" +
+                                result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                    }
+                }
+            }
         </script>
     </head>
     <body>
-        <div id="map" style="width:100%;height:800px;"></div>
+        <div id="map" style="width:100%;height:400px;"></div>
+        <h3 id="path_title"></h3>
+        <ul id="path"></ul>
         <script>
             var mapOptions = {
                 center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
@@ -120,12 +150,11 @@
 
             var map = new Tmapv2.Map('map', mapOptions);
             // map.addListener("click", onClick);
-            var sx = 129.08430065427552;
-            var sy = 35.136598147347556;
-            var ex = 129.10367398943262;
-            var ey = 35.133770411143;
-            
-            
+            var sx = 126.98503375053453;
+            var sy = 37.566487291886936;
+            var ex = 127.00020003318826;
+            var ey = 37.558307529122324;
+
             //길찾기 API 호출
             searchPubTransPathAJAX(sx, sy, ex, ey);
         </script>
