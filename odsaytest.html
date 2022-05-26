@@ -20,7 +20,7 @@
                         //노선그래픽 데이터 호출
                         callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
                         //노선 데이터 출력
-                        setPathList(JSON.parse(xhr.responseText));
+                        setPathList(JSON.parse(xhr.responseText)["result"]);
                     }
                 }
             }
@@ -94,8 +94,8 @@
                 }
             }
 
-            function setPathList(json) {
-                var result = json["result"];
+            // 경로 목록 출력 함수
+            function setPathList(result) {
                 var pathList = document.getElementById('path_list');
                 for (var t = 0; t < result["path"].length; t++) {
                     var title = document.createElement('h3');
@@ -104,14 +104,15 @@
                     pathList.appendChild(list);
                     switch (result["path"][t]["pathType"]) {
                         case 1:
-                            title.innerText = "지하철";
+                            title.innerText = "지하철 (총 ";
                             break;
                         case 2:
-                            title.innerText = "버스";
+                            title.innerText = "버스 (총 ";
                             break;
                         case 3:
-                            title.innerText = "지하철 + 버스";
+                            title.innerText = "지하철 + 버스 (총 ";
                     }
+                    title.innerText += result["path"][t]["info"]["totalTime"] + "분)";
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
