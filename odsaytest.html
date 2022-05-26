@@ -97,12 +97,12 @@
             function setPathList(json) {
                 var result = json["result"];
                 var pathList = document.getElementById('path_list');
-                for (var t = 0; t < json["path"].length; t++) {
+                for (var t = 0; t < result["path"].length; t++) {
                     var title = document.createElement('h3');
                     var list = document.createElement('ul');
                     pathList.appendChild(title);
                     pathList.appendChild(list);
-                    switch (result["path"][0]["pathType"]) {
+                    switch (result["path"][t]["pathType"]) {
                         case 1:
                             title.innerText = "지하철";
                             break;
@@ -112,34 +112,34 @@
                         case 3:
                             title.innerText = "지하철 + 버스";
                     }
-                    for (var i = 0; i < result["path"][0]["subPath"].length; i++) {
+                    for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
                         switch (result["path"][0]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
-                                var lane = result["path"][0]["subPath"][i]["lane"][j]["name"];
+                                var lane = result["path"][t]["subPath"][i]["lane"][j]["name"];
                                 list.innerHTML += "<li id='subway'>지하철 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var subway = document.getElementById("subway");
                                 subway.appendChild(subPath);
-                                for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
-                                    subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
+                                    subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                                 break;
                             case 2: //버스
                                 var lane = "";
-                                for (var j = 0; j < result["path"][0]["subPath"][i]["lane"].length; j++) {
+                                for (var j = 0; j < result["path"][t]["subPath"][i]["lane"].length; j++) {
                                     if (j != 0)
                                         lane += ", ";
-                                    lane += result["path"][0]["subPath"][i]["lane"][j]["busNo"] + "번"
+                                    lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
-                                list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='bus'>버스 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var bus = document.getElementById("bus");
                                 bus.appendChild(subPath);
-                                for (var k = 0; k < result["path"][0]["subPath"][i]["passStopList"]["stations"].length; k++)
-                                    subPath.innerHTML += "<li>" + result["path"][0]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
+                                    subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                                 break;
                             case 3: //도보
-                                list.innerHTML += "<li>도보 " + result["path"][0]["subPath"][i]["distance"] + "m (" +
-                                    result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                         }
                     }
                     pathList.innerHTML += "<br>";
