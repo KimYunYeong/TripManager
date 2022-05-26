@@ -113,10 +113,10 @@
                             title.innerText = "지하철 + 버스";
                     }
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
-                        switch (result["path"][0]["subPath"][i]["trafficType"]) {
+                        switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][j]["name"];
-                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" + result["path"][0]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var subway = document.getElementById("subway" + t);
                                 subway.appendChild(subPath);
