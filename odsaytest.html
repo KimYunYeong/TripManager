@@ -112,7 +112,7 @@
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", "path");
                     radio.setAttribute("value", t);
-                    radio.setAttribute("onclick", "test()");
+                    radio.setAttribute("onclick", "alert(this.value)");
                     if (t == 0)
                         radio.setAttribute("checked", true);
                     label.appendChild(title);
@@ -161,7 +161,6 @@
                     pathList.innerHTML += "<br>";
                 }
             }
-            function test() {}
         </script>
     </head>
     <body>
