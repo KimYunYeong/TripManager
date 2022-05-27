@@ -110,7 +110,7 @@
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", "path");
                     radio.setAttribute("value", t);
-                    radio.setAttribute("onclick", "callMapObjApiAJAX(" + result['path'][this.value].info.mapObj + ")");
+                    radio.setAttribute("onclick", "callMapObjApiAJAX(" + result['path'][t].info.mapObj + ")");
                     if (t == 0)
                         radio.setAttribute("checked", true);
                     label.appendChild(title);
