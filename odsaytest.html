@@ -105,12 +105,13 @@
                     var radio = document.createElement('input');
                     var title = document.createElement('h3');
                     var list = document.createElement('ul');
+                    var mapObj = result['path'][t].info.mapObj;
                     pathList.appendChild(label);
                     label.appendChild(radio);
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", "path");
                     radio.setAttribute("value", t);
-                    radio.setAttribute("onclick", "callMapObjApiAJAX(" + result['path'][t].info.mapObj + ")");
+                    radio.setAttribute("onclick", "callMapObjApiAJAX(" + mapObj + ")");
                     if (t == 0)
                         radio.setAttribute("checked", true);
                     label.appendChild(title);
