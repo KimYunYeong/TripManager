@@ -8,7 +8,7 @@
         <!-- 티맵 Application Key 입력  -->
         <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
         <script>
-            var polyline;
+            var polyline = [];
             var data;
             function searchPubTransPathAJAX(startx, starty, endx, endy) {
                 var xhr = new XMLHttpRequest();
@@ -63,8 +63,11 @@
             // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
             function drawTmapPolyLine(data) {
                 var lineArray;
-                if (polyline != null)
-                    polyline.setMap(null);
+                if (polyline.length != 0) {
+                    for (var i = 0; i < polyline.length; i++)
+                        polyline[i].setMap(null);
+                    polyline = [];
+                }
                 for (var i = 0; i < data.result.lane.length; i++) {
                     for (var j = 0; j < data.result.lane[i].section.length; j++) {
                         lineArray = null;
@@ -75,25 +78,25 @@
 
                         //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
                         if (data.result.lane[i].type == 1) {
-                            polyline = new Tmapv2.Polyline({
+                            polyline.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3,
                                 strokeColor: '#003499'
-                            });
+                            }));
                         } else if (data.result.lane[i].type == 2) {
-                            polyline = new Tmapv2.Polyline({
+                            polyline.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3,
                                 strokeColor: '#37b42d'
-                            });
+                            }));
                         } else {
-                            polyline = new Tmapv2.Polyline({
+                            polyline.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3
-                            });
+                            }));
                         }
                     }
                 }
