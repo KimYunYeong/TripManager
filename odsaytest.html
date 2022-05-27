@@ -9,6 +9,7 @@
         <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
         <script>
             var polyline;
+            var data;
             function searchPubTransPathAJAX(startx, starty, endx, endy) {
                 var xhr = new XMLHttpRequest();
                 //ODsay apiKey 입력
@@ -17,11 +18,12 @@
                 xhr.send();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        console.log(JSON.parse(xhr.responseText)); // <- xhr.responseText 로 결과를 가져올 수 있음
+                        data = JSON.parse(xhr.responseText);
+                        console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
                         //노선그래픽 데이터 호출
-                        callMapObjApiAJAX((JSON.parse(xhr.responseText))["result"]["path"][0].info.mapObj);
+                        callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         //노선 데이터 출력
-                        setPathList(JSON.parse(xhr.responseText)["result"]);
+                        setPathList(data["result"]);
                     }
                 }
             }
@@ -105,13 +107,12 @@
                     var radio = document.createElement('input');
                     var title = document.createElement('h3');
                     var list = document.createElement('ul');
-                    var mapObj = result['path'][t].info.mapObj;
                     pathList.appendChild(label);
                     label.appendChild(radio);
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", "path");
                     radio.setAttribute("value", t);
-                    radio.setAttribute("onclick", "callMapObjApiAJAX(" + mapObj + ")");
+                    radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][t].info.mapObj)");
                     if (t == 0)
                         radio.setAttribute("checked", true);
                     label.appendChild(title);
