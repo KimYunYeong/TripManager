@@ -1,5 +1,4 @@
-﻿﻿
-<!--시작 지점에서 끝 지점까지의 대중교통 경로 목록 및 선택 경로 TMap에 표시-->
+﻿<!--시작 지점에서 끝 지점까지의 대중교통 경로 목록 및 선택 경로 TMap에 표시-->﻿
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,7 +23,7 @@
                         //노선그래픽 데이터 호출
                         callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         //노선 데이터 출력
-                        printPathList(data["result"]);
+                        setPathList(data["result"]);
                     }
                 }
             }
@@ -104,7 +103,7 @@
             }
 
             // 경로 목록 출력 함수
-            function printPathList(result) {
+            function setPathList(result) {
                 var pathList = document.getElementById('path_list');
                 for (var t = 0; t < result["path"].length; t++) {
                     var label = document.createElement('label');
@@ -136,7 +135,8 @@
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
-                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" +
+                                    result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var subway = document.getElementById("subway" + t);
                                 subway.appendChild(subPath);
@@ -150,7 +150,8 @@
                                         lane += ", ";
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
-                                list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" +
+                                    result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var bus = document.getElementById("bus" + t);
                                 bus.appendChild(subPath);
