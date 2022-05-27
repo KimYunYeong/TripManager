@@ -101,15 +101,17 @@
             function setPathList(result) {
                 var pathList = document.getElementById('path_list');
                 for (var t = 0; t < result["path"].length; t++) {
+                    var label = document.createElement('label');
                     var radio = document.createElement('input');
                     var title = document.createElement('h3');
                     var list = document.createElement('ul');
-                    pathList.appendChild(radio);
+                    pathList.appendChild(label);
+                    label.appendChild(radio);
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", "path");
                     radio.setAttribute("value", t);
-                    radio.appendChild(title);
-                    radio.appendChild(list);
+                    label.appendChild(title);
+                    label.appendChild(list);
                     switch (result["path"][t]["pathType"]) {
                         case 1:
                             title.innerText = "지하철";
