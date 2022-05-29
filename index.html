@@ -1,61 +1,237 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr">
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <script src="./JS/script.js"></script>
+    <title>Home - Trip Manager</title>
+    <style>
+      .btn{
+        width: 168px;
+        height: 44px;
+        line-height: 40px;
+        margin: auto;
+      }
+      .btn p{
+        transition-duration: 0.5s;
+        text-align: center;
+        margin: auto;
+        border: 2px;
+        border-style: solid;
+      }
+      .array{
+        display: flex;
+        height: 38%;
+      }
+      .array img{
+        width: 90%;
+        height: 100%;
+      }
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+      /*                                 main                                 */
+      #main{
+        height: 100vh;
+        background-image: url(./media/main.jpg);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+      #main .content{
+        position: absolute;
+        height: 226px;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);/*<div>태그가 웹 중앙에 오도록*/
+      }
+      #main .content h1{
+        margin: 0;
+        font-weight: 900;
+        font-size: 70px;
+        /* color: white; */
+        text-align: center;
+      }
+      #main .content h2{
+        margin-top: 20px;
+        margin-bottom: 35px;
+        font-weight: 300;
+        font-size: 18px;
+        /* color: white; */
+        text-align: center;
+      }
+      #main .content .btn p{
+        /* border-color: white; */
+        border-color: black;
+        /* color: white; */
+        height: 40px;
+      }
+      #main .content .btn p:hover{
+        color: black;
+        /* background-color: white; */
+        background-color: gray;
+      }
 
-  <title></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/default.css">
-  <link rel="stylesheet" href="./css/main.css">
-  <link rel="stylesheet" href="./css/qna.css">
-  <link rel="stylesheet" href="./css/animation.css">
-  <link rel="stylesheet" href="./css/result.css">
-</head>
+      /*                               recommend                              */
+      #recommend{
+        height: 950px;
+        background-color: #2d2d2d;
+        text-align: center;
+      }
+      #recommend .content{
+        width: 90%;
+        height: 100%;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+      #recommend .content h1{
+        vertical-align: middle;
+        width: 100%;
+        margin: 0;
+        padding: 120px 0;
+        color: white;
+        font-size: 50px;
+      }
+      #recommend .content h2{
+        color: white;
+      }
+      #recommend .content p{
+        color: #a5a3a0;
+      }
+      #recommend .btn{
+        position: relative;
+          top: 10%;
+      }
+      #recommend .btn p{
+        color: #2d2d2d;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        border: 0;
+      }
+      #recommend .btn p:hover{
+        color: white;
+        background-color: #296671;
+      }
 
-<body>
-  <div class="container">
-    <section id="main" class="mx-auto my-5 py-5 px-3">
-      <h1>테스트로 알아보는 나의 여행 테마</h1>
-      <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
-        <img src="./img/main3.jpg" alt="mainImage" class="img-fluid">
+
+      /*                               course                              */
+      #course{
+        height: 950px;
+        background-color: gray;
+        text-align: center;
+      }
+      #course .content{
+        width: 90%;
+        height: 100%;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+      #course .content h1{
+        vertical-align: middle;
+        width: 100%;
+        margin: 0;
+        padding: 120px 0;
+        color: white;
+        font-size: 50px;
+      }
+      #course .content h2{
+        color: white;
+      }
+      #course .content p{
+        color: #a5a3a0;
+      }
+      #course .btn{
+        position: relative;
+          top: 10%;
+      }
+      #course .btn p{
+        color: #2d2d2d;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        border: 0;
+      }
+      #course .btn p:hover{
+        color: white;
+        background-color: #296671;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 테마 추천 -->
+    <article id="main">
+      <script>
+        headerNav();
+      </script>
+      <div class="content">
+        <h1>Trip Manager</h1>
+        <h2>유형에 맞는 여행 테마를 추천해 드립니다.</h2>
+        <div class="btn">
+          <a href="./typeIndicator.html"><p>ABOUT US</p></a>
       </div>
-      <p><p>
-        
-		여행 테마 추천 사이트입니다! <br>
-        아래 시작하기 버튼을 눌러 시작해 주십시오.
-		</p></p>
-      <button type="button" class="btn btn-outline-danger mt-3" onclick="js:begin()">시작하기</button>
-    </section>
-    <section id="qna">
-      <div class="status mx-auto mt-5">
-        <div class="statusBar">
+    </article>
+
+    <!-- 테마 선택해 여행지 추천 받음  -->
+    <article id="recommend">
+      <div class="content">
+        <h1>Recommended destinations</h1>
+        <div class="array">
+          <section>
+            <a href=""><img src=""></a>
+            <!-- <h2></h2> -->
+            <!-- <div class="btn">
+              <a href=""><p></p></a>
+            </div> -->
+          </section>
+          <section>
+            <a href=""><img src=""></a>
+            <!-- <h2></h2> -->
+            <!-- <div class="btn">
+              <a href=""><p></p></a>
+            </div> -->
+          </section>
+          <section>
+            <a href=""><img src=""></a>
+            <!-- <h2></h2> -->
+            <!-- <div class="btn">
+              <a href=""><p></p></a>
+            </div> -->
+          </section>
+        </div>
+        <div class="btn">
+          <a href="">
+            <p>VIEW MORE</p>
+          </a>
         </div>
       </div>
-      <div class="qBox my-5 py-3 mx-auto">
+    </article>
 
+    <!-- 여행코스 추천  -->
+    <article id="course">
+      <div class="content">
+        <h1>Travel course</h1>
+        <div class="array">
+          <section>
+            <img src="">
+            <h2></h2>
+          </section>
+          <section>
+            <img src="">
+            <h2></h2>
+          </section>
+          <section>
+            <img src="">
+            <h2></h2>
+          </section>
+        </div>
+        <div class="btn">
+          <a href="">
+            <p>VIEW MORE</p>
+          </a>
+        </div>
       </div>
-      <div class="answerBox">
+    </article>
 
-      </div>
-    </section>
-    <section id="result" class="mx-auto my-5 py-5 px-3">
-      <h1>당신의 여행 테마는?!</h1>
-      <div class="resultname">
-
-      </div>
-      <div id="resultImg" class="my-3 col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
-
-      </div>
-      <div class="resultDesc">
-
-      </div>
-    </section>
-    <script src="./js/data.js" charset="utf-8"></script>
-    <script src="./js/start.js" charset="utf-8"></script>
-    <script src="./js/share.js" charset="utf-8"></script>
-	</body>
+    <script>
+      footer();
+    </script>
+  </body>
 </html>
