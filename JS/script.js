@@ -3,9 +3,9 @@ function headerNav(){
     '<nav id="headerNav">'+
       '<ul>'+
         '<li><a href="./index.html">Home</a></li>'+
-        '<li><a href="./aboutUS.html">About us</a></li>'+
-        '<li><a href="">Tap3</a></li>'+
-        '<li><a href="">Tap4</a></li>'+
+        '<li><a href="./typeIndicator.html">여행 유형 테스트</a></li>'+
+        '<li><a href="">테마별 여행지</a></li>'+
+        '<li><a href="">테마별 여행코스</a></li>'+
       '</ul>'+
     '</nav>');
 }
@@ -16,7 +16,7 @@ function footer(){
       '<img src="./media/logo.jpg">'+
       '<ul>'+
         '<li>부산광역시 남구 용소로 45</li>'+
-        '<li>부경대학교 컴퓨터공학과</li>'+
+        '<li>부경대학교 컴퓨터공학과 웹프로그래밍 10조</li>'+
       '</ul>'+
       '<hr>'+
       '<p>Copyright ');
@@ -29,6 +29,6 @@ function footer(){
     document.write("2022 - " + year);
   }
   document.write(
-      ' Trip Manager</p>'+
+      ' Trip manager</p>'+
     '</footer>');
 }
