@@ -2,7 +2,6 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./CSS/style.css">
     <script src="./JS/script.js"></script>
     <title>Home - Trip Manager</title>
     <style>
@@ -58,15 +57,14 @@
         text-align: center;
       }
       #main .content .btn p{
-        /* border-color: white; */
-        border-color: black;
-        /* color: white; */
+        border-color: #2d2d2d;
+        color: #2d2d2d;
         height: 40px;
       }
       #main .content .btn p:hover{
-        color: black;
+        color: #dcdcdc;
         /* background-color: white; */
-        background-color: gray;
+        background-color: #2d2d2d;
       }
 
       /*                               recommend                              */
@@ -97,7 +95,7 @@
       }
       #recommend .btn{
         position: relative;
-          top: 10%;
+        top: 10%;
       }
       #recommend .btn p{
         color: #2d2d2d;
@@ -159,8 +157,9 @@
     <!-- 테마 추천 -->
     <article id="main">
       <script>
-        headerNav();
+        header();
       </script>
+
       <div class="content">
         <h1>Trip Manager</h1>
         <h2>유형에 맞는 여행 테마를 추천해 드립니다.</h2>
@@ -232,6 +231,23 @@
 
     <script>
       footer();
+
+      //main 배경 계절에 따라 바뀌게(배경 이미지 달라져 글자색, 버튼색도 변경 고려)
+      var now = new Date();
+      var month = now.getMonth()+1;
+      // var month = 10;
+      if(month >=3 && month<=5){
+        document.getElementById("main").style.backgroundImage = "url('./media/spring.jpg')";
+      }
+      else if(month >=6 && month<=8){
+        document.getElementById("main").style.backgroundImage = "url('./media/summer.jpg')";
+      }
+      else if(month >=9 && month<=11){
+        document.getElementById("main").style.backgroundImage = "url('./media/fall.jpg')";
+      }
+      else{
+        document.getElementById("main").style.backgroundImage = "url('./media/winter.jpg')";
+      }
     </script>
   </body>
 </html>

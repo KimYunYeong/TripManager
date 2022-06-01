@@ -1,13 +1,20 @@
-function headerNav(){
+
+document.write('<link rel="stylesheet" href="./CSS/style.css">');
+//                               Google Fonts
+document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
+'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
+'<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">');
+
+function header(){
   document.write(
-    '<nav id="headerNav">'+
+    '<header>'+
       '<ul>'+
         '<li><a href="./index.html">Home</a></li>'+
         '<li><a href="./typeIndicator.html">여행 유형 테스트</a></li>'+
-        '<li><a href="">테마별 여행지</a></li>'+
-        '<li><a href="">테마별 여행코스</a></li>'+
+        '<li><a href="./destination.html">테마별 여행지</a></li>'+
+        '<li><a href="./course.html">테마별 여행코스</a></li>'+
       '</ul>'+
-    '</nav>');
+    '</header>');
 }
 
 function footer(){
