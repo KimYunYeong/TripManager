@@ -21,7 +21,7 @@
                         data = JSON.parse(xhr.responseText);
                         console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
                         //노선그래픽 데이터 호출
-                        callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
+                        callMapObjApiAJAX(data["result"]["path"][11].info.mapObj);
                         //노선 데이터 출력
                         //setPathList(data["result"]);
                     }
