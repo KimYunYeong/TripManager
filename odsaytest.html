@@ -145,7 +145,7 @@
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
                                 path[t].subList[i] = document.createElement("li");
-                                path[t].subList[i].innerText = "<summary>지하철 " + lane + "(" +
+                                path[t].subList[i].innerHTML = "<summary>지하철 " + lane + "(" +
                                     result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</summary>";
                                 path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
@@ -161,7 +161,7 @@
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
                                 path[t].subList[i] = document.createElement("li");
-                                path[t].subList[i].innerText = "<summary>버스 " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " +
+                                path[t].subList[i].innerHTML = "<summary>버스 " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " +
                                     result["path"][t]["subPath"][i]["sectionTime"] + "분)</summary";
                                 path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
