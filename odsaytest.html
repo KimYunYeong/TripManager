@@ -115,7 +115,8 @@
                         label: document.createElement('label'),
                         radio: document.createElement('input'),
                         title: document.createElement('h3'),
-                        list: document.createElement('ul')
+                        list: document.createElement('ul'),
+                        subPath: []
                     };
                     
                     pathList.appendChild(path[t].label);
@@ -143,11 +144,11 @@
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
                                 path[t].list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" +
                                     result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
-                                var subPath = document.createElement("ul");
+                                path[t].subPath[i] = document.createElement("ul");
                                 var subway = document.getElementById("subway" + t);
-                                subway.appendChild(subPath);
+                                subway.appendChild(path[t].subPath[i]);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
-                                    subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                                 break;
                             case 2: //버스
                                 var lane = "";
@@ -158,11 +159,11 @@
                                 }
                                 path[t].list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" +
                                     result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
-                                var subPath = document.createElement("ul");
+                                path[t].subPath[i] = document.createElement("ul");
                                 var bus = document.getElementById("bus" + t);
-                                bus.appendChild(subPath);
+                                bus.appendChild(path[t].subPath[i]);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
-                                    subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                                 break;
                             case 3: //도보
                                 path[t].list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
