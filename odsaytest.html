@@ -1,8 +1,9 @@
-﻿<!--시작 지점에서 끝 지점까지의 대중교통 경로 목록 및 선택 경로 TMap에 표시-->﻿
+<!--시작 지점에서 끝 지점까지의 대중교통 경로 목록 및 선택 경로 TMap에 표시-->﻿
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="./JS/script.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
         <title>길찾기 결과 지도에 표출하기</title>
         <!-- 티맵 Application Key 입력  -->
@@ -109,7 +110,7 @@
             function setPathList(result) {
                 var pathList = document.getElementById('path_list');
                 var path = [];
-                
+
                 for (var t = 0; t < result["path"].length; t++) {
                     path[t] = {
                         label: document.createElement('label'),
@@ -119,7 +120,7 @@
                         subList: [],
                         subPath: []
                     };
-                    
+
                     pathList.appendChild(path[t].label);
                     path[t].label.appendChild(path[t].radio);
                     path[t].radio.setAttribute("type", "radio");
@@ -144,8 +145,8 @@
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
                                 path[t].subList[i] = document.createElement("li");
-                                path[t].subList[i].innerText = "지하철 " + lane + "(" +
-                                    result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].subList[i].innerText = "<summary>지하철 " + lane + "(" +
+                                    result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</summary>";
                                 path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
@@ -160,8 +161,8 @@
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
                                 path[t].subList[i] = document.createElement("li");
-                                path[t].subList[i].innerText = "버스 " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " +
-                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].subList[i].innerText = "<summary>버스 " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)</summary";
                                 path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
@@ -182,26 +183,50 @@
 
             }
         </script>
+        <style>
+          #path_list{
+            width: 100%;
+            height: 100%;
+          }
+        </style>
     </head>
     <body>
-        <div id="map" style="width:100%;height:400px;"></div>
-        <form id="path_list"></form>
-        <script>
-            var mapOptions = {
-                center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
-                zoom: 10
-            };
+      <script>
+        header();
+      </script>
 
-            var map = new Tmapv2.Map('map', mapOptions);
-            // 부산 성모병원
-            var sx = 129.10931110382123;
-            var sy = 35.110455394312034;
-            // 해운대 센텀 두산위브 아파트
-            var ex = 129.1397666931156;
-            var ey = 35.173831704236115;
+      <nav>
+      </nav>
 
-            //길찾기 API 호출
-            searchPubTransPathAJAX(sx, sy, ex, ey);
-        </script>
+      <article id="container">
+        <section id="map">
+        </section>
+        <aside id="theme">
+          <form id="path_list"></form>
+        </aside id="theme">
+      </article>
+
+      <!-- <div id="map" style="width:100%;height:400px;"></div> -->
+      <script>
+          var mapOptions = {
+              center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
+              zoom: 10
+          };
+
+          var map = new Tmapv2.Map('map', mapOptions);
+          // 부산 성모병원
+          var sx = 129.10931110382123;
+          var sy = 35.110455394312034;
+          // 해운대 센텀 두산위브 아파트
+          var ex = 129.1397666931156;
+          var ey = 35.173831704236115;
+
+          //길찾기 API 호출
+          searchPubTransPathAJAX(sx, sy, ex, ey);
+      </script>
+
+      <script>
+        footer();
+      </script>
     </body>
 </html>
