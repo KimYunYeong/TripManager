@@ -116,6 +116,7 @@
                         radio: document.createElement('input'),
                         title: document.createElement('h3'),
                         list: document.createElement('ul'),
+                        subList: [],
                         subPath: []
                     };
                     
@@ -142,13 +143,14 @@
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
-                                path[t].list.innerHTML += "<li id='subway" + i + "'>지하철 " + lane + " (" +
-                                    result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "지하철 " + lane + "(" +
+                                    result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
-                                var subway = document.getElementById("subway" + i);
-                                subway.appendChild(path[t].subPath[i]);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                                 break;
                             case 2: //버스
                                 var lane = "";
@@ -157,13 +159,14 @@
                                         lane += ", ";
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
-                                path[t].list.innerHTML += "<li id='bus" + i + "'>버스 " + lane + " (" +
-                                    result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "버스 " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
                                 path[t].subPath[i] = document.createElement("ul");
-                                var bus = document.getElementById("bus" + i);
-                                bus.appendChild(path[t].subPath[i]);
                                 for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                                 break;
                             case 3: //도보
                                 path[t].list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
