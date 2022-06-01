@@ -8,7 +8,10 @@
         <!-- 티맵 Application Key 입력  -->
         <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
         <script>
-            var polyline = [];
+            /**************************************** 대중교통 경로 ****************************************/
+            var subwayLineColor = [];
+            var markerArr = [];
+            var polylineArr = [];
             var data;
             function searchPubTransPathAJAX(startx, starty, endx, endy) {
                 var xhr = new XMLHttpRequest();
@@ -54,19 +57,19 @@
 
             // 지도위 마커 표시해주는 함수
             function drawTmapMarker(x, y) {
-                var marker = new Tmapv2.Marker({
+                markerArr.push(new Tmapv2.Marker({
                     position: new Tmapv2.LatLng(y, x),
                     map: map
-                });
+                }));
             }
 
             // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
             function drawTmapPolyLine(data) {
                 var lineArray;
-                if (polyline.length != 0) {
-                    for (var i = 0; i < polyline.length; i++)
-                        polyline[i].setMap(null);
-                    polyline = [];
+                if (polylineArr.length != 0) {
+                    for (var i = 0; i < polylineArr.length; i++)
+                        polylineArr[i].setMap(null);
+                    polylineArr = [];
                 }
                 for (var i = 0; i < data.result.lane.length; i++) {
                     for (var j = 0; j < data.result.lane[i].section.length; j++) {
@@ -78,21 +81,21 @@
 
                         //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
                         if (data.result.lane[i].type == 1) {
-                            polyline.push(new Tmapv2.Polyline({
+                            polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3,
                                 strokeColor: '#003499'
                             }));
                         } else if (data.result.lane[i].type == 2) {
-                            polyline.push(new Tmapv2.Polyline({
+                            polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3,
                                 strokeColor: '#37b42d'
                             }));
                         } else {
-                            polyline.push(new Tmapv2.Polyline({
+                            polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 3
@@ -105,37 +108,40 @@
             // 경로 목록 출력 함수
             function setPathList(result) {
                 var pathList = document.getElementById('path_list');
+                var path = [];
+                
                 for (var t = 0; t < result["path"].length; t++) {
-                    var label = document.createElement('label');
-                    var radio = document.createElement('input');
-                    var title = document.createElement('h3');
-                    var list = document.createElement('ul');
-                    pathList.appendChild(label);
-                    label.appendChild(radio);
-                    radio.setAttribute("type", "radio");
-                    radio.setAttribute("name", "path");
-                    radio.setAttribute("value", t);
-                    radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj)");
-                    if (t == 0)
-                        radio.setAttribute("checked", true);
-                    label.appendChild(title);
-                    label.appendChild(list);
+                    path[t] = {
+                        label: document.createElement('label'),
+                        radio: document.createElement('input'),
+                        title: document.createElement('h3'),
+                        list: document.createElement('ul')
+                    };
+                    
+                    pathList.appendChild(path[t].label);
+                    path[t].label.appendChild(path[t].radio);
+                    path[t].radio.setAttribute("type", "radio");
+                    path[t].radio.setAttribute("name", "path");
+                    path[t].radio.setAttribute("value", t);
+                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj)");
+                    path[t].label.appendChild(path[t].title);
+                    path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
                         case 1:
-                            title.innerText = "지하철";
+                            path[t].title.innerText = "지하철";
                             break;
                         case 2:
-                            title.innerText = "버스";
+                            path[t].title.innerText = "버스";
                             break;
                         case 3:
-                            title.innerText = "지하철 + 버스";
+                            path[t].title.innerText = "지하철 + 버스";
                     }
-                    title.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
+                    path[t].title.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
                         switch (result["path"][t]["subPath"][i]["trafficType"]) {
                             case 1: //지하철
                                 var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
-                                list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" +
+                                path[t].list.innerHTML += "<li id='subway" + t + "'>지하철 " + lane + " (" +
                                     result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var subway = document.getElementById("subway" + t);
@@ -150,7 +156,7 @@
                                         lane += ", ";
                                     lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "번"
                                 }
-                                list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" +
+                                path[t].list.innerHTML += "<li id='bus" + t + "'>버스 " + lane + " (" +
                                     result["path"][t]["subPath"][i]["stationCount"] + "개 정류장, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                                 var subPath = document.createElement("ul");
                                 var bus = document.getElementById("bus" + t);
@@ -159,12 +165,17 @@
                                     subPath.innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                                 break;
                             case 3: //도보
-                                list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
+                                path[t].list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
                                     result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
                         }
                     }
                     pathList.innerHTML += "<br>";
                 }
+                path[0].radio.setAttribute("checked", true);
+            }
+            /**************************************** 보행자 경로 ****************************************/
+            function drawWalkPath() {
+
             }
         </script>
     </head>
@@ -178,7 +189,6 @@
             };
 
             var map = new Tmapv2.Map('map', mapOptions);
-            // map.addListener("click", onClick);
             // 부산 성모병원
             var sx = 129.10931110382123;
             var sy = 35.110455394312034;
