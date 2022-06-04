@@ -1,11 +1,29 @@
+export {drawStop} ;
+// 받아올때 좌표가 뜨도록 travel.js에서 map.js 메소드를 import한후 
 
 // 경유지 별 마크 설정하여 자동차 길찾기				
 var map;
-var marker_s, marekr_e, waypoint;
+var marker, marker_s, marker_e,marker_p, waypoint;
 var resultMarkerArr = [];
+
 //경로그림정보
 var drawInfoArr = [];
 var resultInfoArr = [];
+
+
+//경유지 그리는 함수
+function drawStop(x1,y1,i)
+{
+
+	marker = new Tmapv2.Marker({
+		position: new Tmapv2.LatLng(x1,y1),
+		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_"+i+".png",
+		iconSize: new Tmapv2.Size(24, 38),
+		map: map
+	});
+
+	resultMarkerArr.push(marker);
+}
 
 function initTmap() {
 	var currentLocation = [];
@@ -22,6 +40,7 @@ function initTmap() {
 		scrollwheel: true
 
 	});
+
 	//사용자의 현재 위치 받아오는 코드
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (pos) {
@@ -47,67 +66,21 @@ function initTmap() {
 		map: map
 	});
 	resultMarkerArr.push(marker_e);
-	// 3. 경유지 심볼 찍기
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.399569, 127.103790),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
 
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.402748, 127.108913),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_2.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.397153, 127.113403),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_3.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.410135, 127.121210),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_4.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.399400, 127.123296),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_5.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.406327, 127.130933),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_6.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.413227, 127.127337),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_7.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
-
+// 	function makeVivaPoint(x1,y1)
+// {
+// 	"viaPoints":
+// 				[
+// 					{
+// 						"viaPointId": "test01",
+// 						"viaPointName": "name01",
+// 						"viaX": "127.103790",
+// 						"viaY": "37.399569"
+// 					},	
+// }
 	// 4. 경로탐색 API 사용요청
 	var routeLayer;
 	$("#btn_select").click(function () {
-
 		var searchOption = $("#selectLevel").val();
 
 		var headers = {};
@@ -263,6 +236,7 @@ function initTmap() {
 		});
 	});
 }
+window.initTmap = initTmap;
 
 function addComma(num) {
 	var regexp = /\B(?=(\d{3})+(?!\d))/g;
