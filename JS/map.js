@@ -1,20 +1,32 @@
-export {drawStop} ;
-// 받아올때 좌표가 뜨도록 travel.js에서 map.js 메소드를 import한후 
+//map.js에서 함수를 쓰기 위해 export해주는 
+export {drawStop};
+export {makeViaPoint};
 
 // 경유지 별 마크 설정하여 자동차 길찾기				
 var map;
 var marker, marker_s, marker_e,marker_p, waypoint;
 var resultMarkerArr = [];
-
+var viaPointsList=[];;
 //경로그림정보
 var drawInfoArr = [];
 var resultInfoArr = [];
 
+// 경로 객체 만들어서 리스트에 추가하는 코드
+function makeViaPoint(latitude,longitude,i)
+{
+		var viaPoints=
+			{
+				"viaPointId": "test0"+i,
+				"viaPointName": "name0"+i,
+				"viaX": ""+longitude,
+				"viaY": ""+latitude
+			};
+		viaPointsList.push(viaPoints);
+}
 
 //경유지 그리는 함수
 function drawStop(x1,y1,i)
 {
-
 	marker = new Tmapv2.Marker({
 		position: new Tmapv2.LatLng(x1,y1),
 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_"+i+".png",
@@ -29,7 +41,6 @@ function initTmap() {
 	var currentLocation = [];
 	resultMarkerArr = [];
 	// 1. 지도 띄우기
-
 
 	map = new Tmapv2.Map("map_div", {
 
@@ -67,18 +78,9 @@ function initTmap() {
 	});
 	resultMarkerArr.push(marker_e);
 
-// 	function makeVivaPoint(x1,y1)
-// {
-// 	"viaPoints":
-// 				[
-// 					{
-// 						"viaPointId": "test01",
-// 						"viaPointName": "name01",
-// 						"viaX": "127.103790",
-// 						"viaY": "37.399569"
-// 					},	
-// }
-	// 4. 경로탐색 API 사용요청
+
+
+	//4. 경로탐색 API 사용요청
 	var routeLayer;
 	$("#btn_select").click(function () {
 		var searchOption = $("#selectLevel").val();
@@ -86,7 +88,6 @@ function initTmap() {
 		var headers = {};
 		headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
 		headers["Content-Type"] = "application/json";
-
 		var param = JSON.stringify({
 			"startName": "출발지",
 			"startX": "" + currentLocation[1],
@@ -95,56 +96,11 @@ function initTmap() {
 			"endName": "도착지",
 			"endX": "127.142571",
 			"endY": "37.414382",
-			"viaPoints":
-				[
-					{
-						"viaPointId": "test01",
-						"viaPointName": "name01",
-						"viaX": "127.103790",
-						"viaY": "37.399569"
-					},
-					{
-						"viaPointId": "test02",
-						"viaPointName": "name02",
-						"viaX": "127.108913",
-						"viaY": "37.402748"
-					},
-					{
-						"viaPointId": "test03",
-						"viaPointName": "name03",
-						"viaX": "127.113403",
-						"viaY": "37.397153"
-					},
-					{
-						"viaPointId": "test04",
-						"viaPointName": "name04",
-						"viaX": "127.121210",
-						"viaY": "37.410135"
-					},
-					{
-						"viaPointId": "test05",
-						"viaPointName": "name05",
-						"viaX": "127.123296",
-						"viaY": "37.399400"
-					},
-					{
-						"viaPointId": "test06",
-						"viaPointName": "name06",
-						"viaX": "127.130933",
-						"viaY": "37.406327"
-					},
-					{
-						"viaPointId": "test07",
-						"viaPointName": "name07",
-						"viaX": "127.127337",
-						"viaY": "37.413227"
-					}
-				],
+			"viaPoints": viaPointsList,
 			"reqCoordType": "WGS84GEO",
 			"resCoordType": "EPSG3857",
 			"searchOption": searchOption
 		});
-
 		$.ajax({
 			method: "POST",
 			url: "https://apis.openapi.sk.com/tmap/routes/routeSequential30?version=1&format=json",//
