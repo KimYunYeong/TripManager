@@ -1,6 +1,7 @@
-//map.js에서 함수를 쓰기 위해 export해주는 
 export {drawStop};
 export {makeViaPoint};
+
+// 받아올때 좌표가 뜨도록 travel.js에서 map.js 메소드를 import한후 
 
 // 경유지 별 마크 설정하여 자동차 길찾기				
 var map;
@@ -94,7 +95,7 @@ function initTmap() {
 			"startY": "" + currentLocation[0],
 			"startTime": "201708081103",
 			"endName": "도착지",
-			"endX": "127.142571",
+			"endX": "127.142571", //도착지 정보 수정필요!!
 			"endY": "37.414382",
 			"viaPoints": viaPointsList,
 			"reqCoordType": "WGS84GEO",
@@ -103,7 +104,7 @@ function initTmap() {
 		});
 		$.ajax({
 			method: "POST",
-			url: "https://apis.openapi.sk.com/tmap/routes/routeSequential30?version=1&format=json",//
+			url: "https://apis.openapi.sk.com/tmap/routes/routeOptimization30?version=1&format=json",//경유지 최적화 api 사용
 			headers: headers,
 			async: false,
 			data: param,
