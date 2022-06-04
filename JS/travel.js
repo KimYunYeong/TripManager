@@ -1,5 +1,7 @@
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
 import {drawStop} from './map.js';
+import {makeViaPoint} from './map.js';
+
 var dinput = document.querySelector('.detail_input');
 var dinput3 = document.querySelector(".detail_input3");
 var dinput2 = document.querySelector(".detail_input2");
@@ -9,16 +11,17 @@ var latitude;
 var add = document.querySelector(".AddTravel");
 var add1 = document.querySelector("#trip");
 var i=1;
-// function makeVivaPoint(){
 
-// }
+
 add.addEventListener('click',function(){
         recommendapi(dinput.value);
         if(add1.checked==true){
-            drawStop(latitude,longitude,i);     
+            drawStop(latitude,longitude,i);    
+            makeViaPoint(latitude,longitude,i);
             i++;       
         }
 });
+
 
 
 dinput.addEventListener('click',function(){       // html의 option선택해서 지역코드(v) 받아오는 기능
@@ -116,4 +119,3 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
     
     xhr.send('');
 }
-
