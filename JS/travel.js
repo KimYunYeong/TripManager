@@ -8,11 +8,16 @@ var latitude;
 
 var add = document.querySelector(".AddTravel");
 var add1 = document.querySelector("#trip");
-// 추천여행지가 마음에 들었을경우 체크박스 클릭후 버튼을누르면 drawStop에 의해 지도에 마크업되며 다른 추천여행지가 표시되게된다.
+var i=1;
+// function makeVivaPoint(){
+
+// }
 add.addEventListener('click',function(){
         recommendapi(dinput.value);
-        if(add1.checked==true)
-            drawStop(latitude,longitude);            
+        if(add1.checked==true){
+            drawStop(latitude,longitude,i);     
+            i++;       
+        }
 });
 
 
