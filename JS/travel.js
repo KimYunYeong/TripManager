@@ -1,9 +1,15 @@
-
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
+export var x1,y1;
 
 var dinput = document.querySelector('.detail_input');
 var dinput3 = document.querySelector(".detail_input3");
 var dinput2 = document.querySelector(".detail_input2");
+
+var add = document.querySelector(".AddTravel");
+//클릭시 recommendpai()를 다시 수행시켜 관광지를 새로보여줌.
+add.addEventListener('click',function(){
+        recommendapi(dinput.value);
+});
 
 dinput.addEventListener('click',function(){       // html의 option선택해서 지역코드(v) 받아오는 기능
     if(document.querySelectorAll(".detail_input3 option").length>0){
@@ -21,12 +27,12 @@ dinput.addEventListener('click',function(){       // html의 option선택해서 
 
     var v = dinput.value;
     inputapi(v); 
-    document.querySelector(".search_btn2").setAttribute('onclick',"location.href='./area.html" + "?" + v + "'");
     if(v != 0){
         recommendapi(v);
     }
 
 });
+
 
 function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
     var xhr = new XMLHttpRequest();
@@ -56,12 +62,14 @@ function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이
     xhr.send('');
 }
 
+
 function searchlink(){
     document.querySelector(".search_btn").setAttribute('onclick',"location.href='./keyword.html" + "?" +document.querySelector(".search_input").value + "'");
 }
 
 document.querySelector(".search_input").addEventListener("keyup",function(){searchlink();});
-
+var x1=[];
+var y1=[];
 function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의 랜덤한 관광지를 html에 출력해주는 기능
     var xhr = new XMLHttpRequest();
     var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
@@ -84,14 +92,19 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
             document.querySelector(".background_overlay").style.backgroundImage = "url(" + image[0].innerHTML + ")";
             document.querySelector(".recommend_box img").setAttribute("src",image[0].innerHTML);
             document.querySelector(".recommend_name").textContent = names[0].textContent;
-            for(var i =0; i<1000; i++){
-                j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
+            for(var i =0; i<i+1;){
+                var j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
                 document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
                 document.querySelectorAll(".area_recommend h3")[i].textContent = "x좌표 : "+ x[j].textContent+" y좌표 : " + y[j].textContent; //해당관광지 위도 경도 출력
+                x1.push(x[j].textContent);
+                y1.push(y[j].textContent);
+                i++;
             }
+            
         }
     };
-    xhr.send('');
 
+    
+    xhr.send('');
 }
-recommendapi(6); // 6번 지역코드인 부산에 해당하는 관광지들이 웹페이지 첫화면에 출력
+
