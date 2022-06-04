@@ -1,230 +1,114 @@
-export {drawStop} ;
-// 받아올때 좌표가 뜨도록 travel.js에서 map.js 메소드를 import한후 
+// 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
+import {drawStop} from './map.js';
+var dinput = document.querySelector('.detail_input');
+var dinput3 = document.querySelector(".detail_input3");
+var dinput2 = document.querySelector(".detail_input2");
+var longitude;
+var latitude;
 
-// 경유지 별 마크 설정하여 자동차 길찾기				
-var map;
-var marker, marker_s, marker_e,marker_p, waypoint;
-var resultMarkerArr = [];
+var add = document.querySelector(".AddTravel");
+var add1 = document.querySelector("#trip");
+// 추천여행지가 마음에 들었을경우 체크박스 클릭후 버튼을누르면 drawStop에 의해 지도에 마크업되며 다른 추천여행지가 표시되게된다.
+add.addEventListener('click',function(){
+        recommendapi(dinput.value);
+        if(add1.checked==true)
+            drawStop(latitude,longitude);            
+});
 
-//경로그림정보
-var drawInfoArr = [];
-var resultInfoArr = [];
 
-//경유지 마크  함수
-function drawStop(x1,y1)
-{
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(x1,y1),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker);
+dinput.addEventListener('click',function(){       // html의 option선택해서 지역코드(v) 받아오는 기능
+    if(document.querySelectorAll(".detail_input3 option").length>0){
+        while(document.querySelector('.detail_input3').hasChildNodes()){
+            document.querySelector('.detail_input3').removeChild(document.querySelector('.detail_input3').firstChild);
+        }
+    } 
+
+    if(document.querySelector(".detail_input3").value == 0){ 
+        var doption = document.createElement('option');
+        dinput3.appendChild(doption);
+        doption.innerHTML ="도시 선택";
+        doption.setAttribute('value',"");
+    }
+
+    var v = dinput.value;
+    inputapi(v); 
+    if(v != 0){
+        recommendapi(v);
+    }
+
+});
+
+
+function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
+    var xhr = new XMLHttpRequest();
+    var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('40'); /**/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
+    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
+    queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(v); /**/
+    xhr.open('GET', url + queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var xml = this.responseXML;
+            var names = xml.getElementsByTagName('name');;
+            for(var i = 0; i<names.length; i++){
+                var num = i;
+                var dinput3 = document.querySelector('.detail_input3');
+                var option = document.createElement('option');
+                option.innerHTML = names[num].innerHTML;
+                option.setAttribute('value',num+1);
+                dinput3.appendChild(option);
+            }
+        }
+    };
+    
+    xhr.send('');
 }
 
-function initTmap() {
-	var currentLocation = [];
-	resultMarkerArr = [];
-	// 1. 지도 띄우기
 
-
-	map = new Tmapv2.Map("map_div", {
-
-		width: "100%",
-		height: "400px",
-		zoom: 14,
-		zoomControl: true,
-		scrollwheel: true
-
-	});
-	//사용자의 현재 위치 받아오는 코드
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function (pos) {
-			currentLocation[0] = pos.coords.latitude;
-			currentLocation[1] = pos.coords.longitude;
-			map.setCenter(new Tmapv2.LatLng(currentLocation[0], currentLocation[1]));
-			marker_s = new Tmapv2.Marker({
-				position: new Tmapv2.LatLng(currentLocation[0], currentLocation[1]),
-				icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-				iconSize: new Tmapv2.Size(24, 38),
-				map: map
-			});
-			resultMarkerArr.push(marker_s); // 현재 위치를 마커로 표시
-		});
-	}
-
-
-	// 도착
-	marker_e = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(37.414382, 127.142571),
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-		iconSize: new Tmapv2.Size(24, 38),
-		map: map
-	});
-	resultMarkerArr.push(marker_e);
-
-	// 4. 경로탐색 API 사용요청
-	var routeLayer;
-	$("#btn_select").click(function () {
-		drawStop();
-		var searchOption = $("#selectLevel").val();
-
-		var headers = {};
-		headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
-		headers["Content-Type"] = "application/json";
-
-		var param = JSON.stringify({
-			"startName": "출발지",
-			"startX": "" + currentLocation[1],
-			"startY": "" + currentLocation[0],
-			"startTime": "201708081103",
-			"endName": "도착지",
-			"endX": "127.142571",
-			"endY": "37.414382",
-			"viaPoints":
-				[
-					{
-						"viaPointId": "test01",
-						"viaPointName": "name01",
-						"viaX": "127.103790",
-						"viaY": "37.399569"
-					},
-					{
-						"viaPointId": "test02",
-						"viaPointName": "name02",
-						"viaX": "127.108913",
-						"viaY": "37.402748"
-					},
-					{
-						"viaPointId": "test03",
-						"viaPointName": "name03",
-						"viaX": "127.113403",
-						"viaY": "37.397153"
-					},
-					{
-						"viaPointId": "test04",
-						"viaPointName": "name04",
-						"viaX": "127.121210",
-						"viaY": "37.410135"
-					},
-					{
-						"viaPointId": "test05",
-						"viaPointName": "name05",
-						"viaX": "127.123296",
-						"viaY": "37.399400"
-					},
-					{
-						"viaPointId": "test06",
-						"viaPointName": "name06",
-						"viaX": "127.130933",
-						"viaY": "37.406327"
-					},
-					{
-						"viaPointId": "test07",
-						"viaPointName": "name07",
-						"viaX": "127.127337",
-						"viaY": "37.413227"
-					}
-				],
-			"reqCoordType": "WGS84GEO",
-			"resCoordType": "EPSG3857",
-			"searchOption": searchOption
-		});
-
-		$.ajax({
-			method: "POST",
-			url: "https://apis.openapi.sk.com/tmap/routes/routeSequential30?version=1&format=json",//
-			headers: headers,
-			async: false,
-			data: param,
-			success: function (response) {
-
-				var resultData = response.properties;
-				var resultFeatures = response.features;
-
-				// 결과 출력
-				var tDistance = "총 거리 : " + (resultData.totalDistance / 1000).toFixed(1) + "km,  ";
-				var tTime = "총 시간 : " + (resultData.totalTime / 60).toFixed(0) + "분,  ";
-				var tFare = "총 요금 : " + resultData.totalFare + "원";
-
-				$("#result").text(tDistance + tTime + tFare);
-
-				//기존  라인 초기화
-
-				if (resultInfoArr.length > 0) {
-					for (var i in resultInfoArr) {
-						resultInfoArr[i].setMap(null);
-					}
-					resultInfoArr = [];
-				}
-
-				for (var i in resultFeatures) {
-					var geometry = resultFeatures[i].geometry;
-					var properties = resultFeatures[i].properties;
-					var polyline_;
-
-					drawInfoArr = [];
-
-					if (geometry.type == "LineString") {
-						for (var j in geometry.coordinates) {
-							// 경로들의 결과값(구간)들을 포인트 객체로 변환 
-							var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
-							// 포인트 객체를 받아 좌표값으로 변환
-							var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-							// 포인트객체의 정보로 좌표값 변환 객체로 저장
-							var convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
-
-							drawInfoArr.push(convertChange);
-						}
-
-						polyline_ = new Tmapv2.Polyline({
-							path: drawInfoArr,
-							strokeColor: "#FF0000",
-							strokeWeight: 6,
-							map: map
-						});
-						resultInfoArr.push(polyline_);
-
-					} else {
-						var markerImg = "";
-						var size = "";			//아이콘 크기 설정합니다.
-
-						if (properties.pointType == "S") {	//출발지 마커
-							markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
-							size = new Tmapv2.Size(24, 38);
-						} else if (properties.pointType == "E") {	//도착지 마커
-							markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
-							size = new Tmapv2.Size(24, 38);
-						} else {	//각 포인트 마커
-							markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
-							size = new Tmapv2.Size(8, 8);
-						}
-
-						// 경로들의 결과값들을 포인트 객체로 변환 
-						var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
-						// 포인트 객체를 받아 좌표값으로 다시 변환
-						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
-
-						marker_p = new Tmapv2.Marker({
-							position: new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng),
-							icon: markerImg,
-							iconSize: size,
-							map: map
-						});
-
-						resultMarkerArr.push(marker_p);
-					}
-				}
-			},
-			error: function (request, status, error) {
-				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			}
-		});
-	});
+function searchlink(){
+    document.querySelector(".search_btn").setAttribute('onclick',"location.href='./keyword.html" + "?" +document.querySelector(".search_input").value + "'");
 }
-window.initTmap = initTmap;
 
-function addComma(num) {
-	var regexp = /\B(?=(\d{3})+(?!\d))/g;
-	return num.toString().replace(regexp, ',');
+document.querySelector(".search_input").addEventListener("keyup",function(){searchlink();});
+
+function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의 랜덤한 관광지를 html에 출력해주는 기능
+    var xhr = new XMLHttpRequest();
+    var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10000'); /**/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
+    queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P'); /**/
+    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
+    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
+    queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(a);
+    queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
+    xhr.open('GET', url + queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var xml = this.responseXML;
+            var names = xml.getElementsByTagName('title');
+            var image = xml.getElementsByTagName('firstimage');
+            var x = xml.getElementsByTagName('mapx');
+            var y = xml.getElementsByTagName('mapy');
+            document.querySelector(".background_overlay").style.backgroundImage = "url(" + image[0].innerHTML + ")";
+            document.querySelector(".recommend_box img").setAttribute("src",image[0].innerHTML);
+            document.querySelector(".recommend_name").textContent = names[0].textContent;
+            for(var i =0; i<i+1;){
+                var j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
+                document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
+                document.querySelectorAll(".area_recommend h3")[i].textContent = "x좌표 : "+ x[j].textContent+" y좌표 : " + y[j].textContent; //해당관광지 위도 경도 출력
+                longitude=x[j].textContent;
+                latitude=y[j].textContent;
+                i++;
+            }
+            
+        }
+    };
+
+    
+    xhr.send('');
 }
+
