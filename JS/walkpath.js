@@ -1,11 +1,10 @@
 // <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 // <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-// ë„ë³´ ì´ìš© ê²½ë¡œ í‘œì‹œ
 var drawInfoArr = [];
 var walkPolylineArr = [];
 
 function searchWalkPath(map, startx, starty, endx, endy) {
-    // ê²½ë¡œíƒìƒ‰ API ì‚¬ìš©ìš”ì²­
+    // °æ·ÎÅ½»ö API »ç¿ë¿äÃ»
     $
         .ajax({
             method: "POST",
@@ -19,34 +18,26 @@ function searchWalkPath(map, startx, starty, endx, endy) {
                 "endY": "" + endy,
                 "reqCoordType": "WGS84GEO",
                 "resCoordType": "EPSG3857",
-                "startName": "ì¶œë°œì§€",
-                "endName": "ë„ì°©ì§€"
+                "startName": "Ãâ¹ßÁö",
+                "endName": "µµÂøÁö"
             },
             success: function (response) {
                 var resultData = response.features;
                 /*
-                //ê²°ê³¼ ì¶œë ¥
-                var tDistance = "ì´ ê±°ë¦¬ : "
+                //°á°ú Ãâ·Â
+                var tDistance = "ÃÑ °Å¸® : "
                     + ((resultData[0].properties.totalDistance) / 1000)
                         .toFixed(1) + "km,";
-                var tTime = " ì´ ì‹œê°„ : "
+                var tTime = " ÃÑ ½Ã°£ : "
                     + ((resultData[0].properties.totalTime) / 60)
-                        .toFixed(0) + "ë¶„";
+                        .toFixed(0) + "ºÐ";
  
                 $("#result").text(tDistance + tTime);
                 */
-                //ê¸°ì¡´ ê·¸ë ¤ì§„ ë¼ì¸ & ë§ˆì»¤ê°€ ìžˆë‹¤ë©´ ì´ˆê¸°í™”
-                if (walkPolylineArr.length > 0) {
-                    for (var i in walkPolylineArr) {
-                        walkPolylineArr[i]
-                            .setMap(null);
-                    }
-                    walkPolylineArr = [];
-                }
 
                 drawInfoArr = [];
 
-                for (var i in resultData) { //forë¬¸ [S]
+                for (var i in resultData) { //for¹® [S]
                     var geometry = resultData[i].geometry;
                     var properties = resultData[i].properties;
                     var polyline_;
@@ -54,21 +45,21 @@ function searchWalkPath(map, startx, starty, endx, endy) {
 
                     if (geometry.type == "LineString") {
                         for (var j in geometry.coordinates) {
-                            // ê²½ë¡œë“¤ì˜ ê²°ê³¼ê°’(êµ¬ê°„)ë“¤ì„ í¬ì¸íŠ¸ ê°ì²´ë¡œ ë³€í™˜
+                            // °æ·ÎµéÀÇ °á°ú°ª(±¸°£)µéÀ» Æ÷ÀÎÆ® °´Ã¼·Î º¯È¯
                             var latlng = new Tmapv2.Point(
                                 geometry.coordinates[j][0],
                                 geometry.coordinates[j][1]);
-                            // í¬ì¸íŠ¸ ê°ì²´ë¥¼ ë°›ì•„ ì¢Œí‘œê°’ìœ¼ë¡œ ë³€í™˜
+                            // Æ÷ÀÎÆ® °´Ã¼¸¦ ¹Þ¾Æ ÁÂÇ¥°ªÀ¸·Î º¯È¯
                             var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-                            // í¬ì¸íŠ¸ê°ì²´ì˜ ì •ë³´ë¡œ ì¢Œí‘œê°’ ë³€í™˜ ê°ì²´ë¡œ ì €ìž¥
+                            // Æ÷ÀÎÆ®°´Ã¼ÀÇ Á¤º¸·Î ÁÂÇ¥°ª º¯È¯ °´Ã¼·Î ÀúÀå
                             var convertChange = new Tmapv2.LatLng(
                                 convertPoint._lat,
                                 convertPoint._lng);
-                            // ë°°ì—´ì— ë‹´ê¸°
+                            // ¹è¿­¿¡ ´ã±â
                             drawInfoArr.push(convertChange);
                         }
                     }
-                }//forë¬¸ [E]
+                }//for¹® [E]
                 drawWalkPath(map, drawInfoArr);
             },
             error: function (request, status, error) {
@@ -91,4 +82,14 @@ function drawWalkPath(map, arrPoint) {
         map: map
     });
     walkPolylineArr.push(polyline_);
+}
+
+function deleteWalkPath() {
+    if (walkPolylineArr.length > 0) {
+        for (var i in walkPolylineArr) {
+            walkPolylineArr[i]
+                .setMap(null);
+        }
+        walkPolylineArr = [];
+    }
 }
