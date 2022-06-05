@@ -27,35 +27,39 @@
                         //노선그래픽 데이터 호출
                         callMapObjApiAJAX(data["result"]["path"][0].info.mapObj, startx, starty, endx, endy);
                         var subPath = data["result"]["path"][0]["subPath"];
-                        for (var i = 0; i < subPath.length; i++) {
-                            if (subPath[i]["trafficType"] == 3) {
-                                if (i == 0) {
-                                    if (subPath.length > 2)
-                                        searchWalkPath(map, startx, starty, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
-                                    else
-                                        searchWalkPath(map, startx, starty, endx, endy);
-                                }
-                                else if (i < subPath.length - 1) {
-                                    if (subPath.length > 2)
-                                        searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
-                                    else
-                                        searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
-                                }
-                                else {
-                                    if (subPath.length > 2)
-                                        searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
-                                    else
-                                        searchWalkPath(map, startx, starty, endx, endy);
-                                }
-                            }
-                        }
+                        walkPath(subPath, startx, starty, endx, endy);
                         //노선 데이터 출력
                         setPathList(data["result"]);
                     }
                 }
             }
 
-            function callMapObjApiAJAX(mabObj, startx, starty, endx, endy) {
+            function walkPath(subPath) {
+                for (var i = 0; i < subPath.length; i++) {
+                    if (subPath[i]["trafficType"] == 3) {
+                        if (i == 0) {
+                            if (subPath.length > 2)
+                                searchWalkPath(map, startx, starty, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
+                            else
+                                searchWalkPath(map, startx, starty, endx, endy);
+                        }
+                        else if (i < subPath.length - 1) {
+                            if (subPath.length > 2)
+                                searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
+                            else
+                                searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
+                        }
+                        else {
+                            if (subPath.length > 2)
+                                searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
+                            else
+                                searchWalkPath(map, startx, starty, endx, endy);
+                        }
+                    }
+                }
+            }
+
+            function callMapObjApiAJAX(mabObj) {
                 var xhr = new XMLHttpRequest();
                 //ODsay apiKey 입력
                 var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
@@ -151,7 +155,8 @@
                     path[t].radio.setAttribute("type", "radio");
                     path[t].radio.setAttribute("name", "path");
                     path[t].radio.setAttribute("value", t);
-                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj)");
+                    path[t].radio.setAttribute("onclick",
+                        "function() { callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj); walkPath(data['result']['path'][this.value]['subPath']); }");
                     path[t].label.appendChild(path[t].title);
                     path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
@@ -215,11 +220,11 @@
 
             var map = new Tmapv2.Map('map', mapOptions);
             // 부산 성모병원
-            var sx = 129.10931110382123;
-            var sy = 35.110455394312034;
+            var startx = 129.10931110382123;
+            var starty = 35.110455394312034;
             // 해운대 센텀 두산위브 아파트
-            var ex = 129.1397666931156;
-            var ey = 35.173831704236115;
+            var endx = 129.1397666931156;
+            var endy = 35.173831704236115;
 
             //길찾기 API 호출
             searchPubTransPathAJAX(sx, sy, ex, ey);
