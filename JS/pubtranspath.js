@@ -16,7 +16,7 @@ function searchPubTransPathAJAX(map, startx, starty, endx, endy) {
             //노선그래픽 데이터 호출
             callMapObjApiAJAX(map, data["result"]["path"][0].info.mapObj);
             //노선 데이터 JSON 리턴
-            return data["result"];
+            return data;
         }
     }
 }
