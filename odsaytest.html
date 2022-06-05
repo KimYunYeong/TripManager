@@ -10,7 +10,43 @@
         <script src="./JS/walkpath.js"></script>
         <script>
             /**************************************** 대중교통 경로 ****************************************/
-            var subwayLineColor = [];
+            var subwayLineColor = {
+                1: '#263c96', // 수도권 1호선
+                2: '#3cb44a', // 수도권 2호선
+                3: '#ff7300', // 수도권 3호선
+                4: '#2c9ede', // 수도권 4호선
+                5: '#8936e0', // 수도권 5호선
+                6: '#b5500b', // 수도권 6호선
+                7: '#697215', // 수도권 7호선
+                8: '#e51e6e', // 수도권 8호선
+                9: '#cea43a', // 수도권 9호선
+                101: '#73b6e4', // 공항철도
+                102: '#ff9d5a', // 자기부상철도
+                104: '#7cc4a5', // 경의중앙선
+                107: '#77c371', // 에버라인
+                108: '#08af7b', // 경춘선
+                109: '#a71e31', // 신분당선
+                110: '#ff9d27', // 의정부경전철
+                112: '#2683f2', // 경강선
+                113: '#c6c100', // 우이신설선
+                114: '#8bc53f', // 서해선
+                115: '#96710a', // 김포골드라인
+                116: '#ffce33', // 수인분당선
+                117: '#4e67a5', // 신림선
+                21: '#6f99d0', // 인천 1호선
+                22: '#ffb850', // 인천 2호선
+                31: '#3cb44a', // 대전 1호선
+                41: '#f0602f', // 대구 1호선
+                42: '#3cb44a', // 대구 2호선
+                43: '#fdbf56', // 대구 3호선
+                51: '#3cb44a', // 광주 1호선
+                71: '#f0602f', // 부산 1호선
+                72: '#3cb44a', // 부산 2호선
+                73: '#d4a556', // 부산 3호선
+                74: '#426fb5', // 부산 4호선
+                78: '#a3c3e2', // 동해선
+                79: '#80499c' // 부산-김해경전철
+            };
             var markerArr = [];
             var polylineArr = [];
             var data;
@@ -26,8 +62,8 @@
                         console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
                         //노선그래픽 데이터 호출
                         callMapObjApiAJAX(data["result"]["path"][0].info.mapObj, startx, starty, endx, endy);
-                        var subPath = data["result"]["path"][0]["subPath"];
-                        walkPath(subPath, startx, starty, endx, endy);
+                        //var subPath = data["result"]["path"][0]["subPath"];
+                        //walkPath(subPath, startx, starty, endx, endy);
                         //노선 데이터 출력
                         setPathList(data["result"]);
                     }
@@ -108,26 +144,19 @@
                             lineArray.push(new Tmapv2.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
                         }
 
-                        //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
-                        if (data.result.lane[i].type == 1) {
+                        //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분
+                        if (subwayLineColor[data.result.lane[i].type]) {
                             polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
-                                strokeWeight: 3,
-                                strokeColor: '#003499'
-                            }));
-                        } else if (data.result.lane[i].type == 2) {
-                            polylineArr.push(new Tmapv2.Polyline({
-                                map: map,
-                                path: lineArray,
-                                strokeWeight: 3,
-                                strokeColor: '#37b42d'
+                                strokeWeight: 6,
+                                strokeColor: subwayLineColor[data.result.lane[i].type]
                             }));
                         } else {
                             polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
-                                strokeWeight: 3
+                                strokeWeight: 6
                             }));
                         }
                     }
@@ -207,10 +236,10 @@
                     pathList.innerHTML += "<br>";
                 }
             }
+
             function onClick(path) {
                 callMapObjApiAJAX(path.info.mapObj);
-                walkPath(path["subPath"]);
-                console.log(path);
+                //walkPath(path["subPath"]);
             }
         </script>
     </head>
