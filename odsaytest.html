@@ -32,7 +32,7 @@
                     path[t].radio.setAttribute("type", "radio");
                     path[t].radio.setAttribute("name", "path");
                     path[t].radio.setAttribute("value", t);
-                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(pubTransPathResult['path'][this.value].info.mapObj)");
+                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(pubTransPathResult['result']['path'][this.value].info.mapObj)");
                     path[t].label.appendChild(path[t].title);
                     path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
