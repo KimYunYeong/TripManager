@@ -4,7 +4,7 @@
 var drawInfoArr = [];
 var walkPolylineArr = [];
 
-function findPath(map, startx, starty, endx, endy) {
+function searchWalkPath(map, startx, starty, endx, endy) {
     // 경로탐색 API 사용요청
     $
         .ajax({
