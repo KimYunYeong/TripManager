@@ -1,21 +1,21 @@
 // <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-// ´ëÁß±³Åë ÀÌ¿ë °æ·Î Ç¥½Ã
+// ëŒ€ì¤‘êµí†µ ì´ìš© ê²½ë¡œ í‘œì‹œ
 var subwayLineColor = [];
 var markerArr = [];
 var polylineArr = [];
 function searchPubTransPathAJAX(map, startx, starty, endx, endy) {
     var xhr = new XMLHttpRequest();
-    //ODsay apiKey ÀÔ·Â
+    //ODsay apiKey ì…ë ¥
     var url = "https://api.odsay.com/v1/api/searchPubTransPath?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var data = JSON.parse(xhr.responseText);
-            console.log(data); // <- xhr.responseText ·Î °á°ú¸¦ °¡Á®¿Ã ¼ö ÀÖÀ½
-            //³ë¼±±×·¡ÇÈ µ¥ÀÌÅÍ È£Ãâ
+            console.log(data); // <- xhr.responseText ë¡œ ê²°ê³¼ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ìˆìŒ
+            //ë…¸ì„ ê·¸ë˜í”½ ë°ì´í„° í˜¸ì¶œ
             callMapObjApiAJAX(map, data["result"]["path"][0].info.mapObj);
-            //³ë¼± µ¥ÀÌÅÍ JSON ¸®ÅÏ
+            //ë…¸ì„  ë°ì´í„° JSON ë¦¬í„´
             return data["result"];
         }
     }
@@ -23,17 +23,17 @@ function searchPubTransPathAJAX(map, startx, starty, endx, endy) {
 
 function callMapObjApiAJAX(map, mabObj) {
     var xhr = new XMLHttpRequest();
-    //ODsay apiKey ÀÔ·Â
+    //ODsay apiKey ì…ë ¥
     var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
-            drawTmapMarker(map, sx, sy);				// Ãâ¹ßÁö ¸¶Ä¿ Ç¥½Ã
-            drawTmapMarker(map, ex, ey);				// µµÂøÁö ¸¶Ä¿ Ç¥½Ã
-            drawTmapPolyLine(map, resultJsonData);		// ³ë¼±±×·¡ÇÈµ¥ÀÌÅÍ ÁöµµÀ§ Ç¥½Ã
-            // boundary µ¥ÀÌÅÍ°¡ ÀÖÀ»°æ¿ì, ÇØ´ç boundary·Î ÁöµµÀÌµ¿
+            drawTmapMarker(map, sx, sy);				// ì¶œë°œì§€ ë§ˆì»¤ í‘œì‹œ
+            drawTmapMarker(map, ex, ey);				// ë„ì°©ì§€ ë§ˆì»¤ í‘œì‹œ
+            drawTmapPolyLine(map, resultJsonData);		// ë…¸ì„ ê·¸ë˜í”½ë°ì´í„° ì§€ë„ìœ„ í‘œì‹œ
+            // boundary ë°ì´í„°ê°€ ìˆì„ê²½ìš°, í•´ë‹¹ boundaryë¡œ ì§€ë„ì´ë™
             if (resultJsonData.result.boundary) {
                 var boundary = new Tmapv2.LatLngBounds(
                     new Tmapv2.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
@@ -45,7 +45,7 @@ function callMapObjApiAJAX(map, mabObj) {
     }
 }
 
-// ÁöµµÀ§ ¸¶Ä¿ Ç¥½ÃÇØÁÖ´Â ÇÔ¼ö
+// ì§€ë„ìœ„ ë§ˆì»¤ í‘œì‹œí•´ì£¼ëŠ” í•¨ìˆ˜
 function drawTmapMarker(map, x, y) {
     markerArr.push(new Tmapv2.Marker({
         position: new Tmapv2.LatLng(y, x),
@@ -53,7 +53,7 @@ function drawTmapMarker(map, x, y) {
     }));
 }
 
-// ³ë¼±±×·¡ÇÈ µ¥ÀÌÅÍ¸¦ ÀÌ¿ëÇÏ¿© ÁöµµÀ§ Æú¸®¶óÀÎ ±×·ÁÁÖ´Â ÇÔ¼ö
+// ë…¸ì„ ê·¸ë˜í”½ ë°ì´í„°ë¥¼ ì´ìš©í•˜ì—¬ ì§€ë„ìœ„ í´ë¦¬ë¼ì¸ ê·¸ë ¤ì£¼ëŠ” í•¨ìˆ˜
 function drawTmapPolyLine(map, data) {
     var lineArray;
     if (polylineArr.length != 0) {
@@ -69,7 +69,7 @@ function drawTmapPolyLine(map, data) {
                 lineArray.push(new Tmapv2.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
             }
 
-            //ÁöÇÏÃ¶°á°úÀÇ °æ¿ì ³ë¼±¿¡ µû¸¥ ¶óÀÎ»ö»ó ÁöÁ¤ÇÏ´Â ºÎºĞ (1,2È£¼±ÀÇ °æ¿ì¸¸ ¿¹·Î µéÀ½)
+            //ì§€í•˜ì² ê²°ê³¼ì˜ ê²½ìš° ë…¸ì„ ì— ë”°ë¥¸ ë¼ì¸ìƒ‰ìƒ ì§€ì •í•˜ëŠ” ë¶€ë¶„ (1,2í˜¸ì„ ì˜ ê²½ìš°ë§Œ ì˜ˆë¡œ ë“¤ìŒ), ì¶”ê°€í•„ìš”
             if (data.result.lane[i].type == 1) {
                 polylineArr.push(new Tmapv2.Polyline({
                     map: map,
