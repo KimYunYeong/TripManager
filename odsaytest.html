@@ -126,9 +126,9 @@
                     path[t].radio.setAttribute("type", "radio");
                     path[t].radio.setAttribute("name", "path");
                     path[t].radio.setAttribute("value", t);
-                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj)");
                     if (t == 0)
                         path[t].radio.checked = true;
+                    path[t].radio.setAttribute("onclick", "callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj)");
                     path[t].label.appendChild(path[t].title);
                     path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
