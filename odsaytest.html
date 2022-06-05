@@ -150,13 +150,17 @@
                                 map: map,
                                 path: lineArray,
                                 strokeWeight: 6,
-                                strokeColor: subwayLineColor[data.result.lane[i].type]
+                                strokeColor: subwayLineColor[data.result.lane[i].type],
+                                outline: true,
+                                outlineColor: '#505050'
                             }));
                         } else {
                             polylineArr.push(new Tmapv2.Polyline({
                                 map: map,
                                 path: lineArray,
-                                strokeWeight: 6
+                                strokeWeight: 6,
+                                outline: true,
+                                outlineColor: '#505050'
                             }));
                         }
                     }
