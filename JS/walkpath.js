@@ -1,10 +1,11 @@
 // <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 // <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+// ë„ë³´ ì´ìš© ê²½ë¡œ í‘œì‹œ
 var drawInfoArr = [];
 var walkPolylineArr = [];
 
 function findPath(map, startx, starty, endx, endy) {
-    // °æ·ÎÅ½»ö API »ç¿ë¿äÃ»
+    // ê²½ë¡œíƒìƒ‰ API ì‚¬ìš©ìš”ì²­
     $
         .ajax({
             method: "POST",
@@ -18,23 +19,23 @@ function findPath(map, startx, starty, endx, endy) {
                 "endY": "" + endy,
                 "reqCoordType": "WGS84GEO",
                 "resCoordType": "EPSG3857",
-                "startName": "Ãâ¹ßÁö",
-                "endName": "µµÂøÁö"
+                "startName": "ì¶œë°œì§€",
+                "endName": "ë„ì°©ì§€"
             },
             success: function (response) {
                 var resultData = response.features;
                 /*
-                //°á°ú Ãâ·Â
-                var tDistance = "ÃÑ °Å¸® : "
+                //ê²°ê³¼ ì¶œë ¥
+                var tDistance = "ì´ ê±°ë¦¬ : "
                     + ((resultData[0].properties.totalDistance) / 1000)
                         .toFixed(1) + "km,";
-                var tTime = " ÃÑ ½Ã°£ : "
+                var tTime = " ì´ ì‹œê°„ : "
                     + ((resultData[0].properties.totalTime) / 60)
-                        .toFixed(0) + "ºĞ";
+                        .toFixed(0) + "ë¶„";
  
                 $("#result").text(tDistance + tTime);
                 */
-                //±âÁ¸ ±×·ÁÁø ¶óÀÎ & ¸¶Ä¿°¡ ÀÖ´Ù¸é ÃÊ±âÈ­
+                //ê¸°ì¡´ ê·¸ë ¤ì§„ ë¼ì¸ & ë§ˆì»¤ê°€ ìˆë‹¤ë©´ ì´ˆê¸°í™”
                 if (walkPolylineArr.length > 0) {
                     for (var i in walkPolylineArr) {
                         walkPolylineArr[i]
@@ -45,7 +46,7 @@ function findPath(map, startx, starty, endx, endy) {
 
                 drawInfoArr = [];
 
-                for (var i in resultData) { //for¹® [S]
+                for (var i in resultData) { //forë¬¸ [S]
                     var geometry = resultData[i].geometry;
                     var properties = resultData[i].properties;
                     var polyline_;
@@ -53,21 +54,21 @@ function findPath(map, startx, starty, endx, endy) {
 
                     if (geometry.type == "LineString") {
                         for (var j in geometry.coordinates) {
-                            // °æ·ÎµéÀÇ °á°ú°ª(±¸°£)µéÀ» Æ÷ÀÎÆ® °´Ã¼·Î º¯È¯
+                            // ê²½ë¡œë“¤ì˜ ê²°ê³¼ê°’(êµ¬ê°„)ë“¤ì„ í¬ì¸íŠ¸ ê°ì²´ë¡œ ë³€í™˜
                             var latlng = new Tmapv2.Point(
                                 geometry.coordinates[j][0],
                                 geometry.coordinates[j][1]);
-                            // Æ÷ÀÎÆ® °´Ã¼¸¦ ¹Ş¾Æ ÁÂÇ¥°ªÀ¸·Î º¯È¯
+                            // í¬ì¸íŠ¸ ê°ì²´ë¥¼ ë°›ì•„ ì¢Œí‘œê°’ìœ¼ë¡œ ë³€í™˜
                             var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-                            // Æ÷ÀÎÆ®°´Ã¼ÀÇ Á¤º¸·Î ÁÂÇ¥°ª º¯È¯ °´Ã¼·Î ÀúÀå
+                            // í¬ì¸íŠ¸ê°ì²´ì˜ ì •ë³´ë¡œ ì¢Œí‘œê°’ ë³€í™˜ ê°ì²´ë¡œ ì €ì¥
                             var convertChange = new Tmapv2.LatLng(
                                 convertPoint._lat,
                                 convertPoint._lng);
-                            // ¹è¿­¿¡ ´ã±â
+                            // ë°°ì—´ì— ë‹´ê¸°
                             drawInfoArr.push(convertChange);
                         }
                     }
-                }//for¹® [E]
+                }//forë¬¸ [E]
                 drawWalkPath(map, drawInfoArr);
             },
             error: function (request, status, error) {
