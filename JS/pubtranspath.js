@@ -69,7 +69,7 @@ function drawTmapPolyLine(map, data) {
                 lineArray.push(new Tmapv2.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
             }
 
-            //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음), 추가필요
+            //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분 (1,2호선의 경우만 예로 들음)
             if (data.result.lane[i].type == 1) {
                 polylineArr.push(new Tmapv2.Polyline({
                     map: map,
