@@ -41,6 +41,7 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var resultJsonData = JSON.parse(xhr.responseText);
+                        console.log(resultJsonData);
                         drawTmapMarker(sx, sy);				// 출발지 마커 표시
                         drawTmapMarker(ex, ey);				// 도착지 마커 표시
                         drawTmapPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
