@@ -155,8 +155,7 @@
                     path[t].radio.setAttribute("type", "radio");
                     path[t].radio.setAttribute("name", "path");
                     path[t].radio.setAttribute("value", t);
-                    path[t].radio.setAttribute("onclick",
-                        "function() { callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj); walkPath(data['result']['path'][this.value]['subPath']); }");
+                    path[t].radio.setAttribute("onclick", "onClick(data['result']['path'][this.value]);");
                     path[t].label.appendChild(path[t].title);
                     path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
@@ -206,6 +205,10 @@
                     }
                     pathList.innerHTML += "<br>";
                 }
+            }
+            function onClick(path) {
+                callMapObjApiAJAX(path.info.mapObj);
+                walkPath(path["subPath"]);
             }
         </script>
     </head>
