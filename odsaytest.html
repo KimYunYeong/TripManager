@@ -106,7 +106,7 @@
 
             //길찾기 API 호출
             pubTransPathResult = searchPubTransPathAJAX(map, sx, sy, ex, ey);
-            //setPathList(pubTransPathResult);
+            //setPathList(pubTransPathResult["result"]);
             var p = document.getElementById("test");
             p.innerText = JSON.stringify(pubTransPathResult, null, 1)
         </script>
