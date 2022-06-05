@@ -35,6 +35,7 @@
             }
 
             function walkPath(subPath) {
+                deleteWalkPath();
                 for (var i = 0; i < subPath.length; i++) {
                     if (subPath[i]["trafficType"] == 3) {
                         if (i == 0) {
