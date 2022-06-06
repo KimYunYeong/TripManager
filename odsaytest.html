@@ -9,7 +9,6 @@
         <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
         <script src="./JS/walkpath.js"></script>
         <script>
-            /**************************************** 대중교통 경로 ****************************************/
             var subwayLineColor = {
                 1: '#263c96', //수도권 1호선
                 2: '#3cb44a', //수도권 2호선
@@ -145,6 +144,25 @@
                         }
                     }
                 }
+            }
+
+            //지도 반경 설정
+            function setTmapBoundary(coords) {
+                var minX = coords[0][0],
+                    minY = coords[0][1],
+                    maxX = coords[0][0],
+                    maxY = coords[0][1];
+                for (var i = 0; i < coords.length; i++) {
+                    if (minX > coords[i][0]) minX = coors[i][0];
+                    if (minY > coords[i][1]) minX = coors[i][1];
+                    if (maxX < coords[i][0]) minX = coors[i][0];
+                    if (maxY < coords[i][1]) minX = coors[i][1];
+                }
+                var boundary = new Tmapv2.LatLngBounds(
+                    new Tmapv2.LatLng(maxX, minY),
+                    new Tmapv2.LatLng(minX, maxY)
+                );
+                map.panToBounds(boundary);
             }
 
             //지도위 마커 표시해주는 함수
@@ -366,6 +384,7 @@
             }
 
             function onClick(data, path) {
+                var coords = [[startx, starty], [endx, endy]];
                 //마커 및 폴리라인 초기화
                 deleteMarkers();
                 deletePolylines();
@@ -377,9 +396,12 @@
                     drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
                     drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
                     for (var i = 0; i < path["subPath"].length; i++) {
+                        coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
+                        coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
                         drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
                         drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
                     }
+                    setTmapBoundary(coords);
                 }
             }
         </script>
