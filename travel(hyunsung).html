@@ -10,11 +10,11 @@
 	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript"
 	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <script type="text/javascript" src="./map.js"></script>
+    <script type="module" src="./map.js"></script>
    
     
 </head>
-<body onload="initTmap()" id="parent">    ><!-- 맵 생성 실행 -->
+<body onload="initTmap()" >    ><!-- 맵 생성 실행 -->
 		<select id="selectLevel">
 			<option value="0" selected="selected">교통최적+추천</option>
 			<option value="1" >교통최적+무료우선</option>
@@ -72,103 +72,17 @@
                 </span>  
                 <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
                 <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
+                <p>
                 <div class="area_recommend">
                     <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
+                    <input type='checkbox' name='trip' id="trip"><span></span><h3></h3>
                 </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>  
-                <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip'><span></span><h3></h3>
-                </div>
-                
-                <a href="javascript:createDIV()">DIV 생성</a>
+                </p>
+                -->
+             <button class="AddTravel">LET'S GO</button>
     </div>
 </article>
-<script src="./travel.js"></script>
+<script type="module" src="./travel.js"></script>
 
 </body>
 </html>
