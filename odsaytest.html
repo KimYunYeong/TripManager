@@ -417,6 +417,7 @@
                     xhr.open("GET", url, true);
                     xhr.send();
                     xhr.onreadystatechange = function () {
+                        console.log(xhr.readyState + ", " + xhr.status);
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             data = JSON.parse(xhr.responseText);
                             console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
@@ -465,6 +466,7 @@
                         xhr.open("GET", url, true);
                         xhr.send();
                         xhr.onreadystatechange = function () {
+                            console.log(xhr.readyState + ", " + xhr.status);
                             if (xhr.readyState == 4 && xhr.status == 200) {
                                 data = JSON.parse(xhr.responseText);
                                 console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
