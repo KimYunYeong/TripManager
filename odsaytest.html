@@ -11,59 +11,59 @@
         <script>
             /**************************************** 대중교통 경로 ****************************************/
             var subwayLineColor = {
-                1: '#263c96', // 수도권 1호선
-                2: '#3cb44a', // 수도권 2호선
-                3: '#ff7300', // 수도권 3호선
-                4: '#2c9ede', // 수도권 4호선
-                5: '#8936e0', // 수도권 5호선
-                6: '#b5500b', // 수도권 6호선
-                7: '#697215', // 수도권 7호선
-                8: '#e51e6e', // 수도권 8호선
-                9: '#cea43a', // 수도권 9호선
-                101: '#73b6e4', // 공항철도
-                102: '#ff9d5a', // 자기부상철도
-                104: '#7cc4a5', // 경의중앙선
-                107: '#77c371', // 에버라인
-                108: '#08af7b', // 경춘선
-                109: '#a71e31', // 신분당선
-                110: '#ff9d27', // 의정부경전철
-                112: '#2683f2', // 경강선
-                113: '#c6c100', // 우이신설선
-                114: '#8bc53f', // 서해선
-                115: '#96710a', // 김포골드라인
-                116: '#ffce33', // 수인분당선
-                117: '#4e67a5', // 신림선
-                21: '#6f99d0', // 인천 1호선
-                22: '#ffb850', // 인천 2호선
-                31: '#3cb44a', // 대전 1호선
-                41: '#f0602f', // 대구 1호선
-                42: '#3cb44a', // 대구 2호선
-                43: '#fdbf56', // 대구 3호선
-                51: '#3cb44a', // 광주 1호선
-                71: '#f0602f', // 부산 1호선
-                72: '#3cb44a', // 부산 2호선
-                73: '#d4a556', // 부산 3호선
-                74: '#426fb5', // 부산 4호선
-                78: '#a3c3e2', // 동해선
-                79: '#80499c' // 부산-김해경전철
+                1: '#263c96', //수도권 1호선
+                2: '#3cb44a', //수도권 2호선
+                3: '#ff7300', //수도권 3호선
+                4: '#2c9ede', //수도권 4호선
+                5: '#8936e0', //수도권 5호선
+                6: '#b5500b', //수도권 6호선
+                7: '#697215', //수도권 7호선
+                8: '#e51e6e', //수도권 8호선
+                9: '#cea43a', //수도권 9호선
+                101: '#73b6e4', //공항철도
+                102: '#ff9d5a', //자기부상철도
+                104: '#7cc4a5', //경의중앙선
+                107: '#77c371', //에버라인
+                108: '#08af7b', //경춘선
+                109: '#a71e31', //신분당선
+                110: '#ff9d27', //의정부경전철
+                112: '#2683f2', //경강선
+                113: '#c6c100', //우이신설선
+                114: '#8bc53f', //서해선
+                115: '#96710a', //김포골드라인
+                116: '#ffce33', //수인분당선
+                117: '#4e67a5', //신림선
+                21: '#6f99d0', //인천 1호선
+                22: '#ffb850', //인천 2호선
+                31: '#3cb44a', //대전 1호선
+                41: '#f0602f', //대구 1호선
+                42: '#3cb44a', //대구 2호선
+                43: '#fdbf56', //대구 3호선
+                51: '#3cb44a', //광주 1호선
+                71: '#f0602f', //부산 1호선
+                72: '#3cb44a', //부산 2호선
+                73: '#d4a556', //부산 3호선
+                74: '#426fb5', //부산 4호선
+                78: '#a3c3e2', //동해선
+                79: '#80499c' //부산-김해경전철
             };
             var busRouteColor = {
-                1: '#3cb44a', // 일반
-                2: '#3d5bab', // 좌석
-                3: '#5bb025', // 마을버스
-                4: '#f72f08', // 직행좌석
-                5: '#8b4513', // 공항버스
-                6: '#f72f08', // 간선급행
-                10: '#5bb025', // 외곽
-                11: '#3d5bab', // 간선
-                12: '#5bb025', // 지선
-                13: '#f99d1c', // 순환
-                14: '#f72f08', // 광역
-                15: '#fb5852', // 급행
-                20: '#5bb025', // 농어촌버스
-                21: '#5bb025', // 제주도 시외형버스
-                22: '#5bb025', // 경기도 시외형버스
-                26: '#f72f08' // 급행간선
+                1: '#3cb44a', //일반
+                2: '#3d5bab', //좌석
+                3: '#5bb025', //마을버스
+                4: '#f72f08', //직행좌석
+                5: '#8b4513', //공항버스
+                6: '#f72f08', //간선급행
+                10: '#5bb025', //외곽
+                11: '#3d5bab', //간선
+                12: '#5bb025', //지선
+                13: '#f99d1c', //순환
+                14: '#f72f08', //광역
+                15: '#fb5852', //급행
+                20: '#5bb025', //농어촌버스
+                21: '#5bb025', //제주도 시외형버스
+                22: '#5bb025', //경기도 시외형버스
+                26: '#f72f08' //급행간선
             };
             var markerArr = [];
             var polylineArr = [];
@@ -82,11 +82,12 @@
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         else { //도시 간 경로
-                            drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
-                            drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-                            drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "b", "t");
-                            drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
-                                data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "b", "t");
+                            drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
+                            drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
+                            for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
+                                drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
+                                drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
+                            }
                         }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
@@ -131,10 +132,10 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var resultJsonData = JSON.parse(xhr.responseText);
-                        drawTmapMarker(startx, starty, "s");			// 출발지 마커 표시
-                        drawTmapMarker(endx, endy, "e");				// 도착지 마커 표시
-                        drawTmapPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
-                        // boundary 데이터가 있을경우, 해당 boundary로 지도이동
+                        drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
+                        drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
+                        drawTmapPolyLine(resultJsonData); //노선그래픽데이터 지도위 표시
+                        //boundary 데이터가 있을경우, 해당 boundary로 지도이동
                         if (resultJsonData.result.boundary) {
                             var boundary = new Tmapv2.LatLngBounds(
                                 new Tmapv2.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
@@ -146,7 +147,7 @@
                 }
             }
 
-            // 지도위 마커 표시해주는 함수
+            //지도위 마커 표시해주는 함수
             function drawTmapMarker(x, y, color, text) {
                 markerArr.push(new Tmapv2.Marker({
                     position: new Tmapv2.LatLng(y, x),
@@ -155,14 +156,18 @@
                 }));
             }
 
-            // 노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
+            //마커 초기화 함수
+            function deleteMarkers() {
+                if (markerArr.length > 0) {
+                    for (var i = 0; i < markerArr.length; i++)
+                        markerArr[i].setMap(null);
+                    markerArr = [];
+                }
+            }
+
+            //노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
             function drawTmapPolyLine(data) {
                 var lineArray;
-                if (polylineArr.length != 0) {
-                    for (var i = 0; i < polylineArr.length; i++)
-                        polylineArr[i].setMap(null);
-                    polylineArr = [];
-                }
                 for (var i = 0; i < data.result.lane.length; i++) {
                     for (var j = 0; j < data.result.lane[i].section.length; j++) {
                         lineArray = null;
@@ -215,7 +220,16 @@
                 }
             }
 
-            // 경로 목록 출력 함수
+            //폴리라인 초기화 함수
+            function deletePolylines() {
+                if (polylineArr.length != 0) {
+                    for (var i = 0; i < polylineArr.length; i++)
+                        polylineArr[i].setMap(null);
+                    polylineArr = [];
+                }
+            }
+
+            //경로 목록 출력 함수
             function setPathList(result) {
                 var pathList = document.getElementById('path_list');
                 var path = [];
@@ -352,13 +366,9 @@
             }
 
             function onClick(data, path) {
-                //마커 초기화
-                for (var i = 0; i < markerArr.length; i++) {
-                    if (markerArr[i]) {
-                        markerArr[i].setMap(null);
-                    }
-                }
-                markerArr = [];
+                //마커 및 폴리라인 초기화
+                deleteMarkers();
+                deletePolylines();
                 if (data["result"]["searchType"] == 0) //도시 내 경로
                     //노선그래픽 데이터 호출
                     callMapObjApiAJAX(path.info.mapObj);
@@ -366,9 +376,10 @@
                 else { //도시 간 경로
                     drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
                     drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-                    drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "b", "t");
-                    drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
-                        data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "b", "t");
+                    for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
+                        drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
+                        drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
+                    }
                 }
             }
         </script>
