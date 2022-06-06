@@ -376,9 +376,9 @@
                 else { //도시 간 경로
                     drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
                     drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-                    for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
-                        drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
-                        drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
+                    for (var i = 0; i < path["subPath"].length; i++) {
+                        drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
+                        drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
                     }
                 }
             }
