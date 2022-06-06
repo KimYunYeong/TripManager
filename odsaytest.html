@@ -441,6 +441,7 @@
                             ey = null;
                         }
                     }
+                    console.log(sx + ", " + sy + ", " + ex + ", " + ey);
                     if (sx && sy && ex && ey) {
                         var xhr = new XMLHttpRequest();
                         //ODsay apiKey 입력
@@ -450,12 +451,12 @@
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState == 4 && xhr.status == 200) {
                                 data = JSON.parse(xhr.responseText);
-                                //console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
+                                console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
                                 pathListInCity.push(data);
                             }
                         }
                     } else {
-                        pathListInCity.push({});
+                        //pathListInCity.push({});
                     }
                 }
                 console.log(pathListInCity);
