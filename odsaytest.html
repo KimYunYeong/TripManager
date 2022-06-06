@@ -152,6 +152,7 @@
                     minY = coords[0][1],
                     maxX = coords[0][0],
                     maxY = coords[0][1];
+                console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
                 for (var i = 0; i < coords.length; i++) {
                     if (minX > coords[i][0]) minX = coords[i][0];
                     if (minY > coords[i][1]) minY = coords[i][1];
@@ -162,7 +163,7 @@
                     new Tmapv2.LatLng(maxX, minY), //top, left
                     new Tmapv2.LatLng(minX, maxY) //bottom, right
                 );
-                //console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
+                console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
                 map.panToBounds(boundary);
             }
 
