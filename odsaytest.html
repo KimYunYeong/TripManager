@@ -81,12 +81,32 @@
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         else { //도시 간 경로
+                            var coords = [[startx, starty], [endx, endy]];
                             drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
                             drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
                             for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
+                                coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
+                                coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
+                                if (i == 0) {
+                                    if (startx != data["result"]["path"][0]["subPath"][i]["startX"] &&
+                                        starty != data["result"]["path"][0]["subPath"][i]["startY"])
+                                        searchPubTransPathAJAX(startx, starty,
+                                            data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]);
+                                } else if (i < data["result"]["path"][0]["subPath"].length - 1) {
+                                    if (data["result"]["path"][0]["subPath"][i]["endX"] != data["result"]["path"][0]["subPath"][i + 1]["startX"] &&
+                                        data["result"]["path"][0]["subPath"][i]["endY"] != data["result"]["path"][0]["subPath"][i + 1]["startY"])
+                                        searchPubTransPathAJAX(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"],
+                                            data["result"]["path"][0]["subPath"][i + 1]["startX"], data["result"]["path"][0]["subPath"][i + 1]["startY"]);
+                                } else {
+                                    if (data["result"]["path"][0]["subPath"][i]["endX"] != endx &&
+                                        data["result"]["path"][0]["subPath"][i]["endY"] != endy)
+                                        searchPubTransPathAJAX(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"],
+                                            endx, endy);
+                                }
                             }
+                            setTmapBoundary(coords);
                         }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
@@ -402,6 +422,18 @@
                         coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
                         drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
                         drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
+                        if (i == 0) {
+                            if (startx != path["subPath"][i]["startX"] && starty != path["subPath"][i]["startY"])
+                                searchPubTransPathAJAX(startx, starty, path["subPath"][i]["startX"], path["subPath"][i]["startY"]);
+                        } else if (i < path["subPath"].length - 1) {
+                            if (path["subPath"][i]["endX"] != path["subPath"][i + 1]["startX"] &&
+                                path["subPath"][i]["endY"] != path["subPath"][i + 1]["startY"])
+                                searchPubTransPathAJAX(path["subPath"][i]["endX"], path["subPath"][i]["endY"],
+                                    path["subPath"][i + 1]["startX"], path["subPath"][i + 1]["startY"]);
+                        } else {
+                            if (path["subPath"][i]["endX"] != endx && path["subPath"][i]["endY"] != endy)
+                                searchPubTransPathAJAX(path["subPath"][i]["endX"], path["subPath"][i]["endY"], endx, endy);
+                        }
                     }
                     setTmapBoundary(coords);
                 }
