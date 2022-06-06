@@ -77,9 +77,12 @@
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         data = JSON.parse(xhr.responseText);
                         console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
-                        if (data["result"]["searchType"] == 0) //도시 내 경로
+                        if (data["result"]["searchType"] == 0) { //도시 내 경로
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
+                            //노선 데이터 출력
+                            setPathListInCity(data["result"]);
+                        }
                         else { //도시 간 경로
                             var coords = [[startx, starty], [endx, endy]];
                             drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
@@ -89,29 +92,15 @@
                                 coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
-                                if (i == 0) {
-                                    if (startx != data["result"]["path"][0]["subPath"][i]["startX"] &&
-                                        starty != data["result"]["path"][0]["subPath"][i]["startY"])
-                                        searchPubTransPathAJAX(startx, starty,
-                                            data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]);
-                                } else if (i < data["result"]["path"][0]["subPath"].length - 1) {
-                                    if (data["result"]["path"][0]["subPath"][i]["endX"] != data["result"]["path"][0]["subPath"][i + 1]["startX"] &&
-                                        data["result"]["path"][0]["subPath"][i]["endY"] != data["result"]["path"][0]["subPath"][i + 1]["startY"])
-                                        searchPubTransPathAJAX(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"],
-                                            data["result"]["path"][0]["subPath"][i + 1]["startX"], data["result"]["path"][0]["subPath"][i + 1]["startY"]);
-                                } else {
-                                    if (data["result"]["path"][0]["subPath"][i]["endX"] != endx &&
-                                        data["result"]["path"][0]["subPath"][i]["endY"] != endy)
-                                        searchPubTransPathAJAX(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"],
-                                            endx, endy);
-                                }
                             }
                             setTmapBoundary(coords);
+                            //노선 데이터 출력
+                            setPathListBetweenCity(data["result"], data["result"]["path"][0]);
                         }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
                         //노선 데이터 출력
-                        setPathList(data["result"]);
+                        //setPathList(data["result"]);
                     }
                 }
             }
@@ -172,7 +161,7 @@
                     minY = coords[0][1],
                     maxX = coords[0][0],
                     maxY = coords[0][1];
-                console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
+                //console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
                 for (var i = 0; i < coords.length; i++) {
                     if (minX > coords[i][0]) minX = coords[i][0];
                     if (minY > coords[i][1]) minY = coords[i][1];
@@ -183,7 +172,7 @@
                     new Tmapv2.LatLng(maxY, minX), //top, left
                     new Tmapv2.LatLng(minY, maxX) //bottom, right
                 );
-                console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
+                //console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
                 map.panToBounds(boundary);
             }
 
@@ -270,7 +259,7 @@
             }
 
             //경로 목록 출력 함수
-            function setPathList(result) {
+            function setPathListInCity(result) {
                 var pathList = document.getElementById('path_list');
                 var path = [];
 
@@ -403,6 +392,72 @@
                     }
                     pathList.innerHTML += "<br>";
                 }
+            }
+
+            function setPathListBetweenCity(result, path) {
+                var pathListInCity = [];
+                var sx, sy, ex, ey;
+                for (var i = 0; i < path["subPath"].length; i++) {
+                    if (i == 0) {
+                        if (startx != path["subPath"][i]["startX"] && starty != path["subPath"][i]["startY"]) {
+                            //searchPubTransPathAJAX(startx, starty, path["subPath"][i]["startX"], path["subPath"][i]["startY"]);
+                            sx = startx;
+                            sy = starty;
+                            ex = path["subPath"][i]["startX"];
+                            ey = path["subPath"][i]["startY"];
+                        } else {
+                            sx = null;
+                            sy = null;
+                            ex = null;
+                            ey = null;
+                        }
+                    } else if (i < path["subPath"].length - 1) {
+                        if (path["subPath"][i]["endX"] != path["subPath"][i + 1]["startX"] &&
+                            path["subPath"][i]["endY"] != path["subPath"][i + 1]["startY"]) {
+                            //searchPubTransPathAJAX(path["subPath"][i]["endX"], path["subPath"][i]["endY"],
+                            //    path["subPath"][i + 1]["startX"], path["subPath"][i + 1]["startY"]);
+                            sx = path["subPath"][i]["endX"];
+                            sy = path["subPath"][i]["endY"];
+                            ex = path["subPath"][i + 1]["startX"];
+                            ey = path["subPath"][i + 1]["startY"];
+                        } else {
+                            sx = null;
+                            sy = null;
+                            ex = null;
+                            ey = null;
+                        }
+                    } else {
+                        if (path["subPath"][i]["endX"] != endx && path["subPath"][i]["endY"] != endy) {
+                            //searchPubTransPathAJAX(path["subPath"][i]["endX"], path["subPath"][i]["endY"], endx, endy);
+                            sx = path["subPath"][i]["endX"];
+                            sy = path["subPath"][i]["endY"];
+                            ex = endx;
+                            ey = endy;
+                        } else {
+                            sx = null;
+                            sy = null;
+                            ex = null;
+                            ey = null;
+                        }
+                    }
+                    if (sx && sy && ex && ey) {
+                        var xhr = new XMLHttpRequest();
+                        //ODsay apiKey 입력
+                        var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + sx + "&SY=" + sy + "&EX=" + ex + "&EY=" + ey + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
+                        xhr.open("GET", url, true);
+                        xhr.send();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                data = JSON.parse(xhr.responseText);
+                                console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
+                                pathListInCity.push(data);
+                            }
+                        }
+                    } else {
+                        pathListInCity.push(null);
+                    }
+                }
+                console.log(pathListInCity);
             }
 
             function onClick(data, path) {
