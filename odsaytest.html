@@ -47,6 +47,24 @@
                 78: '#a3c3e2', // 동해선
                 79: '#80499c' // 부산-김해경전철
             };
+            var busRouteColor = {
+                1: '#3cb44a', // 일반
+                2: '#3d5bab', // 좌석
+                3: '#5bb025', // 마을버스
+                4: '#f72f08', // 직행좌석
+                5: '#8b4513', // 공항버스
+                6: '#f72f08', // 간선급행
+                10: '#5bb025', // 외곽
+                11: '#3d5bab', // 간선
+                12: '#5bb025', // 지선
+                13: '#f99d1c', // 순환
+                14: '#f72f08', // 광역
+                15: '#fb5852', // 급행
+                20: '#5bb025', // 농어촌버스
+                21: '#5bb025', // 제주도 시외형버스
+                22: '#5bb025', // 경기도 시외형버스
+                26: '#f72f08' // 급행간선
+            };
             var markerArr = [];
             var polylineArr = [];
             var data;
@@ -60,8 +78,14 @@
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         data = JSON.parse(xhr.responseText);
                         console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
-                        //노선그래픽 데이터 호출
-                        callMapObjApiAJAX(data["result"]["path"][0].info.mapObj, startx, starty, endx, endy);
+                        if (data["result"]["searchType"] == 0) //도시 내 경로
+                            //노선그래픽 데이터 호출
+                            callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
+                        else { //도시 간 경로
+                            drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "T");
+                            drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
+                                data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "T");
+                        }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
                         //노선 데이터 출력
@@ -105,8 +129,8 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var resultJsonData = JSON.parse(xhr.responseText);
-                        drawTmapMarker(startx, starty);			// 출발지 마커 표시
-                        drawTmapMarker(endx, endy);				// 도착지 마커 표시
+                        drawTmapMarker(startx, starty, "S");			// 출발지 마커 표시
+                        drawTmapMarker(endx, endy, "E");				// 도착지 마커 표시
                         drawTmapPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
                         // boundary 데이터가 있을경우, 해당 boundary로 지도이동
                         if (resultJsonData.result.boundary) {
@@ -121,9 +145,10 @@
             }
 
             // 지도위 마커 표시해주는 함수
-            function drawTmapMarker(x, y) {
+            function drawTmapMarker(x, y, t) {
                 markerArr.push(new Tmapv2.Marker({
                     position: new Tmapv2.LatLng(y, x),
+                    title: t,
                     map: map
                 }));
             }
@@ -144,24 +169,45 @@
                             lineArray.push(new Tmapv2.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
                         }
 
-                        //지하철결과의 경우 노선에 따른 라인색상 지정하는 부분
-                        if (subwayLineColor[data.result.lane[i].type]) {
-                            polylineArr.push(new Tmapv2.Polyline({
-                                map: map,
-                                path: lineArray,
-                                strokeWeight: 6,
-                                strokeColor: subwayLineColor[data.result.lane[i].type],
-                                outline: true,
-                                outlineColor: '#505050'
-                            }));
-                        } else {
-                            polylineArr.push(new Tmapv2.Polyline({
-                                map: map,
-                                path: lineArray,
-                                strokeWeight: 6,
-                                outline: true,
-                                outlineColor: '#505050'
-                            }));
+                        //노선 종류에 따른 라인색상 지정하는 부분
+                        if (data.result.lane[i].class == 1) {
+                            if (subwayLineColor[data.result.lane[i].type]) {
+                                polylineArr.push(new Tmapv2.Polyline({
+                                    map: map,
+                                    path: lineArray,
+                                    strokeWeight: 5,
+                                    strokeColor: busRouteColor[data.result.lane[i].type],
+                                    outline: true,
+                                    outlineColor: '#505050'
+                                }));
+                            } else {
+                                polylineArr.push(new Tmapv2.Polyline({
+                                    map: map,
+                                    path: lineArray,
+                                    strokeWeight: 5,
+                                    outline: true,
+                                    outlineColor: '#505050'
+                                }));
+                            }
+                        } else if (data.result.lane[i].class == 2) {
+                            if (subwayLineColor[data.result.lane[i].type]) {
+                                polylineArr.push(new Tmapv2.Polyline({
+                                    map: map,
+                                    path: lineArray,
+                                    strokeWeight: 5,
+                                    strokeColor: subwayLineColor[data.result.lane[i].type],
+                                    outline: true,
+                                    outlineColor: '#505050'
+                                }));
+                            } else {
+                                polylineArr.push(new Tmapv2.Polyline({
+                                    map: map,
+                                    path: lineArray,
+                                    strokeWeight: 5,
+                                    outline: true,
+                                    outlineColor: '#505050'
+                                }));
+                            }
                         }
                     }
                 }
@@ -189,7 +235,7 @@
                     path[t].radio.setAttribute("type", "radio");
                     path[t].radio.setAttribute("name", "path");
                     path[t].radio.setAttribute("value", t);
-                    path[t].radio.setAttribute("onclick", "onClick(data['result']['path'][this.value]);");
+                    path[t].radio.setAttribute("onclick", "onClick(data, data['result']['path'][this.value]);");
                     path[t].label.appendChild(path[t].title);
                     path[t].label.appendChild(path[t].list);
                     switch (result["path"][t]["pathType"]) {
@@ -201,6 +247,18 @@
                             break;
                         case 3:
                             path[t].title.innerText = "지하철 + 버스";
+                            break;
+                        case 11:
+                            path[t].title.innerText = "열차";
+                            break;
+                        case 12:
+                            path[t].title.innerText = "고속 / 시외버스";
+                            break;
+                        case 13:
+                            path[t].title.innerText = "항공";
+                            break;
+                        case 20:
+                            path[t].title.innerText = "시외교통 복합(열차 + 고속버스 등)";
                     }
                     path[t].title.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
                     for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
@@ -235,15 +293,75 @@
                             case 3: //도보
                                 path[t].list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
                                     result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                                break;
+                            case 4: //열차
+                                var trainName = {
+                                    1: 'KTX',
+                                    2: '새마을',
+                                    3: '무궁화',
+                                    4: '누리호',
+                                    5: '통근',
+                                    6: 'ITX',
+                                    7: 'ITX-청춘',
+                                    8: 'SRT'
+                                };
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "열차 " + "(" + trainName[result["path"][t]["subPath"][i]["trainType"]] + ", " + 
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
+                                path[t].subPath[i] = document.createElement("ul");
+                                path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
+                                    result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                break;
+                            case 5: //고속버스
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "고속버스 (" +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
+                                path[t].subPath[i] = document.createElement("ul");
+                                path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
+                                    result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                break;
+                            case 6: //시외버스
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "시외버스 (" +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
+                                path[t].subPath[i] = document.createElement("ul");
+                                path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
+                                    result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                break;
+                            case 7: //항공
+                                path[t].subList[i] = document.createElement("li");
+                                path[t].subList[i].innerText = "항공 (" +
+                                    result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                                path[t].list.appendChild(path[t].subList[i]);
+                                path[t].subPath[i] = document.createElement("ul");
+                                path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
+                                    result["path"][t]["subPath"][i]["endName"] + "</li>";
                         }
                     }
                     pathList.innerHTML += "<br>";
                 }
             }
 
-            function onClick(path) {
-                callMapObjApiAJAX(path.info.mapObj);
-                //walkPath(path["subPath"]);
+            function onClick(data, path) {
+                //마커 초기화
+                for (var i = 0; i < markerArr.length; i++) {
+                    if (markerArr[i]) {
+                        markerArr[i].setMap(null);
+                    }
+                }
+                markerArr = [];
+                if (data["result"]["searchType"] == 0) //도시 내 경로
+                    //노선그래픽 데이터 호출
+                    callMapObjApiAJAX(path.info.mapObj);
+                    //walkPath(path["subPath"]);
+                else { //도시 간 경로
+                    drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "T");
+                    drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
+                        data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "T");
+                }
             }
         </script>
     </head>
@@ -257,13 +375,20 @@
             };
 
             var map = new Tmapv2.Map('map', mapOptions);
+            /*
             // 부산 성모병원
             var startx = 129.10931110382123;
             var starty = 35.110455394312034;
             // 해운대 센텀 두산위브 아파트
             var endx = 129.1397666931156;
             var endy = 35.173831704236115;
-
+            */
+            //부산 메가마트 문현점
+            var startx = 129.07257986068768;
+            var starty = 35.13775979703992;
+            //광주 북구 종합운동장
+            var endx = 126.85687473842108;
+            var endy = 35.1972579922849;
             //길찾기 API 호출
             searchPubTransPathAJAX(startx, starty, endx, endy);
         </script>
