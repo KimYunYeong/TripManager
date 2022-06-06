@@ -159,9 +159,10 @@
                     if (maxY < coords[i][1]) minX = coords[i][1];
                 }
                 var boundary = new Tmapv2.LatLngBounds(
-                    new Tmapv2.LatLng(maxX, minY),
-                    new Tmapv2.LatLng(minX, maxY)
+                    new Tmapv2.LatLng(maxX, minY), //top, left
+                    new Tmapv2.LatLng(minX, maxY) //bottom, right
                 );
+                console.log(minX + ", " + minY + ", " + maxX + ", " + maxY);
                 map.panToBounds(boundary);
             }
 
