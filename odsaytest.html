@@ -81,12 +81,16 @@
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         else { //도시 간 경로
+                            var coords = [[startx, starty], [endx, endy]];
                             drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
                             drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
                             for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
+                                coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
+                                coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
                                 drawTmapMarker(data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
                             }
+                            setTmapBoundary(coords);
                         }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
