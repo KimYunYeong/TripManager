@@ -82,9 +82,9 @@
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         else { //도시 간 경로
-                            drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "T");
+                            drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "t");
                             drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
-                                data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "T");
+                                data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "t");
                         }
                         //var subPath = data["result"]["path"][0]["subPath"];
                         //walkPath(subPath, startx, starty, endx, endy);
@@ -129,8 +129,8 @@
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var resultJsonData = JSON.parse(xhr.responseText);
-                        drawTmapMarker(startx, starty, "S");			// 출발지 마커 표시
-                        drawTmapMarker(endx, endy, "E");				// 도착지 마커 표시
+                        drawTmapMarker(startx, starty, "s");			// 출발지 마커 표시
+                        drawTmapMarker(endx, endy, "e");				// 도착지 마커 표시
                         drawTmapPolyLine(resultJsonData);		// 노선그래픽데이터 지도위 표시
                         // boundary 데이터가 있을경우, 해당 boundary로 지도이동
                         if (resultJsonData.result.boundary) {
@@ -145,10 +145,10 @@
             }
 
             // 지도위 마커 표시해주는 함수
-            function drawTmapMarker(x, y, t) {
+            function drawTmapMarker(x, y, i) {
                 markerArr.push(new Tmapv2.Marker({
                     position: new Tmapv2.LatLng(y, x),
-                    title: t,
+                    icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_" + i + ".png",
                     map: map
                 }));
             }
@@ -312,6 +312,7 @@
                                 path[t].subPath[i] = document.createElement("ul");
                                 path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                                     result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                                 break;
                             case 5: //고속버스
                                 path[t].subList[i] = document.createElement("li");
@@ -321,6 +322,7 @@
                                 path[t].subPath[i] = document.createElement("ul");
                                 path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                                     result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                                 break;
                             case 6: //시외버스
                                 path[t].subList[i] = document.createElement("li");
@@ -330,6 +332,7 @@
                                 path[t].subPath[i] = document.createElement("ul");
                                 path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                                     result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                                 break;
                             case 7: //항공
                                 path[t].subList[i] = document.createElement("li");
@@ -339,6 +342,7 @@
                                 path[t].subPath[i] = document.createElement("ul");
                                 path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                                     result["path"][t]["subPath"][i]["endName"] + "</li>";
+                                path[t].subList[i].appendChild(path[t].subPath[i]);
                         }
                     }
                     pathList.innerHTML += "<br>";
@@ -358,9 +362,9 @@
                     callMapObjApiAJAX(path.info.mapObj);
                     //walkPath(path["subPath"]);
                 else { //도시 간 경로
-                    drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "T");
+                    drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "t");
                     drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
-                        data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "T");
+                        data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "t");
                 }
             }
         </script>
