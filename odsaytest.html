@@ -82,6 +82,8 @@
                             //노선그래픽 데이터 호출
                             callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
                         else { //도시 간 경로
+                            drawTmapMarker(startx, starty, "s");			// 출발지 마커 표시
+                            drawTmapMarker(endx, endy, "e");				// 도착지 마커 표시
                             drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "t");
                             drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
                                 data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "t");
@@ -362,6 +364,8 @@
                     callMapObjApiAJAX(path.info.mapObj);
                     //walkPath(path["subPath"]);
                 else { //도시 간 경로
+                    drawTmapMarker(startx, starty, "s");			// 출발지 마커 표시
+                    drawTmapMarker(endx, endy, "e");				// 도착지 마커 표시
                     drawTmapMarker(data["result"]["path"][0]["subPath"][0]["startX"], data["result"]["path"][0]["subPath"][0]["startY"], "t");
                     drawTmapMarker(data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endX"],
                         data["result"]["path"][0]["subPath"][data["result"]["path"][0]["subPath"].length - 1]["endY"], "t");
