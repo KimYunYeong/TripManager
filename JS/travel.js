@@ -40,7 +40,6 @@ dinput.addEventListener('click',function(){       // html의 option선택해서 
     if(v != 0){
         recommendapi(v);
     }
-
 });
 
 function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
