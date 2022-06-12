@@ -1,4 +1,4 @@
-/*
+/* Test like next code *
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"><script>
 <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"><script>
 <script src="./JS/walkpath.js"><script>
@@ -6,104 +6,104 @@
 <form id="path_list"></form>
 <script>
     var mapOptions = {
-        center: new Tmapv2.LatLng(37.3595704, 127.105399), // Áöµµ Áß¾Ó ¼³Á¤
+        center: new Tmapv2.LatLng(37.3595704, 127.105399), // ì§€ë„ ì¤‘ì•™ ì„¤ì •
         zoom: 10
     };
 
     var map = new Tmapv2.Map('map', mapOptions);
 
-    // ºÎ»ê ¼º¸ğº´¿ø
+    // ë¶€ì‚° ì„±ëª¨ë³‘ì›
     var startx = 129.10931110382123;
     var starty = 35.110455394312034;
-    // ÇØ¿î´ë ¼¾ÅÒ µÎ»êÀ§ºê ¾ÆÆÄÆ®
+    // í•´ìš´ëŒ€ ì„¼í…€ ë‘ì‚°ìœ„ë¸Œ ì•„íŒŒíŠ¸
     var endx = 129.1397666931156;
     var endy = 35.173831704236115;
 
-    //ºÎ»ê ¸Ş°¡¸¶Æ® ¹®ÇöÁ¡
+    //ë¶€ì‚° ë©”ê°€ë§ˆíŠ¸ ë¬¸í˜„ì 
     var startx = 129.07257986068768;
     var starty = 35.13775979703992;
-    //±¤ÁÖ ºÏ±¸ Á¾ÇÕ¿îµ¿Àå
+    //ê´‘ì£¼ ë¶êµ¬ ì¢…í•©ìš´ë™ì¥
     var endx = 126.85687473842108;
     var endy = 35.1972579922849;
-    //±æÃ£±â API È£Ãâ
+    //ê¸¸ì°¾ê¸° API í˜¸ì¶œ
     searchPubTransPathAJAX(startx, starty, endx, endy);
 <script>
 */
 var subwayLineColor = {
-    1: '#263c96', //¼öµµ±Ç 1È£¼±
-    2: '#3cb44a', //¼öµµ±Ç 2È£¼±
-    3: '#ff7300', //¼öµµ±Ç 3È£¼±
-    4: '#2c9ede', //¼öµµ±Ç 4È£¼±
-    5: '#8936e0', //¼öµµ±Ç 5È£¼±
-    6: '#b5500b', //¼öµµ±Ç 6È£¼±
-    7: '#697215', //¼öµµ±Ç 7È£¼±
-    8: '#e51e6e', //¼öµµ±Ç 8È£¼±
-    9: '#cea43a', //¼öµµ±Ç 9È£¼±
-    101: '#73b6e4', //°øÇ×Ã¶µµ
-    102: '#ff9d5a', //ÀÚ±âºÎ»óÃ¶µµ
-    104: '#7cc4a5', //°æÀÇÁß¾Ó¼±
-    107: '#77c371', //¿¡¹ö¶óÀÎ
-    108: '#08af7b', //°æÃá¼±
-    109: '#a71e31', //½ÅºĞ´ç¼±
-    110: '#ff9d27', //ÀÇÁ¤ºÎ°æÀüÃ¶
-    112: '#2683f2', //°æ°­¼±
-    113: '#c6c100', //¿ìÀÌ½Å¼³¼±
-    114: '#8bc53f', //¼­ÇØ¼±
-    115: '#96710a', //±èÆ÷°ñµå¶óÀÎ
-    116: '#ffce33', //¼öÀÎºĞ´ç¼±
-    117: '#4e67a5', //½Å¸²¼±
-    21: '#6f99d0', //ÀÎÃµ 1È£¼±
-    22: '#ffb850', //ÀÎÃµ 2È£¼±
-    31: '#3cb44a', //´ëÀü 1È£¼±
-    41: '#f0602f', //´ë±¸ 1È£¼±
-    42: '#3cb44a', //´ë±¸ 2È£¼±
-    43: '#fdbf56', //´ë±¸ 3È£¼±
-    51: '#3cb44a', //±¤ÁÖ 1È£¼±
-    71: '#f0602f', //ºÎ»ê 1È£¼±
-    72: '#3cb44a', //ºÎ»ê 2È£¼±
-    73: '#d4a556', //ºÎ»ê 3È£¼±
-    74: '#426fb5', //ºÎ»ê 4È£¼±
-    78: '#a3c3e2', //µ¿ÇØ¼±
-    79: '#80499c' //ºÎ»ê-±èÇØ°æÀüÃ¶
+    1: '#263c96', //ìˆ˜ë„ê¶Œ 1í˜¸ì„ 
+    2: '#3cb44a', //ìˆ˜ë„ê¶Œ 2í˜¸ì„ 
+    3: '#ff7300', //ìˆ˜ë„ê¶Œ 3í˜¸ì„ 
+    4: '#2c9ede', //ìˆ˜ë„ê¶Œ 4í˜¸ì„ 
+    5: '#8936e0', //ìˆ˜ë„ê¶Œ 5í˜¸ì„ 
+    6: '#b5500b', //ìˆ˜ë„ê¶Œ 6í˜¸ì„ 
+    7: '#697215', //ìˆ˜ë„ê¶Œ 7í˜¸ì„ 
+    8: '#e51e6e', //ìˆ˜ë„ê¶Œ 8í˜¸ì„ 
+    9: '#cea43a', //ìˆ˜ë„ê¶Œ 9í˜¸ì„ 
+    101: '#73b6e4', //ê³µí•­ì² ë„
+    102: '#ff9d5a', //ìê¸°ë¶€ìƒì² ë„
+    104: '#7cc4a5', //ê²½ì˜ì¤‘ì•™ì„ 
+    107: '#77c371', //ì—ë²„ë¼ì¸
+    108: '#08af7b', //ê²½ì¶˜ì„ 
+    109: '#a71e31', //ì‹ ë¶„ë‹¹ì„ 
+    110: '#ff9d27', //ì˜ì •ë¶€ê²½ì „ì² 
+    112: '#2683f2', //ê²½ê°•ì„ 
+    113: '#c6c100', //ìš°ì´ì‹ ì„¤ì„ 
+    114: '#8bc53f', //ì„œí•´ì„ 
+    115: '#96710a', //ê¹€í¬ê³¨ë“œë¼ì¸
+    116: '#ffce33', //ìˆ˜ì¸ë¶„ë‹¹ì„ 
+    117: '#4e67a5', //ì‹ ë¦¼ì„ 
+    21: '#6f99d0', //ì¸ì²œ 1í˜¸ì„ 
+    22: '#ffb850', //ì¸ì²œ 2í˜¸ì„ 
+    31: '#3cb44a', //ëŒ€ì „ 1í˜¸ì„ 
+    41: '#f0602f', //ëŒ€êµ¬ 1í˜¸ì„ 
+    42: '#3cb44a', //ëŒ€êµ¬ 2í˜¸ì„ 
+    43: '#fdbf56', //ëŒ€êµ¬ 3í˜¸ì„ 
+    51: '#3cb44a', //ê´‘ì£¼ 1í˜¸ì„ 
+    71: '#f0602f', //ë¶€ì‚° 1í˜¸ì„ 
+    72: '#3cb44a', //ë¶€ì‚° 2í˜¸ì„ 
+    73: '#d4a556', //ë¶€ì‚° 3í˜¸ì„ 
+    74: '#426fb5', //ë¶€ì‚° 4í˜¸ì„ 
+    78: '#a3c3e2', //ë™í•´ì„ 
+    79: '#80499c' //ë¶€ì‚°-ê¹€í•´ê²½ì „ì² 
 };
 var busRouteColor = {
-    1: '#3cb44a', //ÀÏ¹İ
-    2: '#3d5bab', //ÁÂ¼®
-    3: '#5bb025', //¸¶À»¹ö½º
-    4: '#f72f08', //Á÷ÇàÁÂ¼®
-    5: '#8b4513', //°øÇ×¹ö½º
-    6: '#f72f08', //°£¼±±ŞÇà
-    10: '#5bb025', //¿Ü°û
-    11: '#3d5bab', //°£¼±
-    12: '#5bb025', //Áö¼±
-    13: '#f99d1c', //¼øÈ¯
-    14: '#f72f08', //±¤¿ª
-    15: '#fb5852', //±ŞÇà
-    20: '#5bb025', //³ó¾îÃÌ¹ö½º
-    21: '#5bb025', //Á¦ÁÖµµ ½Ã¿ÜÇü¹ö½º
-    22: '#5bb025', //°æ±âµµ ½Ã¿ÜÇü¹ö½º
-    26: '#f72f08' //±ŞÇà°£¼±
+    1: '#3cb44a', //ì¼ë°˜
+    2: '#3d5bab', //ì¢Œì„
+    3: '#5bb025', //ë§ˆì„ë²„ìŠ¤
+    4: '#f72f08', //ì§í–‰ì¢Œì„
+    5: '#8b4513', //ê³µí•­ë²„ìŠ¤
+    6: '#f72f08', //ê°„ì„ ê¸‰í–‰
+    10: '#5bb025', //ì™¸ê³½
+    11: '#3d5bab', //ê°„ì„ 
+    12: '#5bb025', //ì§€ì„ 
+    13: '#f99d1c', //ìˆœí™˜
+    14: '#f72f08', //ê´‘ì—­
+    15: '#fb5852', //ê¸‰í–‰
+    20: '#5bb025', //ë†ì–´ì´Œë²„ìŠ¤
+    21: '#5bb025', //ì œì£¼ë„ ì‹œì™¸í˜•ë²„ìŠ¤
+    22: '#5bb025', //ê²½ê¸°ë„ ì‹œì™¸í˜•ë²„ìŠ¤
+    26: '#f72f08' //ê¸‰í–‰ê°„ì„ 
 };
 var markerArr = [];
 var polylineArr = [];
 var data;
 function searchPubTransPathAJAX(startx, starty, endx, endy) {
     var xhr = new XMLHttpRequest();
-    //ODsay apiKey ÀÔ·Â
+    //ODsay apiKey ì…ë ¥
     var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             data = JSON.parse(xhr.responseText);
-            console.log(data); // <- xhr.responseText ·Î °á°ú¸¦ °¡Á®¿Ã ¼ö ÀÖÀ½
-            if (data["result"]["searchType"] == 0) //µµ½Ã ³» °æ·Î
-                //³ë¼±±×·¡ÇÈ µ¥ÀÌÅÍ È£Ãâ
+            console.log(data); // <- xhr.responseText ë¡œ ê²°ê³¼ë¥¼ ê°€ì ¸ì˜¬ ìˆ˜ ìˆìŒ
+            if (data["result"]["searchType"] == 0) //ë„ì‹œ ë‚´ ê²½ë¡œ
+                //ë…¸ì„ ê·¸ë˜í”½ ë°ì´í„° í˜¸ì¶œ
                 callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
-            else { //µµ½Ã °£ °æ·Î
+            else { //ë„ì‹œ ê°„ ê²½ë¡œ
                 var coords = [[startx, starty], [endx, endy]];
-                drawTmapMarker(startx, starty, "r", "s"); //Ãâ¹ßÁö ¸¶Ä¿ Ç¥½Ã
-                drawTmapMarker(endx, endy, "r", "e"); //µµÂøÁö ¸¶Ä¿ Ç¥½Ã
+                drawTmapMarker(startx, starty, "r", "s"); //ì¶œë°œì§€ ë§ˆì»¤ í‘œì‹œ
+                drawTmapMarker(endx, endy, "r", "e"); //ë„ì°©ì§€ ë§ˆì»¤ í‘œì‹œ
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
@@ -114,7 +114,7 @@ function searchPubTransPathAJAX(startx, starty, endx, endy) {
             }
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
-            //³ë¼± µ¥ÀÌÅÍ Ãâ·Â
+            //ë…¸ì„  ë°ì´í„° ì¶œë ¥
             setPathList(data["result"]);
         }
     }
@@ -148,17 +148,17 @@ function walkPath(subPath) {
 
 function callMapObjApiAJAX(mabObj) {
     var xhr = new XMLHttpRequest();
-    //ODsay apiKey ÀÔ·Â
+    //ODsay apiKey ì…ë ¥
     var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
-            drawTmapMarker(startx, starty, "r", "s"); //Ãâ¹ßÁö ¸¶Ä¿ Ç¥½Ã
-            drawTmapMarker(endx, endy, "r", "e"); //µµÂøÁö ¸¶Ä¿ Ç¥½Ã
-            drawTmapPolyLine(resultJsonData); //³ë¼±±×·¡ÇÈµ¥ÀÌÅÍ ÁöµµÀ§ Ç¥½Ã
-            //boundary µ¥ÀÌÅÍ°¡ ÀÖÀ»°æ¿ì, ÇØ´ç boundary·Î ÁöµµÀÌµ¿
+            drawTmapMarker(startx, starty, "r", "s"); //ì¶œë°œì§€ ë§ˆì»¤ í‘œì‹œ
+            drawTmapMarker(endx, endy, "r", "e"); //ë„ì°©ì§€ ë§ˆì»¤ í‘œì‹œ
+            drawTmapPolyLine(resultJsonData); //ë…¸ì„ ê·¸ë˜í”½ë°ì´í„° ì§€ë„ìœ„ í‘œì‹œ
+            //boundary ë°ì´í„°ê°€ ìˆì„ê²½ìš°, í•´ë‹¹ boundaryë¡œ ì§€ë„ì´ë™
             if (resultJsonData.result.boundary) {
                 var boundary = new Tmapv2.LatLngBounds(
                     new Tmapv2.LatLng(resultJsonData.result.boundary.top, resultJsonData.result.boundary.left),
@@ -170,7 +170,7 @@ function callMapObjApiAJAX(mabObj) {
     }
 }
 
-//Áöµµ ¹İ°æ ¼³Á¤
+//ì§€ë„ ë°˜ê²½ ì„¤ì •
 function setTmapBoundary(coords) {
     var minX = coords[0][0],
         minY = coords[0][1],
@@ -191,7 +191,7 @@ function setTmapBoundary(coords) {
     map.panToBounds(boundary);
 }
 
-//ÁöµµÀ§ ¸¶Ä¿ Ç¥½ÃÇØÁÖ´Â ÇÔ¼ö
+//ì§€ë„ìœ„ ë§ˆì»¤ í‘œì‹œí•´ì£¼ëŠ” í•¨ìˆ˜
 function drawTmapMarker(x, y, color, text) {
     markerArr.push(new Tmapv2.Marker({
         position: new Tmapv2.LatLng(y, x),
@@ -200,7 +200,7 @@ function drawTmapMarker(x, y, color, text) {
     }));
 }
 
-//¸¶Ä¿ ÃÊ±âÈ­ ÇÔ¼ö
+//ë§ˆì»¤ ì´ˆê¸°í™” í•¨ìˆ˜
 function deleteMarkers() {
     if (markerArr.length != 0) {
         for (var i = 0; i < markerArr.length; i++)
@@ -209,7 +209,7 @@ function deleteMarkers() {
     }
 }
 
-//³ë¼±±×·¡ÇÈ µ¥ÀÌÅÍ¸¦ ÀÌ¿ëÇÏ¿© ÁöµµÀ§ Æú¸®¶óÀÎ ±×·ÁÁÖ´Â ÇÔ¼ö
+//ë…¸ì„ ê·¸ë˜í”½ ë°ì´í„°ë¥¼ ì´ìš©í•˜ì—¬ ì§€ë„ìœ„ í´ë¦¬ë¼ì¸ ê·¸ë ¤ì£¼ëŠ” í•¨ìˆ˜
 function drawTmapPolyLine(data) {
     var lineArray;
     for (var i = 0; i < data.result.lane.length; i++) {
@@ -220,7 +220,7 @@ function drawTmapPolyLine(data) {
                 lineArray.push(new Tmapv2.LatLng(data.result.lane[i].section[j].graphPos[k].y, data.result.lane[i].section[j].graphPos[k].x));
             }
 
-            //³ë¼± Á¾·ù¿¡ µû¸¥ ¶óÀÎ»ö»ó ÁöÁ¤ÇÏ´Â ºÎºĞ
+            //ë…¸ì„  ì¢…ë¥˜ì— ë”°ë¥¸ ë¼ì¸ìƒ‰ìƒ ì§€ì •í•˜ëŠ” ë¶€ë¶„
             if (data.result.lane[i].class == 1) {
                 if (subwayLineColor[data.result.lane[i].type]) {
                     polylineArr.push(new Tmapv2.Polyline({
@@ -264,7 +264,7 @@ function drawTmapPolyLine(data) {
     }
 }
 
-//Æú¸®¶óÀÎ ÃÊ±âÈ­ ÇÔ¼ö
+//í´ë¦¬ë¼ì¸ ì´ˆê¸°í™” í•¨ìˆ˜
 function deletePolylines() {
     if (polylineArr.length != 0) {
         for (var i = 0; i < polylineArr.length; i++)
@@ -273,7 +273,7 @@ function deletePolylines() {
     }
 }
 
-//°æ·Î ¸ñ·Ï Ãâ·Â ÇÔ¼ö
+//ê²½ë¡œ ëª©ë¡ ì¶œë ¥ í•¨ìˆ˜
 function setPathList(result) {
     var pathList = document.getElementById('path_list');
     var path = [];
@@ -300,104 +300,104 @@ function setPathList(result) {
         path[t].label.appendChild(path[t].list);
         switch (result["path"][t]["pathType"]) {
             case 1:
-                path[t].title.innerText = "ÁöÇÏÃ¶";
+                path[t].title.innerText = "ì§€í•˜ì² ";
                 break;
             case 2:
-                path[t].title.innerText = "¹ö½º";
+                path[t].title.innerText = "ë²„ìŠ¤";
                 break;
             case 3:
-                path[t].title.innerText = "ÁöÇÏÃ¶ + ¹ö½º";
+                path[t].title.innerText = "ì§€í•˜ì²  + ë²„ìŠ¤";
                 break;
             case 11:
-                path[t].title.innerText = "¿­Â÷";
+                path[t].title.innerText = "ì—´ì°¨";
                 break;
             case 12:
-                path[t].title.innerText = "°í¼Ó / ½Ã¿Ü¹ö½º";
+                path[t].title.innerText = "ê³ ì† / ì‹œì™¸ë²„ìŠ¤";
                 break;
             case 13:
-                path[t].title.innerText = "Ç×°ø";
+                path[t].title.innerText = "í•­ê³µ";
                 break;
             case 20:
-                path[t].title.innerText = "½Ã¿Ü±³Åë º¹ÇÕ(¿­Â÷ + °í¼Ó¹ö½º µî)";
+                path[t].title.innerText = "ì‹œì™¸êµí†µ ë³µí•©(ì—´ì°¨ + ê³ ì†ë²„ìŠ¤ ë“±)";
         }
-        path[t].title.innerText += " (ÃÑ " + result["path"][t]["info"]["totalTime"] + "ºĞ)";
+        path[t].title.innerText += " (ì´ " + result["path"][t]["info"]["totalTime"] + "ë¶„)";
         for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
             switch (result["path"][t]["subPath"][i]["trafficType"]) {
-                case 1: //ÁöÇÏÃ¶
+                case 1: //ì§€í•˜ì² 
                     var lane = result["path"][t]["subPath"][i]["lane"][0]["name"];
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "ÁöÇÏÃ¶ " + lane + "(" +
-                        result["path"][t]["subPath"][i]["stationCount"] + "°³ ¿ª, " + result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "ì§€í•˜ì²  " + lane + "(" +
+                        result["path"][t]["subPath"][i]["stationCount"] + "ê°œ ì—­, " + result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                         path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
-                case 2: //¹ö½º
+                case 2: //ë²„ìŠ¤
                     var lane = "";
                     for (var j = 0; j < result["path"][t]["subPath"][i]["lane"].length; j++) {
                         if (j != 0)
                             lane += ", ";
-                        lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "¹ø"
+                        lane += result["path"][t]["subPath"][i]["lane"][j]["busNo"] + "ë²ˆ"
                     }
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "¹ö½º " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "°³ Á¤·ùÀå, " +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "ë²„ìŠ¤ " + lane + "(" + result["path"][t]["subPath"][i]["stationCount"] + "ê°œ ì •ë¥˜ì¥, " +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
                         path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
-                case 3: //µµº¸
-                    path[t].list.innerHTML += "<li>µµº¸ " + result["path"][t]["subPath"][i]["distance"] + "m (" +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)</li>";
+                case 3: //ë„ë³´
+                    path[t].list.innerHTML += "<li>ë„ë³´ " + result["path"][t]["subPath"][i]["distance"] + "m (" +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)</li>";
                     break;
-                case 4: //¿­Â÷
+                case 4: //ì—´ì°¨
                     var trainName = {
                         1: 'KTX',
-                        2: '»õ¸¶À»',
-                        3: '¹«±ÃÈ­',
-                        4: '´©¸®È£',
-                        5: 'Åë±Ù',
+                        2: 'ìƒˆë§ˆì„',
+                        3: 'ë¬´ê¶í™”',
+                        4: 'ëˆ„ë¦¬í˜¸',
+                        5: 'í†µê·¼',
                         6: 'ITX',
-                        7: 'ITX-Ã»Ãá',
+                        7: 'ITX-ì²­ì¶˜',
                         8: 'SRT'
                     };
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "¿­Â÷ " + "(" + trainName[result["path"][t]["subPath"][i]["trainType"]] + ", " +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "ì—´ì°¨ " + "(" + trainName[result["path"][t]["subPath"][i]["trainType"]] + ", " +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                         result["path"][t]["subPath"][i]["endName"] + "</li>";
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
-                case 5: //°í¼Ó¹ö½º
+                case 5: //ê³ ì†ë²„ìŠ¤
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "°í¼Ó¹ö½º (" +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "ê³ ì†ë²„ìŠ¤ (" +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                         result["path"][t]["subPath"][i]["endName"] + "</li>";
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
-                case 6: //½Ã¿Ü¹ö½º
+                case 6: //ì‹œì™¸ë²„ìŠ¤
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "½Ã¿Ü¹ö½º (" +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "ì‹œì™¸ë²„ìŠ¤ (" +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
                         result["path"][t]["subPath"][i]["endName"] + "</li>";
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
-                case 7: //Ç×°ø
+                case 7: //í•­ê³µ
                     path[t].subList[i] = document.createElement("li");
-                    path[t].subList[i].innerText = "Ç×°ø (" +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "ºĞ)";
+                    path[t].subList[i].innerText = "í•­ê³µ (" +
+                        result["path"][t]["subPath"][i]["sectionTime"] + "ë¶„)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
                     path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
@@ -411,16 +411,16 @@ function setPathList(result) {
 
 function onClick(data, path) {
     var coords = [[startx, starty], [endx, endy]];
-    //¸¶Ä¿ ¹× Æú¸®¶óÀÎ ÃÊ±âÈ­
+    //ë§ˆì»¤ ë° í´ë¦¬ë¼ì¸ ì´ˆê¸°í™”
     deleteMarkers();
     deletePolylines();
-    if (data["result"]["searchType"] == 0) //µµ½Ã ³» °æ·Î
-        //³ë¼±±×·¡ÇÈ µ¥ÀÌÅÍ È£Ãâ
+    if (data["result"]["searchType"] == 0) //ë„ì‹œ ë‚´ ê²½ë¡œ
+        //ë…¸ì„ ê·¸ë˜í”½ ë°ì´í„° í˜¸ì¶œ
         callMapObjApiAJAX(path.info.mapObj);
     //walkPath(path["subPath"]);
-    else { //µµ½Ã °£ °æ·Î
-        drawTmapMarker(startx, starty, "r", "s");			// Ãâ¹ßÁö ¸¶Ä¿ Ç¥½Ã
-        drawTmapMarker(endx, endy, "r", "e");				// µµÂøÁö ¸¶Ä¿ Ç¥½Ã
+    else { //ë„ì‹œ ê°„ ê²½ë¡œ
+        drawTmapMarker(startx, starty, "r", "s");			// ì¶œë°œì§€ ë§ˆì»¤ í‘œì‹œ
+        drawTmapMarker(endx, endy, "r", "e");				// ë„ì°©ì§€ ë§ˆì»¤ í‘œì‹œ
         for (var i = 0; i < path["subPath"].length; i++) {
             coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
             coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
