@@ -5,6 +5,18 @@ document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
 '<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">');
 
+//현성
+var currentLocation=[];
+
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (pos) {
+		currentLocation[0] = pos.coords.latitude;
+		currentLocation[1] = pos.coords.longitude;
+		localStorage.setItem('a',currentLocation[0]);
+		localStorage.setItem('b',currentLocation[1]);
+	});
+}
+
 function header(){
   document.write(
     '<header>'+
