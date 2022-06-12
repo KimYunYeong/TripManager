@@ -1,8 +1,19 @@
+.title {
+	font-weight: bold;
+	font-size: 30px;
+}
+
+body{
+  background-color: #D3EBCD;
+}
+
+*{
+  font-family: 'Nanum Pen Script', cursive;
+}
 
 #main{
   background-color: whitesmoke;
   width: 80%;
-  margin: auto;
   text-align: center;
   border-radius: 20px;
 }
@@ -12,6 +23,7 @@ p{
 }
 
 #qna {
+  display: none;
 }
 
 .qBox {
@@ -19,8 +31,7 @@ p{
   text-align: center;
   border-radius: 20px;
   font-size: 24px;
-  width: 80%;
-  margin: auto;
+  width: 80%
 }
 
 .answerList {
@@ -30,7 +41,6 @@ p{
   width: 80%;
   border: 0px;
   font-size: 20px;
-  margin: auto;
 }
 
 .answerList:hover, .answerList:focus {
@@ -43,7 +53,6 @@ p{
   width: 80%;
   background-color: white;
   border-radius: 20px;
-  margin: auto;
 }
 
 .statusBar {
@@ -62,6 +71,25 @@ p{
   /* IE6-9 */
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-webkit-keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 
 .fadeIn{
   animation: fadeIn;
@@ -72,15 +100,12 @@ p{
   animation: fadeOut;
   animation-duration: 0.5s;
 }
-
 #result{
   display: none;
   background-color: whitesmoke;
   width: 80%;
   text-align: center;
   border-radius: 20px;
-  margin: auto;
-  margin: auto;
 }
 
 #shareResult{

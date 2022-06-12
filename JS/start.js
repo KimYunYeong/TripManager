@@ -18,7 +18,7 @@ function setResult(){
 
   var resultImg = document.createElement('img');
   const imgDiv = document.querySelector('#resultImg');
-  var imgURL = 'img/image-' + point + '.png';
+  var imgURL = 'media/image-' + point + '.jpg';
   resultImg.src = imgURL;
   resultImg.alt = point;
   resultImg.classList.add('img-fluid');
@@ -90,6 +90,21 @@ function goNext(qIdx){
 }
 
 function begin(){
+  main.style.WebkitAnimation = "fadeOut 1s";
+  main.style.animation = "fadeOut 1s";
+  setTimeout(() => {
+    qna.style.WebkitAnimation = "fadeIn 1s";
+    qna.style.animation = "fadeIn 1s";
+    setTimeout(() => {
+      main.style.display = "none";
+      qna.style.display = "block"
+    }, 450)
+    let qIdx = 0;
+    goNext(qIdx);
+  }, 450);
+}
+
+function end(){
   main.style.WebkitAnimation = "fadeOut 1s";
   main.style.animation = "fadeOut 1s";
   setTimeout(() => {
