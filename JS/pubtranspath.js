@@ -284,7 +284,8 @@ function setPathList(result) {
         path[t] = {
             label: document.createElement('label'),
             radio: document.createElement('input'),
-            title: document.createElement('h3'),
+            detail: document.createElement('detail'),
+            title: document.createElement('summary'),
             list: document.createElement('ul'),
             subList: [],
             subPath: []
@@ -298,8 +299,9 @@ function setPathList(result) {
         path[t].radio.setAttribute("name", "path");
         path[t].radio.setAttribute("value", t);
         path[t].radio.setAttribute("onclick", "onClick(data, data['result']['path'][this.value]);");
-        path[t].label.appendChild(path[t].title);
-        path[t].label.appendChild(path[t].list);
+        path[t].label.appendChild(path[t].detail);
+        path[t].detail.appendChild(path[t].title);
+        path[t].detail.appendChild(path[t].list);
         switch (result["path"][t]["pathType"]) {
             case 1:
                 path[t].title.innerText = "지하철";
