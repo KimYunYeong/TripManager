@@ -279,6 +279,7 @@ function deletePolylines() {
 function setPathList(result) {
     var pathList = document.getElementById('path_list');
     var path = [];
+    pathList.innerHTML = "";
 
     for (var t = 0; t < result["path"].length; t++) {
         path[t] = {
@@ -291,6 +292,7 @@ function setPathList(result) {
             subPath: []
         };
 
+        pathList.setAttribute("line-height", "150%");
         if (t == 0)
             path[t].radio.checked = true;
         pathList.appendChild(path[t].label);
