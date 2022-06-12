@@ -2,6 +2,7 @@
 import {drawStop} from './map.js';
 import {makeViaPoint} from './map.js';
 
+
 var dinput = document.querySelector('.detail_input');
 var dinput3 = document.querySelector(".detail_input3");
 var dinput2 = document.querySelector(".detail_input2");
@@ -12,7 +13,6 @@ var add = document.querySelector(".AddTravel");
 var add1 = document.querySelector("#trip");
 var i=1;
 
-
 add.addEventListener('click',function(){
         recommendapi(dinput.value);
         if(add1.checked==true){
@@ -21,8 +21,6 @@ add.addEventListener('click',function(){
             i++;       
         }
 });
-
-
 
 dinput.addEventListener('click',function(){       // html의 option선택해서 지역코드(v) 받아오는 기능
     if(document.querySelectorAll(".detail_input3 option").length>0){
@@ -37,7 +35,6 @@ dinput.addEventListener('click',function(){       // html의 option선택해서 
         doption.innerHTML ="도시 선택";
         doption.setAttribute('value',"");
     }
-
     var v = dinput.value;
     inputapi(v); 
     if(v != 0){
@@ -45,7 +42,6 @@ dinput.addEventListener('click',function(){       // html의 option선택해서 
     }
 
 });
-
 
 function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
     var xhr = new XMLHttpRequest();
@@ -75,7 +71,6 @@ function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이
     xhr.send('');
 }
 
-
 function searchlink(){
     document.querySelector(".search_btn").setAttribute('onclick',"location.href='./keyword.html" + "?" +document.querySelector(".search_input").value + "'");
 }
@@ -102,8 +97,6 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
             var x = xml.getElementsByTagName('mapx');
             var y = xml.getElementsByTagName('mapy');
             document.querySelector(".background_overlay").style.backgroundImage = "url(" + image[0].innerHTML + ")";
-            document.querySelector(".recommend_box img").setAttribute("src",image[0].innerHTML);
-            document.querySelector(".recommend_name").textContent = names[0].textContent;
             for(var i =0; i<i+1;){
                 var j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
                 document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
@@ -119,3 +112,4 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
     
     xhr.send('');
 }
+
