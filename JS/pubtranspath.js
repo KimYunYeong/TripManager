@@ -30,6 +30,7 @@
     searchPubTransPathAJAX(startx, starty, endx, endy);
 <script>
 */
+
 var subwayLineColor = {
     1: '#263c96', //수도권 1호선
     2: '#3cb44a', //수도권 2호선
