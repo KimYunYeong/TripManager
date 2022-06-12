@@ -1,4 +1,5 @@
-/* Test like next code *
+/* Test like next comment */
+/*
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"><script>
 <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"><script>
 <script src="./JS/walkpath.js"><script>
