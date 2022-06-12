@@ -2,6 +2,10 @@
 export {drawStop};
 export {makeViaPoint};
 
+
+const data = JSON.parse(localStorage.getItem('a'));
+const data1 = JSON.parse(localStorage.getItem('b'));
+
 // 경유지 별 마크 설정하여 자동차 길찾기				
 var map;
 var marker, marker_s, marker_e,marker_p, waypoint;
@@ -86,8 +90,8 @@ $("#btn_select").click(function () {
 	headers["Content-Type"] = "application/json";
 	var param = JSON.stringify({
 		"startName": "출발지",
-		"startX": "" + currentLocation[1],
-		"startY": "" + currentLocation[0],
+		"startX": "" + data,
+		"startY": "" + data1,
 		"startTime": "201708081103",
 		"endName": "도착지",
 		"endX": ""+endY, //도착지 정보 수정필요!!
