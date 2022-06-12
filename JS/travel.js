@@ -96,7 +96,6 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
             var image = xml.getElementsByTagName('firstimage');
             var x = xml.getElementsByTagName('mapx');
             var y = xml.getElementsByTagName('mapy');
-            document.querySelector(".background_overlay").style.backgroundImage = "url(" + image[0].innerHTML + ")";
             for(var i =0; i<i+1;){
                 var j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
                 document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
