@@ -42,17 +42,6 @@ function drawStop(x1,y1,i)
 
 }
 
-function drawEnd(x1,y1)
-{
-		// 도착
-		marker_e = new Tmapv2.Marker({
-			position: new Tmapv2.LatLng(37.414382, 127.142571),
-			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-			iconSize: new Tmapv2.Size(24, 38),
-			map: map
-		});
-		resultMarkerArr.push(marker_e);
-}
 var currentLocation = [];
 function initTmap() {
 	resultMarkerArr = [];
