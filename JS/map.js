@@ -47,27 +47,27 @@ function setStartPoint(e){
 	startY=start._lng;
 }
 
-function setEndPoint(e){
-	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
-	lonlat = e.latLng;
-	//Marker 객체 생성.
-	marker = new Tmapv2.Marker({
-		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-		map: map //Marker가 표시될 Map 설정.
-	});
-	markers2.push(marker);
-	end = marker.getPosition();
-	endX=end._lat;
-	endY=end._lng;
-}
+// function setEndPoint(e){
+// 	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
+// 	lonlat = e.latLng;
+// 	//Marker 객체 생성.
+// 	marker = new Tmapv2.Marker({
+// 		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+// 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+// 		map: map //Marker가 표시될 Map 설정.
+// 	});
+// 	markers2.push(marker);
+// 	end = marker.getPosition();
+// 	endX=end._lat;
+// 	endY=end._lng;
+// }
 
-function removeMarkers2() {
-	for (var i = 0; i < markers2.length; i++) {
-		markers2[i].setMap(null);
-	}
-	markers2 = [];
-}
+// function removeMarkers2() {
+// 	for (var i = 0; i < markers2.length; i++) {
+// 		markers2[i].setMap(null);
+// 	}
+// 	markers2 = [];
+// }
 // 경로 객체 만들어서 리스트에 추가하는 코드
 function makeViaPoint(latitude,longitude,i)
 {
