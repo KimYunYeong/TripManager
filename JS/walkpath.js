@@ -4,7 +4,7 @@ var drawInfoArr = [];
 var walkPolylineArr = [];
 
 function searchWalkPath(map, startx, starty, endx, endy) {
-    // ����Ž�� API ������û
+    // 경로탐색 API 사용요청
     $
         .ajax({
             method: "POST",
@@ -18,26 +18,26 @@ function searchWalkPath(map, startx, starty, endx, endy) {
                 "endY": "" + endy,
                 "reqCoordType": "WGS84GEO",
                 "resCoordType": "EPSG3857",
-                "startName": "������",
-                "endName": "������"
+                "startName": "출발지",
+                "endName": "도착지"
             },
             success: function (response) {
                 var resultData = response.features;
                 /*
-                //���� ����
-                var tDistance = "�� �Ÿ� : "
+                //결과 출력
+                var tDistance = "총 거리 : "
                     + ((resultData[0].properties.totalDistance) / 1000)
                         .toFixed(1) + "km,";
-                var tTime = " �� �ð� : "
+                var tTime = " 총 시간 : "
                     + ((resultData[0].properties.totalTime) / 60)
-                        .toFixed(0) + "��";
-
+                        .toFixed(0) + "분";
+ 
                 $("#result").text(tDistance + tTime);
                 */
 
                 drawInfoArr = [];
 
-                for (var i in resultData) { //for�� [S]
+                for (var i in resultData) { //for문 [S]
                     var geometry = resultData[i].geometry;
                     var properties = resultData[i].properties;
                     var polyline_;
@@ -45,21 +45,21 @@ function searchWalkPath(map, startx, starty, endx, endy) {
 
                     if (geometry.type == "LineString") {
                         for (var j in geometry.coordinates) {
-                            // ���ε��� ������(����)���� ����Ʈ ��ü�� ��ȯ
+                            // 경로들의 결과값(구간)들을 포인트 객체로 변환
                             var latlng = new Tmapv2.Point(
                                 geometry.coordinates[j][0],
                                 geometry.coordinates[j][1]);
-                            // ����Ʈ ��ü�� �޾� ��ǥ������ ��ȯ
+                            // 포인트 객체를 받아 좌표값으로 변환
                             var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-                            // ����Ʈ��ü�� ������ ��ǥ�� ��ȯ ��ü�� ����
+                            // 포인트객체의 정보로 좌표값 변환 객체로 저장
                             var convertChange = new Tmapv2.LatLng(
                                 convertPoint._lat,
                                 convertPoint._lng);
-                            // �迭�� ����
+                            // 배열에 담기
                             drawInfoArr.push(convertChange);
                         }
                     }
-                }//for�� [E]
+                }//for문 [E]
                 drawWalkPath(map, drawInfoArr);
             },
             error: function (request, status, error) {
