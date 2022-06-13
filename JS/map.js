@@ -106,9 +106,6 @@ function drawStop(x1,y1,i)
 	resultMarkerArr.push(marker);
 }
 
-
-window.initTmap = initTmap;
-
 function initTmap() {
 	resultMarkerArr = [];
 	// 1. 지도 띄우기
@@ -126,6 +123,9 @@ function initTmap() {
 
 	 
 }
+
+
+window.initTmap = initTmap;
 
 //btn_select버튼을 누를시 경로탐색 API 사용요청
 var routeLayer;
