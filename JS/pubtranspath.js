@@ -14,20 +14,20 @@
     var map = new Tmapv2.Map('map', mapOptions);
 
     // 부산 성모병원
-    var startx = 129.10931110382123;
-    var starty = 35.110455394312034;
+    var startX = 129.10931110382123;
+    var startY = 35.110455394312034;
     // 해운대 센텀 두산위브 아파트
-    var endx = 129.1397666931156;
-    var endy = 35.173831704236115;
+    var endX = 129.1397666931156;
+    var endY = 35.173831704236115;
 
     //부산 메가마트 문현점
-    var startx = 129.07257986068768;
-    var starty = 35.13775979703992;
+    var startX = 129.07257986068768;
+    var startY = 35.13775979703992;
     //광주 북구 종합운동장
-    var endx = 126.85687473842108;
-    var endy = 35.1972579922849;
+    var endX = 126.85687473842108;
+    var endY = 35.1972579922849;
     //길찾기 API 호출
-    searchPubTransPathAJAX(startx, starty, endx, endy);
+    searchPubTransPathAJAX(startX, startY, endX, endY);
 <script>
 */
 
@@ -90,10 +90,10 @@ var markerArr = [];
 var polylineArr = [];
 var data;
 var pathList;
-function searchPubTransPathAJAX(form, startx, starty, endx, endy) {
+function searchPubTransPathAJAX(form, startX, startY, endX, endY) {
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
-    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
+    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startX + "&SY=" + startY + "&EX=" + endX + "&EY=" + endY + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
@@ -104,9 +104,9 @@ function searchPubTransPathAJAX(form, startx, starty, endx, endy) {
                 //노선그래픽 데이터 호출
                 callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
             else { //도시 간 경로
-                var coords = [[startx, starty], [endx, endy]];
-                drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
-                drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
+                var coords = [[startX, startY], [endX, endY]];
+                drawTmapMarker(startX, startY, "r", "s"); //출발지 마커 표시
+                drawTmapMarker(endX, endY, "r", "e"); //도착지 마커 표시
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
@@ -116,7 +116,7 @@ function searchPubTransPathAJAX(form, startx, starty, endx, endy) {
                 setTmapBoundary(coords);
             }
             //var subPath = data["result"]["path"][0]["subPath"];
-            //walkPath(subPath, startx, starty, endx, endy);
+            //walkPath(subPath, startX, startY, endX, endY);
             //노선 데이터 출력
             setPathList(form, data["result"]);
         }
@@ -129,21 +129,21 @@ function walkPath(subPath) {
         if (subPath[i]["trafficType"] == 3) {
             if (i == 0) {
                 if (subPath.length > 2)
-                    searchWalkPath(map, startx, starty, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
+                    searchWalkPath(map, startX, startY, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
                 else
-                    searchWalkPath(map, startx, starty, endx, endy);
+                    searchWalkPath(map, startX, startY, endX, endY);
             }
             else if (i < subPath.length - 1) {
                 if (subPath.length > 2)
                     searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
                 else
-                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
+                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endX, endY);
             }
             else {
                 if (subPath.length > 2)
-                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
+                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endX, endY);
                 else
-                    searchWalkPath(map, startx, starty, endx, endy);
+                    searchWalkPath(map, startX, startY, endX, endY);
             }
         }
     }
@@ -158,8 +158,8 @@ function callMapObjApiAJAX(mabObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
-            drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
-            drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
+            drawTmapMarker(startX, startY, "r", "s"); //출발지 마커 표시
+            drawTmapMarker(endX, endY, "r", "e"); //도착지 마커 표시
             drawTmapPolyLine(resultJsonData); //노선그래픽데이터 지도위 표시
             //boundary 데이터가 있을경우, 해당 boundary로 지도이동
             if (resultJsonData.result.boundary) {
@@ -418,7 +418,7 @@ function setPathList(form, result) {
 }
 
 function onClick(data, path) {
-    var coords = [[startx, starty], [endx, endy]];
+    var coords = [[startX, startY], [endX, endY]];
     //마커 및 폴리라인 초기화
     deleteMarkers();
     deletePolylines();
@@ -427,8 +427,8 @@ function onClick(data, path) {
         callMapObjApiAJAX(path.info.mapObj);
     //walkPath(path["subPath"]);
     else { //도시 간 경로
-        drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
-        drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
+        drawTmapMarker(startX, startY, "r", "s");			// 출발지 마커 표시
+        drawTmapMarker(endX, endY, "r", "e");				// 도착지 마커 표시
         for (var i = 0; i < path["subPath"].length; i++) {
             coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
             coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
