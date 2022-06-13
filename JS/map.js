@@ -34,6 +34,7 @@ $("#deleteMarker").click(function(){
 var pointCheck = false;
 function setPoint(e){
 	if(pointCheck == false){
+		pointCheck = true;
 		// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
 		lonlat = e.latLng;
 		//Marker 객체 생성.
