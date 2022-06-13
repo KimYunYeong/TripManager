@@ -10,7 +10,7 @@
 	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript"
 	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <script type="module" src="./JS/map.js"></script>
+    <script type="module" src="./map.js"></script>
    
     
 </head>
@@ -29,15 +29,7 @@
             <p id="result"></p>
     <!-- 추천받은 관광지 출력-->
     <article class="search_page">
-    <div id="background_overlay"></div>
-    <div class="recommend_box">
-        <div class="recommend_place">
-            <img>
-            <div class="recommend_image">
-                <h1>추천 여행코스</h1>
-                <h2 class="recommend_name"></h2>
-            </div>
-        </div>
+
         <div class="search_box">
             <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
                 <span class="detail_input_box">
@@ -74,9 +66,20 @@
                 <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
                 <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
                 <p>
+        <div id="background_overlay"></div>
+                <div class="recommend_image">
+                    <h1>추천 여행코스</h1>
+                    <h2 class="recommend_name"></h2>
+                </div>
+            </div>
                 <div class="area_recommend">
                     <strong>추천 여행지</strong></br>
-                    <input type='checkbox' name='trip' id="trip"><span></span><h3></h3>
+                    <input type='checkbox' name='trip' id="trip"><span></span>
+                    <div class="recommend_box">
+                        <div class="recommend_place">
+                            <img>
+                        </div>
+                    </div>
                 </div>  
                 </p>
                 -->
@@ -84,7 +87,7 @@
 
     </div>
 </article>
-<script type="module" src="./JS/travel.js"></script>
+<script type="module" src="./travel.js"></script>
 
 </body>
 </html>
