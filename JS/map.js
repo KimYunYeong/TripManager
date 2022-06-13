@@ -7,39 +7,41 @@ export {endX};
 export {endY};
 
 
-// 경유지 별 마크 설정하여 자동차 길찾기				
-var map;
-var marker, marker_s, marker_e,marker_p, waypoint;
-var startX, startY;
-var resultMarkerArr = [];
-var viaPointsList=[];
-var endPointsList=[];
-//경로그림정보
-var drawInfoArr = [];
-var resultInfoArr = [];
-var endX;
-var endY;
-var lonlat;
-var start;
-var end;
-var start;
-var markercheck=false;
-var startMarker;
-var endMarker;
+// export를 하여 map.js의 메소드를 다른 js파일에서 사용할수있도록 해줌
+export {drawStop};
+export {makeViaPoint};
+
+//전역 변수
+
+var startX, startY; //시작 x,y좌표담을 변수
+var endX, endY; // 끝 x,y좌표를 담을 변수
+var startMarker; //시작 마커 변수
+var endMarker; // 끝 마커 변수 			
+var map; // tmap정보를 담을 map 객체
+var marker,marker_p; //각 마커들의 정보들을 담을 marker 객체
+var start,end; //시작 끝 좌표를 정보를 포함할 객체
+var lonlat;  // 선택한 위치의 마커의 위치의 정보를 담을 객체
+var resultMarkerArr = []; //경로탐색시 마커를 담을 리스트
+var viaPointsList=[]; // 경유지 정보를 담을 리스트
+var drawInfoArr = [];  
+var resultInfoArr = []; // 경유지 마커를 담을 리스트
+var markercheck=false; // 마커가 잘 그려졌는지 체크할때 사용
 
 
+//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
 $("#deleteStartMarker").click(function(){
    startMarker.setMap(null);
    startMarker = null;
 });
 
+//id값이 deleteEndMarker에 해당하는 버튼 클릭시 end마커를 지우는 이벤트 실행
 $("#deleteEndMarker").click(function(){
    endMarker.setMap(null);
    endMarker = null;
 });
 
+//출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
 function setPoint(e){
-   // 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
    lonlat = e.latLng;
    if (!markercheck) {
       marker = new Tmapv2.Marker({
@@ -47,24 +49,29 @@ function setPoint(e){
          icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
          map: map, //Marker가 표시될 Map 설정.
       });
+
       if (startMarker) {
          startMarker.setMap(null);
       }
+
       startMarker = marker;
       start = marker.getPosition();
       startX=start._lat;
       startY=start._lng;
       markercheck = true;
    }
+   
    else {
       marker = new Tmapv2.Marker({
          position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
          icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
          map: map //Marker가 표시될 Map 설정.
       });
+
       if (endMarker) {
          endMarker.setMap(null);
       }
+
       endMarker = marker;
       end = marker.getPosition();
       endX=end._lat;
@@ -73,7 +80,7 @@ function setPoint(e){
    }
 }
 
-// 경로 객체 만들어서 리스트에 추가하는 코드
+// travel.js의 id값이 addTravel인 버튼의 메소드와 연동해서 사용한다. 경로 객체 만들어서 리스트에 추가하는 코드
 function makeViaPoint(latitude,longitude,i)
 {
 		var viaPoints=
@@ -87,7 +94,7 @@ function makeViaPoint(latitude,longitude,i)
 }
 
 
-//경유지 그리는 함수
+//매개변수로 위도,경도를 받아와 경유지 그리는 지도에 함수
 function drawStop(x1,y1,i)
 {
 	marker = new Tmapv2.Marker({
@@ -97,9 +104,10 @@ function drawStop(x1,y1,i)
 		map: map
 	});
 	resultMarkerArr.push(marker);
-
 }
 
+
+window.initTmap = initTmap;
 
 function initTmap() {
 	resultMarkerArr = [];
@@ -119,27 +127,29 @@ function initTmap() {
 	 
 }
 
-//4. 경로탐색 API 사용요청
+//btn_select버튼을 누를시 경로탐색 API 사용요청
 var routeLayer;
 $("#btn_select").click(function () {
 	var searchOption = $("#selectLevel").val();
-
 	var headers = {};
 	headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
 	headers["Content-Type"] = "application/json";
+
+	//시작,경유지,끝점에 대한 정보를 json형식으로 만들어 param 변수에 넣어줌.
 	var param = JSON.stringify({
 		"startName": "출발지",
 		"startX": "" + startY,
 		"startY": "" + startX,
 		"startTime": "201708081103",
 		"endName": "도착지",
-		"endX": ""+endY, //도착지 정보 수정필요!!
+		"endX": ""+endY,
 		"endY": ""+endX,
 		"viaPoints": viaPointsList,
 		"reqCoordType": "WGS84GEO",
 		"resCoordType": "EPSG3857",
 		"searchOption": searchOption
 	});
+
 	$.ajax({
 		method: "POST",
 		url: "https://apis.openapi.sk.com/tmap/routes/routeOptimization10?version=1&format=json",//경유지 최적화 api 사용
@@ -225,15 +235,10 @@ $("#btn_select").click(function () {
 				}
 			}
 		},
-		error: function (request, status, error) {
+		error: function (request, status, error) { //에러발생시 콘솔화면에 해당 문구 출력
 			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 		}
 	});
 });
 
-window.initTmap = initTmap;
 
-function addComma(num) {
-	var regexp = /\B(?=(\d{3})+(?!\d))/g;
-	return num.toString().replace(regexp, ',');
-}
