@@ -1,8 +1,8 @@
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
 
 //map.js의 drawstop,makeViaPoint 메소드 를 사용하기 위해 import받음
-import {drawStop} from './JS/map.js';
-import {makeViaPoint} from './JS/map.js';
+import {drawStop} from './map.js';
+import {makeViaPoint} from './map.js';
 
 //전역 변수 
 
