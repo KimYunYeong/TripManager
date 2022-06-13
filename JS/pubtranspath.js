@@ -6,6 +6,7 @@
 <div id="map" style="width:100%;height:400px;"></div>
 <form id="path_list"></form>
 <script>
+
     var mapOptions = {
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
@@ -30,7 +31,10 @@
     searchPubTransPathAJAX(startX, startY, endX, endY);
 <script>
 */
-
+import {startX} from "./map.js";
+import {startY} from "./map.js";
+import {endX} from "./map.js";
+import {endY} from "./map.js";
 var subwayLineColor = {
     1: '#263c96', //수도권 1호선
     2: '#3cb44a', //수도권 2호선
