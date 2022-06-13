@@ -11,7 +11,16 @@
     <script type="text/javascript"
 	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
     <script type="module" src="./JS/map.js"></script>
-   
+   <script type="module">
+        import {startX} from "./map.js";
+        import {startY} from "./map.js";
+        import {endX} from "./map.js";
+        import {endY} from "./map.js";
+        $("#pubbutton").click(function(){
+            var form = document.getElementById("pub");
+            searchPubTransPathAJAX(form, startX, startY, endX, endY);
+        });
+    </script>
     
 </head>
 <body onload="initTmap()" >    <!-- 맵 생성 실행 -->
@@ -87,6 +96,7 @@
 
     </div>
 </article>
+<button id="pubbutton">대중교통</button>
 <form id="pub"></form>
 <script type="module" src="./JS/travel.js"></script>
 <script type="module" src="./JS/pubtranspath.js"></script>
