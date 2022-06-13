@@ -89,7 +89,8 @@ var busRouteColor = {
 var markerArr = [];
 var polylineArr = [];
 var data;
-function searchPubTransPathAJAX(startx, starty, endx, endy) {
+var pathList;
+function searchPubTransPathAJAX(form, startx, starty, endx, endy) {
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
@@ -117,7 +118,7 @@ function searchPubTransPathAJAX(startx, starty, endx, endy) {
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
             //노선 데이터 출력
-            setPathList(data["result"]);
+            setPathList(form, data["result"]);
         }
     }
 }
@@ -276,9 +277,9 @@ function deletePolylines() {
 }
 
 //경로 목록 출력 함수
-function setPathList(result) {
-    var pathList = document.getElementById('path_list');
+function setPathList(form, result) {
     var path = [];
+    pathList = form;
     pathList.innerHTML = "";
 
     for (var t = 0; t < result["path"].length; t++) {
