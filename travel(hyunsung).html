@@ -10,7 +10,7 @@
 	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript"
 	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <script type="module" src="./JS/map.js"></script>
+    <script type="module" src="./map.js"></script>
    
     
 </head>
@@ -27,12 +27,15 @@
 		<div id="map_wrap" class="map_wrap">
 			<div id="map_div"></div>
             <p id="result"></p>
-    <!-- 추천받은 관광지 출력-->
-    <article class="search_page">
 
+    <article class="search_page">
         <div class="search_box">
             <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
-                <span class="detail_input_box">
+            <h3>출발지와 도착지를 지도를 클릭하여 설정해주세요.</h3>
+            <h3>그 후 원하시는 지역을 선택하여 관광지를 살펴본 후 여행 코스를 알아보세요</h3>
+            <h4>선택한 관광지</h4>   
+            <div id="selectTravel"></div> 
+            <span class="detail_input_box">
                     <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
                         <option value="0">지역</option>
                         <option value="1">서울</option>
@@ -56,30 +59,18 @@
                     <select class="detail_input3" name="목록2"> 
                         <option>도시 선택</option>                
                     </select>
-                    <button class="search_btn2">LET'S GO</button>
                 </span>
-                
-                <span class="search_input_box">
-                    <input type ="text" class="search_input"  placeholder="키워드를 입력하고 검색을 눌러주세요">
-                    <button class="search_btn">LET'S GO</button>
-                </span>  
-                <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
-                <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
-                <p>
-        <div id="background_overlay"></div>
-                <div class="recommend_image">
-                    <h1>추천 여행코스</h1>
-                    <h2 class="recommend_name"></h2>
-                </div>
             </div>
                 <div class="area_recommend">
-                    <strong>추천 여행지</strong></br>
+                    <h2>추천 여행지</h2>
                     <input type='checkbox' name='trip' id="trip"><span></span>
                     <div class="recommend_box">
                         <div class="recommend_place">
                             <img>
                         </div>
                     </div>
+                    <h3></h3>
+                    <div id="tel"></div>
                 </div>  
                 </p>
                 -->
@@ -87,6 +78,7 @@
 
     </div>
 </article>
+
 <button id="pubbutton">대중교통</button>
 <form id="pub"></form>
 <script type="module" src="./JS/travel.js"></script>
