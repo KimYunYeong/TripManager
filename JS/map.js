@@ -3,7 +3,7 @@ export {drawStop};
 export {makeViaPoint};
 
 
-// 경유지 별 마크 설정하여 자동차 길찾기				
+// 경유지 별 마크 설정하여 자동차 길찾기
 var map;
 var marker, marker_s, marker_e,marker_p, waypoint;
 var startX, startY;
@@ -31,36 +31,42 @@ $("#deleteMarker").click(function(){
 	markers = [];
 });
 
-function setStartPoint(e){
+var pointCheck = false;
+function setPoint(e){
+	if(pointCheck == false){
+		// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
+		lonlat = e.latLng;
+		//Marker 객체 생성.
+		marker = new Tmapv2.Marker({
+
+			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+			map: map, //Marker가 표시될 Map 설정.
+		});
+		markers.push(marker);
+		start = marker.getPosition();
+		startX=start._lat;
+		startY=start._lng;
+	}
+	else{
+		setEndPoint();
+	}
+}
+
+function setEndPoint(e){
 	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
 	lonlat = e.latLng;
 	//Marker 객체 생성.
 	marker = new Tmapv2.Marker({
-		
 		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-		map: map, //Marker가 표시될 Map 설정.
+		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+		map: map //Marker가 표시될 Map 설정.
 	});
-	markers.push(marker);
-	start = marker.getPosition();
-	startX=start._lat;
-	startY=start._lng;
+	markers2.push(marker);
+	end = marker.getPosition();
+	endX=end._lat;
+	endY=end._lng;
 }
-
-// function setEndPoint(e){
-// 	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
-// 	lonlat = e.latLng;
-// 	//Marker 객체 생성.
-// 	marker = new Tmapv2.Marker({
-// 		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-// 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-// 		map: map //Marker가 표시될 Map 설정.
-// 	});
-// 	markers2.push(marker);
-// 	end = marker.getPosition();
-// 	endX=end._lat;
-// 	endY=end._lng;
-// }
 
 // function removeMarkers2() {
 // 	for (var i = 0; i < markers2.length; i++) {
@@ -112,10 +118,9 @@ function initTmap() {
 
 	});
 
-	map.addListener("click", setStartPoint);
-	map.addListener("click", setEndPoint);
+	map.addListener("click", setPoint);
 	 //map 클릭 이벤트를 등록합니다.
-	 
+
 }
 
 //4. 경로탐색 API 사용요청
@@ -175,7 +180,7 @@ $("#btn_select").click(function () {
 
 				if (geometry.type == "LineString") {
 					for (var j in geometry.coordinates) {
-						// 경로들의 결과값(구간)들을 포인트 객체로 변환 
+						// 경로들의 결과값(구간)들을 포인트 객체로 변환
 						var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 						// 포인트 객체를 받아 좌표값으로 변환
 						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
@@ -208,7 +213,7 @@ $("#btn_select").click(function () {
 						size = new Tmapv2.Size(8, 8);
 					}
 
-					// 경로들의 결과값들을 포인트 객체로 변환 
+					// 경로들의 결과값들을 포인트 객체로 변환
 					var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
 					// 포인트 객체를 받아 좌표값으로 다시 변환
 					var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
