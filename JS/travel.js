@@ -3,6 +3,7 @@ import {drawStop} from './map.js';
 import {makeViaPoint} from './map.js';
 
 
+
 var dinput = document.querySelector('.detail_input');
 var dinput3 = document.querySelector(".detail_input3");
 var dinput2 = document.querySelector(".detail_input2");
@@ -40,6 +41,7 @@ dinput.addEventListener('click',function(){       // html의 option선택해서 
     if(v != 0){
         recommendapi(v);
     }
+
 });
 
 function inputapi(v){ //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
@@ -75,7 +77,6 @@ function searchlink(){
 }
 
 document.querySelector(".search_input").addEventListener("keyup",function(){searchlink();});
-
 function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의 랜덤한 관광지를 html에 출력해주는 기능
     var xhr = new XMLHttpRequest();
     var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
@@ -97,8 +98,9 @@ function recommendapi(a){ // inputapi(v) 함수에 의해 받은 해당지역의
             var y = xml.getElementsByTagName('mapy');
             for(var i =0; i<i+1;){
                 var j=Math.floor(Math.random()*100+i); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
+                document.querySelector("#background_overlay").style.backgroundImage = "url(" + image[j].innerHTML + ")";
+                document.querySelector(".recommend_box img").setAttribute("src",image[j].innerHTML);
                 document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
-                document.querySelectorAll(".area_recommend h3")[i].textContent = "x좌표 : "+ x[j].textContent+" y좌표 : " + y[j].textContent; //해당관광지 위도 경도 출력
                 longitude=x[j].textContent;
                 latitude=y[j].textContent;
                 i++;
