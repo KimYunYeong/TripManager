@@ -70,8 +70,6 @@ function setPoint(e){
       endX=end._lat;
       endY=end._lng;
       markercheck = false;
-	var form = document.getElementById("pubtranspath");
-	searchPubTransPathAJAX(form, startY, startX, endY, endX);
    }
 }
 
