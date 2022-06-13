@@ -3,12 +3,10 @@ export {drawStop};
 export {makeViaPoint};
 
 
-const data = JSON.parse(localStorage.getItem('a'));
-const data1 = JSON.parse(localStorage.getItem('b'));
-
 // 경유지 별 마크 설정하여 자동차 길찾기				
 var map;
 var marker, marker_s, marker_e,marker_p, waypoint;
+var startX, startY;
 var resultMarkerArr = [];
 var viaPointsList=[];
 var endPointsList=[];
@@ -17,6 +15,59 @@ var drawInfoArr = [];
 var resultInfoArr = [];
 var endX;
 var endY;
+var lonlat;
+var start;
+var end;
+var start;
+var markers = [];
+var markers2 = [];
+var markerArr = [];
+
+
+$("#deleteMarker").click(function(){
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(null);
+	}
+	markers = [];
+});
+
+function setStartPoint(e){
+	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
+	lonlat = e.latLng;
+	//Marker 객체 생성.
+	marker = new Tmapv2.Marker({
+		
+		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+		map: map, //Marker가 표시될 Map 설정.
+	});
+	markers.push(marker);
+	start = marker.getPosition();
+	startX=start._lat;
+	startY=start._lng;
+}
+
+function setEndPoint(e){
+	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
+	lonlat = e.latLng;
+	//Marker 객체 생성.
+	marker = new Tmapv2.Marker({
+		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+		map: map //Marker가 표시될 Map 설정.
+	});
+	markers2.push(marker);
+	end = marker.getPosition();
+	endX=end._lat;
+	endY=end._lng;
+}
+
+function removeMarkers2() {
+	for (var i = 0; i < markers2.length; i++) {
+		markers2[i].setMap(null);
+	}
+	markers2 = [];
+}
 // 경로 객체 만들어서 리스트에 추가하는 코드
 function makeViaPoint(latitude,longitude,i)
 {
@@ -47,7 +98,6 @@ function drawStop(x1,y1,i)
 }
 
 
-var currentLocation = [];
 function initTmap() {
 	resultMarkerArr = [];
 	// 1. 지도 띄우기
@@ -62,22 +112,10 @@ function initTmap() {
 
 	});
 
-	//사용자의 현재 위치 받아오는 코드
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function (pos) {
-			currentLocation[0] = pos.coords.latitude;
-			currentLocation[1] = pos.coords.longitude;
-			map.setCenter(new Tmapv2.LatLng(currentLocation[0], currentLocation[1]));
-			marker_s = new Tmapv2.Marker({
-				position: new Tmapv2.LatLng(currentLocation[0], currentLocation[1]),
-				icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-				iconSize: new Tmapv2.Size(24, 38),
-				map: map
-			});
-			resultMarkerArr.push(marker_s); // 현재 위치를 마커로 표시
-		});
-	}
-
+	map.addListener("click", setStartPoint);
+	map.addListener("click", setEndPoint);
+	 //map 클릭 이벤트를 등록합니다.
+	 
 }
 
 //4. 경로탐색 API 사용요청
@@ -90,8 +128,8 @@ $("#btn_select").click(function () {
 	headers["Content-Type"] = "application/json";
 	var param = JSON.stringify({
 		"startName": "출발지",
-		"startX": "" + data,
-		"startY": "" + data1,
+		"startX": "" + startY,
+		"startY": "" + startX,
 		"startTime": "201708081103",
 		"endName": "도착지",
 		"endX": ""+endY, //도착지 정보 수정필요!!
