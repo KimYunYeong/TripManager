@@ -97,8 +97,8 @@
         import {endX} from "./JS/map.js";
         import {endY} from "./JS/map.js";
 	var p = document.getElementById("pubbutton");
-	p.setAttribute("onclick", "onClick();");
-        function onClick() {
+	p.setAttribute("onclick", "pubOnClick()");
+        function pubOnClick() {
             var form = document.getElementById("pub");
             searchPubTransPathAJAX(form, startX, startY, endX, endY);
         };
