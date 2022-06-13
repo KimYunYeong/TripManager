@@ -6,11 +6,6 @@ export {startY};
 export {endX};
 export {endY};
 
-
-// export를 하여 map.js의 메소드를 다른 js파일에서 사용할수있도록 해줌
-export {drawStop};
-export {makeViaPoint};
-
 //전역 변수
 
 var startX, startY; //시작 x,y좌표담을 변수
@@ -125,7 +120,6 @@ function initTmap() {
 }
 
 
-window.initTmap = initTmap;
 
 //btn_select버튼을 누를시 경로탐색 API 사용요청
 var routeLayer;
@@ -241,4 +235,5 @@ $("#btn_select").click(function () {
 	});
 });
 
+window.initTmap = initTmap;
 
