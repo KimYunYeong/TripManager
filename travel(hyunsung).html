@@ -10,7 +10,7 @@
 	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript"
 	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <script type="module" src="./JS/map.js"></script>
+    <script type="module" src="./map.js"></script>
    
     
 </head>
@@ -22,7 +22,8 @@
 			<option value="3" >교통최적+초보</option>
 		</select>
 		<button id="btn_select">경로탐색 적용하기</button>
-		<button id="deleteMarker">출발지 마커 제거 적용하기</button>
+		<button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
+        <button id="deleteEndMarker">도착지 마커 제거 적용하기</button>
 		<div id="map_wrap" class="map_wrap">
 			<div id="map_div"></div>
             <p id="result"></p>
@@ -83,7 +84,7 @@
 
     </div>
 </article>
-<script type="module" src="./JS/travel.js"></script>
+<script type="module" src="./travel.js"></script>
 
 </body>
 </html>
