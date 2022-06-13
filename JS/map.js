@@ -67,7 +67,7 @@ function setPoint(e){
       endY=end._lng;
       markercheck = false;
 	var form = document.getElementById("pubtranspath");
-	searchPubTransPathAJAX(form, startX, startY, endX, endY);
+	searchPubTransPathAJAX(form, startY, startX, endY, endX);
    }
 }
 
