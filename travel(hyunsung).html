@@ -1,92 +1,89 @@
 <!-- map.js와 travel.js를 사용해 지도와 관광지를 출력해주는 html-->
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <script src="./JS/script.js"></script>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
-    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+    <script 
+	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript"
+	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
     <script type="module" src="./JS/map.js"></script>
-  </head>
-  <body onload="initTmap()" >    <!-- 맵 생성 실행 -->
-
-    <script>
-    header();
-    </script>
-
+   
+    
+</head>
+<body onload="initTmap()" >    <!-- 맵 생성 실행 -->
 		<select id="selectLevel">
 			<option value="0" selected="selected">교통최적+추천</option>
 			<option value="1" >교통최적+무료우선</option>
 			<option value="2" >교통최적+최소시간</option>
 			<option value="3" >교통최적+초보</option>
 		</select>
-		<button id="btn_select">적용하기</button>
-
+		<button id="btn_select">경로탐색 적용하기</button>
+		<button id="deleteMarker">출발지 마커 제거 적용하기</button>
 		<div id="map_wrap" class="map_wrap">
-		<div id="map_div"></div>
-    <p id="result"></p>
+			<div id="map_div"></div>
+            <p id="result"></p>
     <!-- 추천받은 관광지 출력-->
     <article class="search_page">
-    <div class="background_overlay"></div>
+    <div id="background_overlay"></div>
     <div class="recommend_box">
-      <div class="recommend_place">
-        <img>
-        <div class="recommend_image">
-            <h1>추천 여행코스</h1>
-            <h2 class="recommend_name"></h2>
+        <div class="recommend_place">
+            <img>
+            <div class="recommend_image">
+                <h1>추천 여행코스</h1>
+                <h2 class="recommend_name"></h2>
+            </div>
         </div>
-      </div>
-      <div class="search_box">
-      <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
-      <span class="detail_input_box">
-        <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
-          <option value="0">지역</option>
-          <option value="1">서울</option>
-          <option value="6">부산</option>
-          <option value="2">인천</option>
-          <option value="4">대구</option>
-          <option value="5">광주</option>
-          <option value="3">대전</option>
-          <option value="7">울산</option>
-          <option value="8">세종</option>
-          <option value="31">경기</option>
-          <option value="32">강원</option>
-          <option value="33">충북</option>
-          <option value="34">충남</option>
-          <option value="35">경북</option>
-          <option value="36">경남</option>
-          <option value="37">전북</option>
-          <option value="38">전남</option>
-          <option value="39">제주</option>
-        </select>
-        <select class="detail_input3" name="목록2">
-          <option>도시 선택</option>
-        </select>
-        <button class="search_btn2">LET'S GO</button>
-      </span>
-      <span class="search_input_box">
-        <input type ="text" class="search_input"  placeholder="키워드를 입력하고 검색을 눌러주세요">
-        <button class="search_btn">LET'S GO</button>
-      </span>
-      <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
-      <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
-      <p>
-        <div class="area_recommend">
-          <strong>추천 여행지</strong></br>
-          <input type='checkbox' name='trip' id="trip"><span></span><h3></h3>
-        </div>
-      </p>
-      <button class="AddTravel">LET'S GO</button>
-    </div>
-  </article>
-  <script type="module" src="./JS/travel.js"></script>
+        <div class="search_box">
+            <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
+                <span class="detail_input_box">
+                    <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
+                        <option value="0">지역</option>
+                        <option value="1">서울</option>
+                        <option value="6">부산</option>
+                        <option value="2">인천</option>
+                        <option value="4">대구</option>
+                        <option value="5">광주</option>
+                        <option value="3">대전</option>
+                        <option value="7">울산</option>
+                        <option value="8">세종</option>
+                        <option value="31">경기</option>
+                        <option value="32">강원</option>
+                        <option value="33">충북</option>
+                        <option value="34">충남</option>
+                        <option value="35">경북</option>
+                        <option value="36">경남</option>
+                        <option value="37">전북</option>
+                        <option value="38">전남</option>
+                        <option value="39">제주</option>
+                    </select>
+                    <select class="detail_input3" name="목록2"> 
+                        <option>도시 선택</option>                
+                    </select>
+                    <button class="search_btn2">LET'S GO</button>
+                </span>
+                
+                <span class="search_input_box">
+                    <input type ="text" class="search_input"  placeholder="키워드를 입력하고 검색을 눌러주세요">
+                    <button class="search_btn">LET'S GO</button>
+                </span>  
+                <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
+                <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
+                <p>
+                <div class="area_recommend">
+                    <strong>추천 여행지</strong></br>
+                    <input type='checkbox' name='trip' id="trip"><span></span><h3></h3>
+                </div>  
+                </p>
+                -->
+             <button class="AddTravel">관광지를 지도에 추가해보세요.</button>
 
-  <script>
-    footer();
-  </script>
-  </body>
+    </div>
+</article>
+<script type="module" src="./JS/travel.js"></script>
+
+</body>
 </html>
