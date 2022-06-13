@@ -1,6 +1,10 @@
 // export를 하여 map.js의 메소드를 다른 js파일에서 사용할수있도록 해줌
 export {drawStop};
 export {makeViaPoint};
+export {startX};
+export {startY};
+export {endX};
+export {endY};
 
 
 // 경유지 별 마크 설정하여 자동차 길찾기				
