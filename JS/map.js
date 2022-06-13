@@ -19,85 +19,56 @@ var lonlat;
 var start;
 var end;
 var start;
-var markers = [];
-var markers2 = [];
-var markerArr = [];
+var markercheck=false;
+var startMarker;
+var endMarker;
 
 
 $("#deleteStartMarker").click(function(){
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].setMap(null);
-	}
-	markers = [];
+   startMarker.setMap(null);
+   startMarker = null;
 });
+
 $("#deleteEndMarker").click(function(){
-	for (var i = 0; i < markers2.length; i++) {
-		markers2[i].setMap(null);
-	}
-	markers2 = [];
+   endMarker.setMap(null);
+   endMarker = null;
 });
-var markercheck=false;
+
 function setPoint(e){
-	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
-	lonlat = e.latLng;
-	var startIcon;
-	if (!markercheck) {
-		marker = new Tmapv2.Marker({
-			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-			map: map, //Marker가 표시될 Map 설정.
-		});
-		markers.push(marker);
-		start = marker.getPosition();
-		startX=start._lat;
-		startY=start._lng;
-		markercheck = true;
-	}
-	else {
-		marker = new Tmapv2.Marker({
-			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-			map: map //Marker가 표시될 Map 설정.
-		});
-		markers2.push(marker);
-		end = marker.getPosition();
-		endX=end._lat;
-		endY=end._lng;
-		markercheck = false;
-	}
+   // 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
+   lonlat = e.latLng;
+   if (!markercheck) {
+      marker = new Tmapv2.Marker({
+         position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+         map: map, //Marker가 표시될 Map 설정.
+      });
+      if (startMarker) {
+         startMarker.setMap(null);
+      }
+      startMarker = marker;
+      start = marker.getPosition();
+      startX=start._lat;
+      startY=start._lng;
+      markercheck = true;
+   }
+   else {
+      marker = new Tmapv2.Marker({
+         position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+         map: map //Marker가 표시될 Map 설정.
+      });
+      if (endMarker) {
+         endMarker.setMap(null);
+      }
+      endMarker = marker;
+      end = marker.getPosition();
+      endX=end._lat;
+      endY=end._lng;
+      markercheck = false;
+   }
 }
-	//Marker 객체 생성.
-// 	marker = new Tmapv2.Marker({
-		
-// 		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-// 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_" + startIcon + ".png",
-// 		map: map, //Marker가 표시될 Map 설정.
-// 	});
-// 	markers.push(marker);
 
-// }
-
-// function setEndPoint(e){
-// 	// 클릭한 위치에 새로 마커를 찍기 위해 이전에 있던 마커들을 제거
-// 	lonlat = e.latLng;
-// 	//Marker 객체 생성.
-// 	marker = new Tmapv2.Marker({
-// 		position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-// 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-// 		map: map //Marker가 표시될 Map 설정.
-// 	});
-// 	markers2.push(marker);
-// 	end = marker.getPosition();
-// 	endX=end._lat;
-// 	endY=end._lng;
-// }
-
-// function removeMarkers2() {
-// 	for (var i = 0; i < markers2.length; i++) {
-// 		markers2[i].setMap(null);
-// 	}
-// 	markers2 = [];
-// }
 // 경로 객체 만들어서 리스트에 추가하는 코드
 function makeViaPoint(latitude,longitude,i)
 {
@@ -255,6 +226,7 @@ $("#btn_select").click(function () {
 		}
 	});
 });
+
 window.initTmap = initTmap;
 
 function addComma(num) {
