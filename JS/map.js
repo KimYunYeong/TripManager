@@ -1,6 +1,7 @@
 // export를 하여 map.js의 메소드를 다른 js파일에서 사용할수있도록 해줌
 export {drawStop};
 export {makeViaPoint};
+export {map};
 export {startX};
 export {startY};
 export {endX};
