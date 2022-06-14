@@ -274,6 +274,7 @@ pubtranspath.drawTmapPolyLine = function(data) {
             }
         }
     }
+    console.log(polylineArr);
 }
 
 //폴리라인 초기화 함수
@@ -428,6 +429,8 @@ pubtranspath.setPathList = function(form, result) {
 
 pubtranspath.onClick = function(data, path) {
     var coords = [[startx, starty], [endx, endy]];
+    console.log(markerArr);
+    console.log(polylineArr);
     //마커 및 폴리라인 초기화
     pubtranspath.deleteMarkers();
     pubtranspath.deletePolylines();
