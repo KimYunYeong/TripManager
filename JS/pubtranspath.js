@@ -31,10 +31,7 @@
 <script>
 */
 export {pubtranspath};
-import {startX} from "./map.js";
-import {startY} from "./map.js";
-import {endX} from "./map.js";
-import {endY} from "./map.js";
+var startx, starty, endx, endy;
 var pubtranspath = {};
 var subwayLineColor = {
     1: '#263c96', //수도권 1호선
@@ -96,11 +93,16 @@ var polylineArr = [];
 var data;
 var pathList;
 var map;
-pubtranspath.searchPubTransPathAJAX = function(m, form, startx, starty, endx, endy) {
+pubtranspath.searchPubTransPathAJAX = function(m, form, sx, sy, ex, ey) {
     map = m;
+    startx = sx;
+    starty = sy;
+    endx = ex;
+    endy = ey;
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
-    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
+    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + 
+    startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
