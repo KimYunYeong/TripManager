@@ -6,7 +6,6 @@
 <div id="map" style="width:100%;height:400px;"></div>
 <form id="path_list"></form>
 <script>
-
     var mapOptions = {
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
@@ -15,22 +14,23 @@
     var map = new Tmapv2.Map('map', mapOptions);
 
     // 부산 성모병원
-    var startX = 129.10931110382123;
-    var startY = 35.110455394312034;
+    var startx = 129.10931110382123;
+    var starty = 35.110455394312034;
     // 해운대 센텀 두산위브 아파트
-    var endX = 129.1397666931156;
-    var endY = 35.173831704236115;
+    var endx = 129.1397666931156;
+    var endy = 35.173831704236115;
 
     //부산 메가마트 문현점
-    var startX = 129.07257986068768;
-    var startY = 35.13775979703992;
+    var startx = 129.07257986068768;
+    var starty = 35.13775979703992;
     //광주 북구 종합운동장
-    var endX = 126.85687473842108;
-    var endY = 35.1972579922849;
+    var endx = 126.85687473842108;
+    var endy = 35.1972579922849;
     //길찾기 API 호출
-    searchPubTransPathAJAX(startX, startY, endX, endY);
+    searchPubTransPathAJAX(startx, starty, endx, endy);
 <script>
 */
+export var pubtranspath;
 import {startX} from "./map.js";
 import {startY} from "./map.js";
 import {endX} from "./map.js";
@@ -94,10 +94,12 @@ var markerArr = [];
 var polylineArr = [];
 var data;
 var pathList;
-function searchPubTransPathAJAX(form, startX, startY, endX, endY) {
+var map;
+pubtranspath.searchPubTransPathAJAX = function(m, form, startx, starty, endx, endy) {
+    map = m;
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
-    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startX + "&SY=" + startY + "&EX=" + endX + "&EY=" + endY + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
+    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
     xhr.onreadystatechange = function () {
@@ -108,9 +110,9 @@ function searchPubTransPathAJAX(form, startX, startY, endX, endY) {
                 //노선그래픽 데이터 호출
                 callMapObjApiAJAX(data["result"]["path"][0].info.mapObj);
             else { //도시 간 경로
-                var coords = [[startX, startY], [endX, endY]];
-                drawTmapMarker(startX, startY, "r", "s"); //출발지 마커 표시
-                drawTmapMarker(endX, endY, "r", "e"); //도착지 마커 표시
+                var coords = [[startx, starty], [endx, endy]];
+                drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
+                drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
@@ -120,40 +122,40 @@ function searchPubTransPathAJAX(form, startX, startY, endX, endY) {
                 setTmapBoundary(coords);
             }
             //var subPath = data["result"]["path"][0]["subPath"];
-            //walkPath(subPath, startX, startY, endX, endY);
+            //walkPath(subPath, startx, starty, endx, endy);
             //노선 데이터 출력
             setPathList(form, data["result"]);
         }
     }
 }
 
-function walkPath(subPath) {
+pubtranspath.walkPath = function(subPath) {
     deleteWalkPath();
     for (var i = 0; i < subPath.length; i++) {
         if (subPath[i]["trafficType"] == 3) {
             if (i == 0) {
                 if (subPath.length > 2)
-                    searchWalkPath(map, startX, startY, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
+                    searchWalkPath(map, startx, starty, subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
                 else
-                    searchWalkPath(map, startX, startY, endX, endY);
+                    searchWalkPath(map, startx, starty, endx, endy);
             }
             else if (i < subPath.length - 1) {
                 if (subPath.length > 2)
                     searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], subPath[i + 1]["startX"], subPath[i + 1]["startY"]);
                 else
-                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endX, endY);
+                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
             }
             else {
                 if (subPath.length > 2)
-                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endX, endY);
+                    searchWalkPath(map, subPath[i - 1]["endX"], subPath[i - 1]["endY"], endx, endy);
                 else
-                    searchWalkPath(map, startX, startY, endX, endY);
+                    searchWalkPath(map, startx, starty, endx, endy);
             }
         }
     }
 }
 
-function callMapObjApiAJAX(mabObj) {
+pubtranspath.callMapObjApiAJAX = function(mabObj) {
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
@@ -162,8 +164,8 @@ function callMapObjApiAJAX(mabObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
-            drawTmapMarker(startX, startY, "r", "s"); //출발지 마커 표시
-            drawTmapMarker(endX, endY, "r", "e"); //도착지 마커 표시
+            drawTmapMarker(startx, starty, "r", "s"); //출발지 마커 표시
+            drawTmapMarker(endx, endy, "r", "e"); //도착지 마커 표시
             drawTmapPolyLine(resultJsonData); //노선그래픽데이터 지도위 표시
             //boundary 데이터가 있을경우, 해당 boundary로 지도이동
             if (resultJsonData.result.boundary) {
@@ -178,7 +180,7 @@ function callMapObjApiAJAX(mabObj) {
 }
 
 //지도 반경 설정
-function setTmapBoundary(coords) {
+pubtranspath.setTmapBoundary = function(coords) {
     var minX = coords[0][0],
         minY = coords[0][1],
         maxX = coords[0][0],
@@ -199,7 +201,7 @@ function setTmapBoundary(coords) {
 }
 
 //지도위 마커 표시해주는 함수
-function drawTmapMarker(x, y, color, text) {
+pubtranspath.drawTmapMarker = function(x, y, color, text) {
     markerArr.push(new Tmapv2.Marker({
         position: new Tmapv2.LatLng(y, x),
         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_" + color + "_m_" + text + ".png",
@@ -208,7 +210,7 @@ function drawTmapMarker(x, y, color, text) {
 }
 
 //마커 초기화 함수
-function deleteMarkers() {
+pubtranspath.deleteMarkers = function() {
     if (markerArr.length != 0) {
         for (var i = 0; i < markerArr.length; i++)
             markerArr[i].setMap(null);
@@ -217,7 +219,7 @@ function deleteMarkers() {
 }
 
 //노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
-function drawTmapPolyLine(data) {
+pubtranspath.drawTmapPolyLine = function(data) {
     var lineArray;
     for (var i = 0; i < data.result.lane.length; i++) {
         for (var j = 0; j < data.result.lane[i].section.length; j++) {
@@ -272,7 +274,7 @@ function drawTmapPolyLine(data) {
 }
 
 //폴리라인 초기화 함수
-function deletePolylines() {
+pubtranspath.deletePolylines = function() {
     if (polylineArr.length != 0) {
         for (var i = 0; i < polylineArr.length; i++)
             polylineArr[i].setMap(null);
@@ -281,7 +283,7 @@ function deletePolylines() {
 }
 
 //경로 목록 출력 함수
-function setPathList(form, result) {
+pubtranspath.setPathList = function(form, result) {
     var path = [];
     pathList = form;
     pathList.innerHTML = "";
@@ -421,8 +423,8 @@ function setPathList(form, result) {
     }
 }
 
-function onClick(data, path) {
-    var coords = [[startX, startY], [endX, endY]];
+pubtranspath.onClick = function(data, path) {
+    var coords = [[startx, starty], [endx, endy]];
     //마커 및 폴리라인 초기화
     deleteMarkers();
     deletePolylines();
@@ -431,8 +433,8 @@ function onClick(data, path) {
         callMapObjApiAJAX(path.info.mapObj);
     //walkPath(path["subPath"]);
     else { //도시 간 경로
-        drawTmapMarker(startX, startY, "r", "s");			// 출발지 마커 표시
-        drawTmapMarker(endX, endY, "r", "e");				// 도착지 마커 표시
+        drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
+        drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
         for (var i = 0; i < path["subPath"].length; i++) {
             coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
             coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
