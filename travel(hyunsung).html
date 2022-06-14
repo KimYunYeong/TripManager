@@ -1,99 +1,99 @@
 <!-- map.js와 travel.js를 사용해 지도와 관광지를 출력해주는 html-->
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
-    <script 
-	src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript"
-	src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <script type="module" src="./JS/map.js"></script>
-   
-    
-</head>
-<body onload="initTmap()" >    <!-- 맵 생성 실행 -->
-		<select id="selectLevel">
-			<option value="0" selected="selected">교통최적+추천</option>
-			<option value="1" >교통최적+무료우선</option>
-			<option value="2" >교통최적+최소시간</option>
-			<option value="3" >교통최적+초보</option>
-		</select>
-		<button id="btn_select">경로탐색 적용하기</button>
-		<button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
+        <script 
+        src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript"
+        src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+        <script type="module" src="./map.js"></script>
+        <script type="module" src="./pubtranspath.js"></script>
+        <script type="module">
+            import {transpubpath} from "./JS/pubtranspath.js";
+            import {startX} from "./JS/map.js";
+            import {startY} from "./JS/map.js";
+            import {endX} from "./JS/map.js";
+            import {endY} from "./JS/map.js";
+            var map = document.getElementById("map_div");
+            $("#pubbutton").click(function(){
+                var form = document.getElementById("pub");
+                pubtranspath.searchPubTransPathAJAX(map, form, startX, startY, endX, endY);
+            });
+        </script>
+    </head>
+    <body onload="initTmap()" >    <!-- 맵 생성 실행 -->
+        <select id="selectLevel">
+            <option value="0" selected="selected">교통최적+추천</option>
+            <option value="1" >교통최적+무료우선</option>
+            <option value="2" >교통최적+최소시간</option>
+            <option value="3" >교통최적+초보</option>
+        </select>
+        <button id="btn_select">경로탐색 적용하기</button>
+        <button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
         <button id="deleteEndMarker">도착지 마커 제거 적용하기</button>
-		<div id="map_wrap" class="map_wrap">
-			<div id="map_div"></div>
+        <div id="map_wrap" class="map_wrap">
+            <div id="map_div"></div>
             <p id="result"></p>
-
-    <article class="search_page">
-        <div class="search_box">
-            <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
-            <h3>출발지와 도착지를 지도를 클릭하여 설정해주세요.</h3>
-            <h3>그 후 원하시는 지역을 선택하여 관광지를 살펴본 후 여행 코스를 알아보세요</h3>
-            <h4>선택한 관광지</h4>   
-            <div id="selectTravel"></div> 
-            <span class="detail_input_box">
-                    <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
-                        <option value="0">지역</option>
-                        <option value="1">서울</option>
-                        <option value="6">부산</option>
-                        <option value="2">인천</option>
-                        <option value="4">대구</option>
-                        <option value="5">광주</option>
-                        <option value="3">대전</option>
-                        <option value="7">울산</option>
-                        <option value="8">세종</option>
-                        <option value="31">경기</option>
-                        <option value="32">강원</option>
-                        <option value="33">충북</option>
-                        <option value="34">충남</option>
-                        <option value="35">경북</option>
-                        <option value="36">경남</option>
-                        <option value="37">전북</option>
-                        <option value="38">전남</option>
-                        <option value="39">제주</option>
-                    </select>
-                    <select class="detail_input3" name="목록2"> 
-                        <option>도시 선택</option>                
-                    </select>
-                </span>
+        <!-- 추천받은 관광지 출력-->
+        <article class="search_page">
+        <div id="background_overlay"></div>
+        <div class="recommend_box">
+            <div class="recommend_place">
+                <img>
+                <div class="recommend_image">
+                    <h1>추천 여행코스</h1>
+                    <h2 class="recommend_name"></h2>
+                </div>
             </div>
-                <div class="area_recommend">
-                    <h2>추천 여행지</h2>
-                    <input type='checkbox' name='trip' id="trip"><span></span>
-                    <div class="recommend_box">
-                        <div class="recommend_place">
-                            <img>
-                        </div>
-                    </div>
-                    <h3></h3>
-                    <div id="tel"></div>
-                </div>  
-                </p>
-                -->
-             <button class="AddTravel">관광지를 지도에 추가해보세요.</button>
-
-    </div>
-</article>
-
-<button id="pubbutton">대중교통</button>
-<form id="pub"></form>
-<script type="module" src="./JS/travel.js"></script>
-<script type="module" src="./JS/pubtranspath.js"></script>
-<script type="module">
-        import {startX} from "./JS/map.js";
-        import {startY} from "./JS/map.js";
-        import {endX} from "./JS/map.js";
-        import {endY} from "./JS/map.js";
-	var p = document.getElementById("pubbutton");
-	p.setAttribute("onclick", "pubOnClick()");
-        function pubOnClick() {
-            var form = document.getElementById("pub");
-            searchPubTransPathAJAX(form, startX, startY, endX, endY);
-        };
-    </script>
-</body>
+            <div class="search_box">
+                <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
+                    <span class="detail_input_box">
+                        <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
+                            <option value="0">지역</option>
+                            <option value="1">서울</option>
+                            <option value="6">부산</option>
+                            <option value="2">인천</option>
+                            <option value="4">대구</option>
+                            <option value="5">광주</option>
+                            <option value="3">대전</option>
+                            <option value="7">울산</option>
+                            <option value="8">세종</option>
+                            <option value="31">경기</option>
+                            <option value="32">강원</option>
+                            <option value="33">충북</option>
+                            <option value="34">충남</option>
+                            <option value="35">경북</option>
+                            <option value="36">경남</option>
+                            <option value="37">전북</option>
+                            <option value="38">전남</option>
+                            <option value="39">제주</option>
+                        </select>
+                        <select class="detail_input3" name="목록2"> 
+                            <option>도시 선택</option>                
+                        </select>
+                        <button class="search_btn2">LET'S GO</button>
+                    </span>
+                    <span class="search_input_box">
+                        <input type ="text" class="search_input"  placeholder="키워드를 입력하고 검색을 눌러주세요">
+                        <button class="search_btn">LET'S GO</button>
+                    </span>  
+                    <!-- span태그안에 랜덤한 관광지 컨텐츠가 추가 h3태그안에 해당 관광지의 위도 경도가 추가되어 출력된다. -->
+                    <div>원하시는 관광지를 선택하시고 경로를 알아보세요!</div>
+                    <p>
+                        <div class="area_recommend">
+                            <strong>추천 여행지</strong></br>
+                            <input type='checkbox' name='trip' id="trip"><span></span><h3></h3>
+                        </div>  
+                    </p>
+                <button class="AddTravel">관광지를 지도에 추가해보세요.</button>
+            </div>
+        </article>
+        <button id="pubbutton">대중교통</button>
+        <form id="pubtranspath"></form>
+        <script type="module" src="./travel.js"></script>
+    </body>
 </html>
