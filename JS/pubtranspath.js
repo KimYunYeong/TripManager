@@ -311,7 +311,7 @@ pubtranspath.setPathList = function(form, result) {
         path[t].radio.setAttribute("name", "path");
         path[t].radio.setAttribute("value", t);
         //path[t].radio.setAttribute("onclick", "onClick(data, data['result']['path'][this.value]);");
-        $(path[t].radio).click(function() {
+        $(path[t].label).on("click", path[t].radio, function() {
             var coords = [[startx, starty], [endx, endy]];
             //마커 및 폴리라인 초기화
             pubtranspath.deleteMarkers();
