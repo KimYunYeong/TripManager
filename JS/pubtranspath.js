@@ -311,7 +311,7 @@ pubtranspath.setPathList = function(form, result) {
         path[t].radio.setAttribute("type", "radio");
         path[t].radio.setAttribute("name", "path");
         path[t].radio.setAttribute("value", t);
-        path[t].radio.onclick = pubtranspath.onClick(data, data['result']['path'][t]);
+        //path[t].radio.onclick = pubtranspath.onClick(data, data['result']['path'][t]);
         path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
         path[t].label.appendChild(path[t].details);
         path[t].details.appendChild(path[t].title);
