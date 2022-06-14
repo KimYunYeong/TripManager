@@ -30,11 +30,12 @@
     searchPubTransPathAJAX(startx, starty, endx, endy);
 <script>
 */
-export var pubtranspath;
+export {pubtranspath};
 import {startX} from "./map.js";
 import {startY} from "./map.js";
 import {endX} from "./map.js";
 import {endY} from "./map.js";
+var pubtranspath = {};
 var subwayLineColor = {
     1: '#263c96', //수도권 1호선
     2: '#3cb44a', //수도권 2호선
