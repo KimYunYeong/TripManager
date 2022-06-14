@@ -310,7 +310,32 @@ pubtranspath.setPathList = function(form, result) {
         path[t].radio.setAttribute("type", "radio");
         path[t].radio.setAttribute("name", "path");
         path[t].radio.setAttribute("value", t);
-        path[t].radio.setAttribute("onclick", "pubtranspath.onClick(data, data['result']['path'][this.value]);");
+        //path[t].radio.setAttribute("onclick", "onClick(data, data['result']['path'][this.value]);");
+        $(path[t].radio).click(function() {
+            var coords = [[startx, starty], [endx, endy]];
+            //마커 및 폴리라인 초기화
+            pubtranspath.deleteMarkers();
+            pubtranspath.deletePolylines();
+            if (data["result"]["searchType"] == 0) //도시 내 경로
+                //노선그래픽 데이터 호출
+                pubtranspath.callMapObjApiAJAX(data['result']['path'][this.value].info.mapObj);
+            //walkPath(path["subPath"]);
+            else { //도시 간 경로
+                pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
+                pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
+                for (var i = 0; i < data['result']['path'][this.value]["subPath"].length; i++) {
+                    coords.push([data['result']['path'][this.value]["subPath"][i]["startX"], 
+                        data['result']['path'][this.value]["subPath"][i]["startY"]]);
+                    coords.push([data['result']['path'][this.value]["subPath"][i]["endX"], 
+                        data['result']['path'][this.value]["subPath"][i]["endY"]]);
+                    pubtranspath.drawTmapMarker(data['result']['path'][this.value]["subPath"][i]["startX"], 
+                        data['result']['path'][this.value]["subPath"][i]["startY"], "b", i + 1);
+                    pubtranspath.drawTmapMarker(data['result']['path'][this.value]["subPath"][i]["endX"], 
+                        data['result']['path'][this.value]["subPath"][i]["endY"], "b", i + 1);
+                }
+                pubtranspath.setTmapBoundary(coords);
+            }
+        });
         path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
         path[t].label.appendChild(path[t].details);
         path[t].details.appendChild(path[t].title);
@@ -426,24 +451,24 @@ pubtranspath.setPathList = function(form, result) {
     }
 }
 
-pubtranspath.onClick = function(data, path) {
-    var coords = [[startx, starty], [endx, endy]];
-    //마커 및 폴리라인 초기화
-    pubtranspath.deleteMarkers();
-    pubtranspath.deletePolylines();
-    if (data["result"]["searchType"] == 0) //도시 내 경로
-        //노선그래픽 데이터 호출
-        pubtranspath.callMapObjApiAJAX(path.info.mapObj);
-    //walkPath(path["subPath"]);
-    else { //도시 간 경로
-        pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
-        pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-        for (var i = 0; i < path["subPath"].length; i++) {
-            coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
-            coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
-            pubtranspath.drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
-            pubtranspath.drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
-        }
-        pubtranspath.setTmapBoundary(coords);
-    }
-}
+// pubtranspath.onClick = function(data, path) {
+//     var coords = [[startx, starty], [endx, endy]];
+//     //마커 및 폴리라인 초기화
+//     pubtranspath.deleteMarkers();
+//     pubtranspath.deletePolylines();
+//     if (data["result"]["searchType"] == 0) //도시 내 경로
+//         //노선그래픽 데이터 호출
+//         pubtranspath.callMapObjApiAJAX(path.info.mapObj);
+//     //walkPath(path["subPath"]);
+//     else { //도시 간 경로
+//         pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
+//         pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
+//         for (var i = 0; i < path["subPath"].length; i++) {
+//             coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
+//             coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
+//             pubtranspath.drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
+//             pubtranspath.drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
+//         }
+//         pubtranspath.setTmapBoundary(coords);
+//     }
+// }
