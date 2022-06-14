@@ -310,6 +310,7 @@ pubtranspath.setPathList = function(form, result) {
         path[t].radio.setAttribute("name", "path");
         path[t].radio.setAttribute("value", t);
         path[t].radio.addEventListener('click', function() {
+            console.log("Clicked radio, " + t);
             var coords = [[startx, starty], [endx, endy]];
             // console.log(markerArr);
             // console.log(polylineArr);
