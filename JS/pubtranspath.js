@@ -73,8 +73,10 @@ var busRouteColor = {
 };
 var markerArr = [];
 var polylineArr = [];
-pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, endy) {
+pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, endy, index) {
     var xhr = new XMLHttpRequest();
+    markerArr[index] = [];
+    polylineArr[index] = [];
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + 
     startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
@@ -86,16 +88,16 @@ pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, e
             console.log(data); // <- xhr.responseText 로 결과를 가져올 수 있음
             if (data["result"]["searchType"] == 0) //도시 내 경로
                 //노선그래픽 데이터 호출
-                pubtranspath.callMapObjApiAJAX(map, data["result"]["path"][0].info.mapObj, startx, starty, endx, endy);
+                pubtranspath.callMapObjApiAJAX(map, data["result"]["path"][0].info.mapObj, startx, starty, endx, endy, index);
             else { //도시 간 경로
                 var coords = [[startx, starty], [endx, endy]];
-                pubtranspath.drawTmapMarker(map, startx, starty, "r", "s"); //출발지 마커 표시
-                pubtranspath.drawTmapMarker(map, endx, endy, "r", "e"); //도착지 마커 표시
+                pubtranspath.drawTmapMarker(map, startx, starty, "r", "s", index); //출발지 마커 표시
+                pubtranspath.drawTmapMarker(map, endx, endy, "r", "e", index); //도착지 마커 표시
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1, index);
                 }
                 pubtranspath.setTmapBoundary(coords);
             }
@@ -133,7 +135,7 @@ pubtranspath.walkPath = function(map, subPath, startx, starty, endx, endy) {
     }
 }
 
-pubtranspath.callMapObjApiAJAX = function(map, mabObj, startx, starty, endx, endy) {
+pubtranspath.callMapObjApiAJAX = function(map, mabObj, startx, starty, endx, endy, index) {
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/loadLane?mapObject=0:0@" + mabObj + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
@@ -142,9 +144,9 @@ pubtranspath.callMapObjApiAJAX = function(map, mabObj, startx, starty, endx, end
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var resultJsonData = JSON.parse(xhr.responseText);
-            pubtranspath.drawTmapMarker(map, startx, starty, "r", "s"); //출발지 마커 표시
-            pubtranspath.drawTmapMarker(map, endx, endy, "r", "e"); //도착지 마커 표시
-            pubtranspath.drawTmapPolyLine(map, resultJsonData); //노선그래픽데이터 지도위 표시
+            // pubtranspath.drawTmapMarker(map, startx, starty, "r", "s"); //출발지 마커 표시
+            // pubtranspath.drawTmapMarker(map, endx, endy, "r", "e"); //도착지 마커 표시
+            pubtranspath.drawTmapPolyLine(map, resultJsonData, index); //노선그래픽데이터 지도위 표시
             //boundary 데이터가 있을경우, 해당 boundary로 지도이동
             if (resultJsonData.result.boundary) {
                 var boundary = new Tmapv2.LatLngBounds(
@@ -179,8 +181,8 @@ pubtranspath.setTmapBoundary = function(map, coords) {
 }
 
 //지도위 마커 표시해주는 함수
-pubtranspath.drawTmapMarker = function(map, x, y, color, text) {
-    markerArr.push(new Tmapv2.Marker({
+pubtranspath.drawTmapMarker = function(map, x, y, color, text, index) {
+    markerArr[index].push(new Tmapv2.Marker({
         position: new Tmapv2.LatLng(y, x),
         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_" + color + "_m_" + text + ".png",
         map: map
@@ -188,16 +190,25 @@ pubtranspath.drawTmapMarker = function(map, x, y, color, text) {
 }
 
 //마커 초기화 함수
-pubtranspath.deleteMarkers = function() {
-    if (markerArr.length != 0) {
-        for (var i = 0; i < markerArr.length; i++)
-            markerArr[i].setMap(null);
+pubtranspath.deleteMarkers = function(index) {
+    if (index) {
+        if (markerArr[index].length != 0) {
+            for (var i = 0; i < markerArr[index].length; i++)
+                markerArr[index][i].setMap(null);
+            markerArr[index] = [];
+        }
+    } else {
+        for (var i = 0; i < markerArr.length; i++) {
+            for (var j = 0; j < markerArr[i].length; j++)
+                markerArr[i][j].setMap(null);
+            markerArr[i] = [];
+        }
         markerArr = [];
     }
 }
 
 //노선그래픽 데이터를 이용하여 지도위 폴리라인 그려주는 함수
-pubtranspath.drawTmapPolyLine = function(map, data) {
+pubtranspath.drawTmapPolyLine = function(map, data, index) {
     var lineArray;
     for (var i = 0; i < data.result.lane.length; i++) {
         for (var j = 0; j < data.result.lane[i].section.length; j++) {
@@ -210,7 +221,7 @@ pubtranspath.drawTmapPolyLine = function(map, data) {
             //노선 종류에 따른 라인색상 지정하는 부분
             if (data.result.lane[i].class == 1) {
                 if (subwayLineColor[data.result.lane[i].type]) {
-                    polylineArr.push(new Tmapv2.Polyline({
+                    polylineArr[index].push(new Tmapv2.Polyline({
                         map: map,
                         path: lineArray,
                         strokeWeight: 5,
@@ -219,7 +230,7 @@ pubtranspath.drawTmapPolyLine = function(map, data) {
                         outlineColor: '#505050'
                     }));
                 } else {
-                    polylineArr.push(new Tmapv2.Polyline({
+                    polylineArr[index].push(new Tmapv2.Polyline({
                         map: map,
                         path: lineArray,
                         strokeWeight: 5,
@@ -229,7 +240,7 @@ pubtranspath.drawTmapPolyLine = function(map, data) {
                 }
             } else if (data.result.lane[i].class == 2) {
                 if (subwayLineColor[data.result.lane[i].type]) {
-                    polylineArr.push(new Tmapv2.Polyline({
+                    polylineArr[index].push(new Tmapv2.Polyline({
                         map: map,
                         path: lineArray,
                         strokeWeight: 5,
@@ -238,7 +249,7 @@ pubtranspath.drawTmapPolyLine = function(map, data) {
                         outlineColor: '#505050'
                     }));
                 } else {
-                    polylineArr.push(new Tmapv2.Polyline({
+                    polylineArr[index].push(new Tmapv2.Polyline({
                         map: map,
                         path: lineArray,
                         strokeWeight: 5,
@@ -252,16 +263,25 @@ pubtranspath.drawTmapPolyLine = function(map, data) {
 }
 
 //폴리라인 초기화 함수
-pubtranspath.deletePolylines = function() {
-    if (polylineArr.length != 0) {
-        for (var i = 0; i < polylineArr.length; i++)
-            polylineArr[i].setMap(null);
+pubtranspath.deletePolylines = function(index) {
+    if (index) {
+        if (polylineArr[index].length != 0) {
+            for (var i = 0; i < polylineArr[index].length; i++)
+                polylineArr[index][i].setMap(null);
+            polylineArr[index] = [];
+        }
+    } else {
+        for (var i = 0; i < polylineArr.length; i++) {
+            for (var j = 0; j < polylineArr[i].length; j++)
+                polylineArr[i][j].setMap(null);
+            polylineArr[i] = [];
+        }
         polylineArr = [];
     }
 }
 
 //경로 목록 출력 함수
-pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy) {
+pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy, index) {
     var path = [];
     dom.innerHTML = "";
     document.addEventListener('click', function(e) {
@@ -272,20 +292,20 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
             // console.log(polylineArr);
             //마커 및 폴리라인 초기화
             console.log("clicked radio, " + e.target.value);
-            pubtranspath.deleteMarkers();
-            pubtranspath.deletePolylines();
+            pubtranspath.deleteMarkers(index);
+            pubtranspath.deletePolylines(index);
             if (result["searchType"] == 0) //도시 내 경로
                 //노선그래픽 데이터 호출
-                pubtranspath.callMapObjApiAJAX(map, result['path'][e.target.value].info.mapObj, startx, starty, endx, endy);
+                pubtranspath.callMapObjApiAJAX(map, result['path'][e.target.value].info.mapObj, startx, starty, endx, endy, index);
             //walkPath(path["subPath"]);
             else { //도시 간 경로
-                pubtranspath.drawTmapMarker(map, startx, starty, "r", "s");			// 출발지 마커 표시
-                pubtranspath.drawTmapMarker(map, endx, endy, "r", "e");				// 도착지 마커 표시
+                // pubtranspath.drawTmapMarker(map, startx, starty, "r", "s");			// 출발지 마커 표시
+                // pubtranspath.drawTmapMarker(map, endx, endy, "r", "e");				// 도착지 마커 표시
                 for (var i = 0; i < result['path'][e.target.value]["subPath"].length; i++) {
                     coords.push([result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"]]);
                     coords.push([result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "b", i + 1);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "b", i + 1);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "b", i + 1, index);
                 }
                 pubtranspath.setTmapBoundary(map, coords);
             }
