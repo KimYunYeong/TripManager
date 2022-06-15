@@ -10,14 +10,15 @@
         src="//code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript"
         src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-        <script type="module" src="./JS/map.js"></script>
+        <script type="module" src="./map.js"></script>
     </head>
     <body onload="initTmap()" >    <!-- 맵 생성 실행 -->
             <select id="selectLevel">
                 <option value="0" selected="selected">교통최적+추천</option>
-                <option value="1" >교통최적+무료우선</option>
-                <option value="2" >교통최적+최소시간</option>
-                <option value="3" >교통최적+초보</option>
+                <option value="1">교통최적+무료우선</option>
+                <option value="2">교통최적+최소시간</option>
+                <option value="3">교통최적+초보</option>
+                <option value="4">대중교통</option>
             </select>
             <button id="btn_select">경로탐색 적용하기</button>
             <button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
@@ -54,45 +55,17 @@
                         <option value="38">전남</option>
                         <option value="39">제주</option>
                     </select>
-                    <select class="detail_input3" name="목록2"> 
-                        <option>도시 선택</option>                
-                    </select>
                 </span>
             </div>
-                <div class="area_recommend">
+                <div id="recommend_area">
                     <h2>추천 여행지</h2>
-                    <input type='checkbox' name='trip' id="trip"><span></span>
-                    <div class="recommend_box">
-                        <div class="recommend_place">
-                            <img>
-                        </div>
-                    </div>
-                    <h3></h3>
-                </div>  
-                <div>
-                <b>관광지에 마음에 들지않는다면 선택하지 않고 버튼을 눌러 새로고침해주세요.</br>
-                       반대로 마음에 드시면 관광지를 선택 후 버튼을 눌러주세요. 
-                </b>
                 </div>
-             <button class="AddTravel">관광지 새로고침/코스에 추가</button>
+                </p>
+                <button class="AddTravel">관광지를 지도에 추가해보세요.</button>
             </div>
         </article>
-
-        <button id="pubbutton">대중교통</button>
         <form id="pub"></form>
-        <script type="module" src="./JS/travel.js"></script>
-        <script type="module" src="./JS/pubtranspath.js"></script>
-        <script type="module">
-            import {pubtranspath} from "./JS/pubtranspath.js";
-            import {map} from "./JS/map.js";
-            import {startX} from "./JS/map.js";
-            import {startY} from "./JS/map.js";
-            import {endX} from "./JS/map.js";
-            import {endY} from "./JS/map.js";
-            $("#pubbutton").click(function(){
-                var form = document.getElementById("pub");
-                pubtranspath.searchPubTransPathAJAX(map, form, startY, startX, endY, endX);
-            });
-        </script>
+        <script type="module" src="./travel.js"></script>
+        <script type="module" src="./pubtranspath.js"></script>
     </body>
 </html>
