@@ -28,7 +28,7 @@ add.addEventListener('click', function() {
             if (!checkedList[dinput.value][destination.recommend[i].checkBox.value]) {
                 destList.push(destination.travelname[i] + "\n");
                 drawStop(destination.latitude[i], destination.longitude[i], index);
-                makeViaPoint(destination.latitude[i], destination.longitude[i], index);
+                makeViaPoint(destination.latitude[i], destination.longitude[i], index, destination.travelname[i]);
                 document.getElementById("selectTravel").innerHTML = destList;
                 index++;
                 checkedList[dinput.value][destination.recommend[i].checkBox.value] = true;
