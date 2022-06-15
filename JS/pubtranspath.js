@@ -3,16 +3,16 @@
 <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
 <script src="./JS/walkpath.js"></script>
 <div id="map" style="width:100%;height:400px;"></div>
-<form id="path_list"></form>
+<dom id="path_list"></dom>
 <script>
     var mapOptions = {
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
     };
     var map = new Tmapv2.Map('map', mapOptions);
-    var form = document.getElementById('form');
+    var dom = document.getElementById('dom');
     var startx, starty, endx, endy;
-    searchPubTransPathAJAX(map, form, startx, starty, endx, endy);
+    searchPubTransPathAJAX(map, dom, startx, starty, endx, endy);
 </script>
 */
 export var pubtranspath = {};
@@ -73,7 +73,7 @@ var busRouteColor = {
 };
 var markerArr = [];
 var polylineArr = [];
-pubtranspath.searchPubTransPathAJAX = function(map, form, startx, starty, endx, endy) {
+pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, endy) {
     var xhr = new XMLHttpRequest();
     //ODsay apiKey 입력
     var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + 
@@ -102,7 +102,7 @@ pubtranspath.searchPubTransPathAJAX = function(map, form, startx, starty, endx, 
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
             //노선 데이터 출력
-            pubtranspath.setPathList(map, form, data["result"], startx, starty, endx, endy);
+            pubtranspath.setPathList(map, dom, data["result"], startx, starty, endx, endy);
         }
     }
 }
@@ -261,9 +261,9 @@ pubtranspath.deletePolylines = function() {
 }
 
 //경로 목록 출력 함수
-pubtranspath.setPathList = function(map, form, result, startx, starty, endx, endy) {
+pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy) {
     var path = [];
-    form.innerHTML = "";
+    dom.innerHTML = "";
     document.addEventListener('click', function(e) {
         console.log("clicked document");
         if (e.target.type == "radio" && e.target.name == "path") {
@@ -302,10 +302,10 @@ pubtranspath.setPathList = function(map, form, result, startx, starty, endx, end
             subPath: []
         };
 
-        form.setAttribute("line-height", 1.8);
+        dom.setAttribute("line-height", 1.8);
         if (t == 0)
             path[t].radio.checked = true;
-        form.appendChild(path[t].label);
+        dom.appendChild(path[t].label);
         path[t].label.appendChild(path[t].radio);
         path[t].radio.type = "radio";
         path[t].radio.name = "path";
@@ -421,7 +421,7 @@ pubtranspath.setPathList = function(map, form, result, startx, starty, endx, end
                     path[t].subList[i].appendChild(path[t].subPath[i]);
             }
         }
-        form.innerHTML += "<br>";
+        dom.innerHTML += "<br>";
     }
 }
 
