@@ -236,7 +236,17 @@ $("#btn_select").click(function () {
 			}
 		});
 	} else { // 대중교통 경로 지도에 표시
-		
+		if (startX && startY && endX && endY) {
+			if (viaPointsList) {
+
+			} else {
+				var pathDiv = document.createElement('div');
+				document.appendChild(pathDiv);
+				pubtranspath.searchPubTransPathAJAX(map, pathDiv, startY, startX, endY, endX);
+			}
+		} else {
+			console.log("시작점과 끝점이 설정되지 않았습니다.");
+		}
 	}
 });
 
