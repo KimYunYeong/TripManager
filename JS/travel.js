@@ -1,11 +1,9 @@
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
 
-// html파일에서 province 함수를 사용하기 위해 export
-export {province};
-
-//map.js의 drawstop,makeViaPoint 메소드를 사용하기 위해 import받음
+//map.js의 drawstop, makeViaPoint, setBoundary 메소드를 사용하기 위해 import
 import {drawStop} from './map.js';
 import {makeViaPoint} from './map.js';
+import {setBoundary} from './map.js';
 
 //전역 변수 
 var dinput = document.querySelector('.detail_input');
@@ -17,7 +15,7 @@ var destination = {
     recommend: []
 };
 var index = 1; 
-var destList = []; //선택한 관광지가 담길 리스트
+var destNameList = []; //선택한 관광지가 담길 리스트
 var checkedList = []; //체크박스 체크 정보를 저장할 리스트
 
 //id값이 AddTravel에 해당하는 버튼을 클릭시 해당 이벤트 발생
@@ -26,15 +24,16 @@ add.addEventListener('click', function() {
     for (var i = 0; i < destination.recommend.length; i++) {
         if (dinput.value != 0 && destination.recommend[i].checkBox.checked) {
             if (!checkedList[dinput.value][destination.recommend[i].checkBox.value]) {
-                destList.push(destination.travelname[i] + "\n");
+                destNameList.push(destination.travelname[i] + "\n");
                 drawStop(destination.latitude[i], destination.longitude[i], index);
                 makeViaPoint(destination.latitude[i], destination.longitude[i], index, destination.travelname[i]);
-                document.getElementById("selectTravel").innerHTML = destList;
+                document.getElementById("selectTravel").innerHTML = destNameList;
                 index++;
                 checkedList[dinput.value][destination.recommend[i].checkBox.value] = true;
             }
         }
     }
+    setBoundary();
 });
 
 // select 값 변경시 지역코드(v) 받아오는 기능, v가 0이아니면 recommendapi() 호출
@@ -44,28 +43,6 @@ dinput.addEventListener('change', function() {
         recommendapi(v);
     }
 });
-
-//8도 선택 refactoring
-function province(){
-  document.write('<option value="0">지역</option>'+
-  '<option value="1">서울</option>'+
-  '<option value="6">부산</option>'+
-  '<option value="2">인천</option>'+
-  '<option value="4">대구</option>'+
-  '<option value="5">광주</option>'+
-  '<option value="3">대전</option>'+
-  '<option value="7">울산</option>'+
-  '<option value="8">세종</option>'+
-  '<option value="31">경기</option>'+
-  '<option value="32">강원</option>'+
-  '<option value="33">충북</option>'+
-  '<option value="34">충남</option>'+
-  '<option value="35">경북</option>'+
-  '<option value="36">경남</option>'+
-  '<option value="37">전북</option>'+
-  '<option value="38">전남</option>'+
-  '<option value="39">제주</option>');
-}
 
 // select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
 function recommendapi(area) { 
@@ -140,9 +117,9 @@ function displayPage(area, xml, page) {
         destination.recommend[i].details.appendChild(destination.recommend[i].image);
         destination.recommend[i].details.appendChild(destination.recommend[i].address);
         if (x[i + (10 * (page - 1))])
-            destination.longitude[i] = x[i + (10 * (page - 1))].textContent;
+            destination.longitude[i] = parseFloat(x[i + (10 * (page - 1))].textContent);
         if (y[i + (10 * (page - 1))])
-            destination.latitude[i] = y[i + (10 * (page - 1))].textContent;
+            destination.latitude[i] = parseFloat(y[i + (10 * (page - 1))].textContent);
         if (names[i + (10 * (page - 1))])
             destination.travelname[i] = names[i + (10 * (page - 1))].textContent;
     }
