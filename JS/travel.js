@@ -4,77 +4,43 @@
 import {drawStop} from './map.js';
 import {makeViaPoint} from './map.js';
 
-//전역 변수
+//전역 변수 
 var dinput = document.querySelector('.detail_input');
-var dinput3 = document.querySelector(".detail_input3");
 var add = document.querySelector(".AddTravel"); // class값이 AddTravel에 해당
-var add1 = document.querySelector("#trip");  // id값이 trip에 해당
-var longitude; //경도에 해당하는 변수
-var latitude; // 위도에 해당하는 변수
-var travelname; //선택한 관광지의 이름이 담길 변수
-var index=1;
-var travelList=[]; //선택한 관광지가 담길 리스트
+var destination = {
+    longitude: [], //경도에 해당하는 변수
+    latitude: [], // 위도에 해당하는 변수
+    travelname: [], //선택한 관광지의 이름이 담길 변수 
+    recommend: []
+};
+var index = 1; 
+var destList = []; //선택한 관광지가 담길 리스트
+var checkedList = []; //체크박스 체크 정보를 저장할 리스트
 
 //id값이 AddTravel에 해당하는 버튼을 클릭시 해당 이벤트 발생
-add.addEventListener('click',function(){
-  recommendapi(dinput.value);
-  if(add1.checked==true){ //체크박스가 클릭시 해당 메소드 실행
-    travelList.push(travelname+"\n");
-    drawStop(latitude,longitude,index);
-    makeViaPoint(latitude,longitude,index);
-    document.getElementById("selectTravel").innerHTML=travelList;
-    index++;
-  }
+add.addEventListener('click', function() {
+    //recommendapi(dinput.value);
+    for (var i = 0; i < destination.recommend.length; i++) {
+        if (dinput.value != 0 && destination.recommend[i].checkBox.checked) {
+            if (!checkedList[dinput.value][destination.recommend[i].checkBox.value]) {
+                destList.push(destination.travelname[i] + "\n");
+                drawStop(destination.latitude[i], destination.longitude[i], index);
+                makeViaPoint(destination.latitude[i], destination.longitude[i], index);
+                document.getElementById("selectTravel").innerHTML = destList;
+                index++;
+                checkedList[dinput.value][destination.recommend[i].checkBox.value] = true;
+            }
+        }
+    }
 });
 
-// html의 option선택해서 지역코드(v) 받아오는 기능 v가 0이아니면 recommendapi()를 지역코드 v를 인자로 사용하여 호출한다.
-dinput.addEventListener('click',function(){
-  if(document.querySelectorAll(".detail_input3 option").length>0){
-    while(document.querySelector('.detail_input3').hasChildNodes()){
-      document.querySelector('.detail_input3').removeChild(document.querySelector('.detail_input3').firstChild);
+// select 값 변경시 지역코드(v) 받아오는 기능, v가 0이아니면 recommendapi() 호출
+dinput.addEventListener('change', function() {
+    var v = dinput.value;
+    if (v != 0) {
+        recommendapi(v);
     }
-  }
-  if(document.querySelector(".detail_input3").value == 0){
-    var doption = document.createElement('option');
-    dinput3.appendChild(doption);
-    doption.innerHTML ="도시 선택";
-    doption.setAttribute('value',"");
-  }
-  var v = dinput.value;
-  inputapi(v);
-  if(v != 0){
-    recommendapi(v);
-  }
 });
-
- //매개변수로 지역코드(v)받아와서 공공데이터 api 응답 받는 코드
-function inputapi(v){
-  var xhr = new XMLHttpRequest();
-  var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode'; /*URL*/
-  /*Service Key*/
-  var queryParams = '?' + encodeURIComponent('serviceKey')+'='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D';
-  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('40'); /**/
-  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-  queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
-  queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
-  queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(v); /**/
-  xhr.open('GET', url + queryParams);
-  xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-      var xml = this.responseXML;
-      var names = xml.getElementsByTagName('name');;
-      for(var i = 0; i<names.length; i++){
-        var num = i;
-        var dinput3 = document.querySelector('.detail_input3');
-        var option = document.createElement('option');
-        option.innerHTML = names[num].innerHTML;
-        option.setAttribute('value',num+1);
-        dinput3.appendChild(option);
-      }
-    }
-  };
-  xhr.send('');
-}
 
 //8도 선택 refactoring
 function province(){
@@ -98,39 +64,106 @@ function province(){
   '<option value="39">제주</option>');
 }
 
-// inputapi(v) 함수에 의해 받은 해당지역의 랜덤한 관광지를 html에 출력해주는 기능
-function recommendapi(a){
-  var xhr = new XMLHttpRequest();
-  var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
-  var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
-  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10000'); /**/
-  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
-  queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P'); /**/
-  queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC'); /**/
-  queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest'); /**/
-  queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(a);
-  queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12'); /**/
-  xhr.open('GET', url + queryParams);
-  xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-      var xml = this.responseXML;
-      var names = xml.getElementsByTagName('title');
-      var image = xml.getElementsByTagName('firstimage');
-      var x = xml.getElementsByTagName('mapx');
-      var y = xml.getElementsByTagName('mapy');
-      var add = xml.getElementsByTagName('addr1');
-      var tel = xml.getElementsByTagName('tel');
-      for(var i =0; i<i+1;){
-        var j=Math.floor(Math.random()*100+Math.random()); //랜덤 함수를 이용해 인덱스번호를 난수로 받아옴
-        document.querySelectorAll(".area_recommend span")[i].textContent = names[j].textContent; // 인덱스값중 랜덤한 관광지 출력
-        document.querySelector(".recommend_box img").setAttribute("src",image[j].innerHTML);
-        document.querySelectorAll(".area_recommend h3")[i].textContent = add[j].textContent;
-        longitude=x[j].textContent;
-        latitude=y[j].textContent;
-        travelname=names[j].textContent;
-        i++;
-      }
+// select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
+function recommendapi(area) { 
+    var xhr = new XMLHttpRequest();
+    var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('2000');
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1');
+    queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P');
+    queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC');
+    queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest');
+    queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(area);
+    queryParams += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12');
+    xhr.open('GET', url + queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var xml = this.responseXML;
+            console.log(xml);
+            displayPage(area, xml, 1);
+        }
+    };
+    xhr.send('');
+}
+
+// recommendapi 함수를 통해 받은 해당 지역의 관광지 목록을 html 페이지에 출력
+function displayPage(area, xml, page) {
+    var names = xml.getElementsByTagName('title');
+    var image = xml.getElementsByTagName('firstimage');
+    var x = xml.getElementsByTagName('mapx');
+    var y = xml.getElementsByTagName('mapy');
+    var addr1 = xml.getElementsByTagName('addr1');
+    var addr2 = xml.getElementsByTagName('addr2');
+    var recommendArea = document.getElementById('recommend_area');
+    var totalCount = parseInt(xml.getElementsByTagName('totalCount')[0].textContent);
+    recommendArea.innerHTML = "<h2>추천 여행지</h2>";
+    var max;
+    if (!checkedList[area])
+        checkedList[area] = [];
+    if (page >= Math.floor((totalCount + 1) / 10) + 1) {
+        max = totalCount % 10;
     }
-  };
-  xhr.send('');
+    else {
+        max = 10;
+    }
+    destination.recommend = [];
+    for (var i = 0; i < max; i++) {
+        destination.recommend[i] = {
+            label: document.createElement('label'),
+            checkBox: document.createElement('input'),
+            details: document.createElement('details'),
+            summary: document.createElement('summary'),
+            image: document.createElement('img'),
+            address: document.createElement('p')
+        };
+        recommendArea.appendChild(destination.recommend[i].label);
+        destination.recommend[i].checkBox.type = 'checkbox';
+        destination.recommend[i].checkBox.name = 'destination';
+        destination.recommend[i].checkBox.value = i + (10 * (page - 1));
+        if (checkedList[area][i + (10 * (page - 1))])
+            destination.recommend[i].checkBox.checked = true;
+        destination.recommend[i].label.appendChild(destination.recommend[i].checkBox);
+        destination.recommend[i].label.appendChild(destination.recommend[i].details);
+        if (names[i + (10 * (page - 1))])
+            destination.recommend[i].summary.textContent = names[i + (10 * (page - 1))].textContent;
+        if (image[i + (10 * (page - 1))])
+            destination.recommend[i].image.setAttribute("src", image[i + (10 * (page - 1))].innerHTML);
+        if (addr1[i + (10 * (page - 1))])
+            destination.recommend[i].address.textContent = addr1[i + (10 * (page - 1))].textContent; 
+        if (addr2[i + (10 * (page - 1))])
+            destination.recommend[i].address.textContent += addr2[i + (10 * (page - 1))].textContent;
+        destination.recommend[i].details.appendChild(destination.recommend[i].summary);
+        destination.recommend[i].details.appendChild(destination.recommend[i].image);
+        destination.recommend[i].details.appendChild(destination.recommend[i].address);
+        if (x[i + (10 * (page - 1))])
+            destination.longitude[i] = x[i + (10 * (page - 1))].textContent;
+        if (y[i + (10 * (page - 1))])
+            destination.latitude[i] = y[i + (10 * (page - 1))].textContent;
+        if (names[i + (10 * (page - 1))])
+            destination.travelname[i] = names[i + (10 * (page - 1))].textContent;
+    }
+    if (page > 1) {
+        var prevButton = document.createElement('button');
+        prevButton.innerText = "이전 페이지";
+        prevButton.id = "prev";
+        recommendArea.appendChild(prevButton);
+    }
+    var currentPage = document.createElement('span');
+    currentPage.innerText = " <" + page + "> ";
+    recommendArea.appendChild(currentPage);
+    if (page < Math.floor((totalCount + 1) / 10) + 1) {
+        var nextButton = document.createElement('button');
+        nextButton.innerText = "다음 페이지";
+        nextButton.id = "next";
+        recommendArea.appendChild(nextButton);
+    }
+    recommendArea.addEventListener('click', function(e) {
+        if (e.target.id == "prev") {
+            displayPage(area, xml, page - 1);
+        }
+        if (e.target.id == "next") {
+            displayPage(area, xml, page + 1);
+        }
+    });
 }
