@@ -12,87 +12,84 @@ export {endY};
 var startX, startY; //시작 x,y좌표담을 변수
 var endX, endY; // 끝 x,y좌표를 담을 변수
 var startMarker; //시작 마커 변수
-var endMarker; // 끝 마커 변수
+var endMarker; // 끝 마커 변수 			
 var map; // tmap정보를 담을 map 객체
 var marker,marker_p; //각 마커들의 정보들을 담을 marker 객체
 var start,end; //시작 끝 좌표를 정보를 포함할 객체
 var lonlat;  // 선택한 위치의 마커의 위치의 정보를 담을 객체
 var resultMarkerArr = []; //경로탐색시 마커를 담을 리스트
 var viaPointsList=[]; // 경유지 정보를 담을 리스트
-var drawInfoArr = [];
+var drawInfoArr = [];  
 var resultInfoArr = []; // 경유지 마커를 담을 리스트
 var markercheck=false; // 마커가 잘 그려졌는지 체크할때 사용
 
 
-//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행
-$("#deleteStartMarker").click(function(){
-   startMarker.setMap(null);
-   startMarker = null;
+//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
+$("#deleteStartMarker").click(function() {
+	startMarker.setMap(null);
+	startMarker = null;
 });
 
 //id값이 deleteEndMarker에 해당하는 버튼 클릭시 end마커를 지우는 이벤트 실행
-$("#deleteEndMarker").click(function(){
-   endMarker.setMap(null);
-   endMarker = null;
+$("#deleteEndMarker").click(function() {
+	endMarker.setMap(null);
+	endMarker = null;
 });
 
 //출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
-function setPoint(e){
-   lonlat = e.latLng;
-   if (!markercheck) {
-      marker = new Tmapv2.Marker({
-         position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-         map: map, //Marker가 표시될 Map 설정.
-      });
+function setPoint(e) {
+	lonlat = e.latLng;
+	if (!markercheck) {
+		marker = new Tmapv2.Marker({
+			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+			map: map, //Marker가 표시될 Map 설정.
+		});
 
-      if (startMarker) {
-         startMarker.setMap(null);
-      }
+		if (startMarker) {
+			startMarker.setMap(null);
+		}
 
-      startMarker = marker;
-      start = marker.getPosition();
-      startX=start._lat;
-      startY=start._lng;
-      markercheck = true;
-   }
+		startMarker = marker;
+		start = marker.getPosition();
+		startX=start._lat;
+		startY=start._lng;
+		markercheck = true;
+	}
+	
+	else {
+		marker = new Tmapv2.Marker({
+			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
+			icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
+			map: map //Marker가 표시될 Map 설정.
+		});
 
-   else {
-      marker = new Tmapv2.Marker({
-         position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
-         icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png",
-         map: map //Marker가 표시될 Map 설정.
-      });
+		if (endMarker) {
+			endMarker.setMap(null);
+		}
 
-      if (endMarker) {
-         endMarker.setMap(null);
-      }
-
-      endMarker = marker;
-      end = marker.getPosition();
-      endX=end._lat;
-      endY=end._lng;
-      markercheck = false;
-   }
+		endMarker = marker;
+		end = marker.getPosition();
+		endX=end._lat;
+		endY=end._lng;
+		markercheck = false;
+	}
 }
 
 // travel.js의 id값이 addTravel인 버튼의 메소드와 연동해서 사용한다. 경로 객체 만들어서 리스트에 추가하는 코드
-function makeViaPoint(latitude,longitude,i)
-{
-		var viaPoints=
-			{
-				"viaPointId": "test0"+i,
-				"viaPointName": "name0"+i,
-				"viaX": ""+longitude,
-				"viaY": ""+latitude
-			};
-		viaPointsList.push(viaPoints);
+function makeViaPoint(latitude,longitude,i) {
+	var viaPoints = {
+		"viaPointId": "test0"+i,
+		"viaPointName": "name0"+i,
+		"viaX": ""+longitude,
+		"viaY": ""+latitude
+	};
+	viaPointsList.push(viaPoints);
 }
 
 
 //매개변수로 위도,경도를 받아와 경유지 그리는 지도에 함수
-function drawStop(x1,y1,i)
-{
+function drawStop(x1,y1,i) {
 	marker = new Tmapv2.Marker({
 		position: new Tmapv2.LatLng(x1,y1),
 		icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_"+i+".png",
@@ -105,19 +102,14 @@ function drawStop(x1,y1,i)
 function initTmap() {
 	resultMarkerArr = [];
 	// 1. 지도 띄우기
-
-	map = new Tmapv2.Map("map", {
-
+	map = new Tmapv2.Map("map_div", {
 		width: "100%",
 		height: "400px",
 		zoom: 14,
 		zoomControl: true,
 		scrollwheel: true
-
 	});
 	map.addListener("click", setPoint);
-
-
 }
 
 
@@ -181,7 +173,7 @@ $("#btn_select").click(function () {
 
 				if (geometry.type == "LineString") {
 					for (var j in geometry.coordinates) {
-						// 경로들의 결과값(구간)들을 포인트 객체로 변환
+						// 경로들의 결과값(구간)들을 포인트 객체로 변환 
 						var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 						// 포인트 객체를 받아 좌표값으로 변환
 						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
@@ -214,7 +206,7 @@ $("#btn_select").click(function () {
 						size = new Tmapv2.Size(8, 8);
 					}
 
-					// 경로들의 결과값들을 포인트 객체로 변환
+					// 경로들의 결과값들을 포인트 객체로 변환 
 					var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
 					// 포인트 객체를 받아 좌표값으로 다시 변환
 					var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
@@ -237,3 +229,4 @@ $("#btn_select").click(function () {
 });
 
 window.initTmap = initTmap;
+
