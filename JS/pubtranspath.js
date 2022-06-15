@@ -306,31 +306,34 @@ pubtranspath.setPathList = function(form, result) {
             path[t].radio.checked = true;
         pathList.appendChild(path[t].label);
         path[t].label.appendChild(path[t].radio);
-        path[t].radio.setAttribute("type", "radio");
-        path[t].radio.setAttribute("name", "path");
-        path[t].radio.setAttribute("value", t);
-        path[t].radio.addEventListener('click', function() {
-            console.log("Clicked radio, " + t);
-            var coords = [[startx, starty], [endx, endy]];
-            // console.log(markerArr);
-            // console.log(polylineArr);
-            //마커 및 폴리라인 초기화
-            pubtranspath.deleteMarkers();
-            pubtranspath.deletePolylines();
-            if (result["searchType"] == 0) //도시 내 경로
-                //노선그래픽 데이터 호출
-                pubtranspath.callMapObjApiAJAX(result['path'][t].info.mapObj);
-            //walkPath(path["subPath"]);
-            else { //도시 간 경로
-                // pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
-                // pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-                for (var i = 0; i < result['path'][t]["subPath"].length; i++) {
-                    coords.push([result['path'][t]["subPath"][i]["startX"], result['path'][t]["subPath"][i]["startY"]]);
-                    coords.push([result['path'][t]["subPath"][i]["endX"], result['path'][t]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(result['path'][t]["subPath"][i]["startX"], result['path'][t]["subPath"][i]["startY"], "b", i + 1);
-                    pubtranspath.drawTmapMarker(result['path'][t]["subPath"][i]["endX"], result['path'][t]["subPath"][i]["endY"], "b", i + 1);
+        path[t].radio.type = "radio";
+        path[t].radio.name = "path";
+        path[t].radio.value = t;
+        path[t].label.addEventListener('click', function(e) {
+            console.log("clicked label");
+            if (e.target.type == "radio" && path[t].radio.name == "path") {
+                var coords = [[startx, starty], [endx, endy]];
+                // console.log(markerArr);
+                // console.log(polylineArr);
+                //마커 및 폴리라인 초기화
+                console.log("clicked radio, " + e.target.value);
+                pubtranspath.deleteMarkers();
+                pubtranspath.deletePolylines();
+                if (result["searchType"] == 0) //도시 내 경로
+                    //노선그래픽 데이터 호출
+                    pubtranspath.callMapObjApiAJAX(result['path'][t].info.mapObj);
+                //walkPath(path["subPath"]);
+                else { //도시 간 경로
+                    // pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
+                    // pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
+                    for (var i = 0; i < result['path'][t]["subPath"].length; i++) {
+                        coords.push([result['path'][t]["subPath"][i]["startX"], result['path'][t]["subPath"][i]["startY"]]);
+                        coords.push([result['path'][t]["subPath"][i]["endX"], result['path'][t]["subPath"][i]["endY"]]);
+                        pubtranspath.drawTmapMarker(result['path'][t]["subPath"][i]["startX"], result['path'][t]["subPath"][i]["startY"], "b", i + 1);
+                        pubtranspath.drawTmapMarker(result['path'][t]["subPath"][i]["endX"], result['path'][t]["subPath"][i]["endY"], "b", i + 1);
+                    }
+                    pubtranspath.setTmapBoundary(coords);
                 }
-                pubtranspath.setTmapBoundary(coords);
             }
         });
         path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
@@ -448,26 +451,26 @@ pubtranspath.setPathList = function(form, result) {
     }
 }
 
-// pubtranspath.onClick = function(data, path) {
-//     var coords = [[startx, starty], [endx, endy]];
-//     console.log(markerArr);
-//     console.log(polylineArr);
-//     //마커 및 폴리라인 초기화
-//     pubtranspath.deleteMarkers();
-//     pubtranspath.deletePolylines();
-//     if (data["result"]["searchType"] == 0) //도시 내 경로
-//         //노선그래픽 데이터 호출
-//         pubtranspath.callMapObjApiAJAX(path.info.mapObj);
-//     //walkPath(path["subPath"]);
-//     else { //도시 간 경로
-//         pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
-//         pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
-//         for (var i = 0; i < path["subPath"].length; i++) {
-//             coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
-//             coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
-//             pubtranspath.drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
-//             pubtranspath.drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
-//         }
-//         pubtranspath.setTmapBoundary(coords);
-//     }
-// }
+pubtranspath.onClick = function(data, path) {
+    var coords = [[startx, starty], [endx, endy]];
+    console.log(markerArr);
+    console.log(polylineArr);
+    //마커 및 폴리라인 초기화
+    pubtranspath.deleteMarkers();
+    pubtranspath.deletePolylines();
+    if (data["result"]["searchType"] == 0) //도시 내 경로
+        //노선그래픽 데이터 호출
+        pubtranspath.callMapObjApiAJAX(path.info.mapObj);
+    //walkPath(path["subPath"]);
+    else { //도시 간 경로
+        pubtranspath.drawTmapMarker(startx, starty, "r", "s");			// 출발지 마커 표시
+        pubtranspath.drawTmapMarker(endx, endy, "r", "e");				// 도착지 마커 표시
+        for (var i = 0; i < path["subPath"].length; i++) {
+            coords.push([path["subPath"][i]["startX"], path["subPath"][i]["startY"]]);
+            coords.push([path["subPath"][i]["endX"], path["subPath"][i]["endY"]]);
+            pubtranspath.drawTmapMarker(path["subPath"][i]["startX"], path["subPath"][i]["startY"], "b", i + 1);
+            pubtranspath.drawTmapMarker(path["subPath"][i]["endX"], path["subPath"][i]["endY"], "b", i + 1);
+        }
+        pubtranspath.setTmapBoundary(coords);
+    }
+}
