@@ -279,14 +279,14 @@ pubtranspath.deletePolylines = function() {
 pubtranspath.setPathList = function(map, form, result, startx, starty, endx, endy) {
     var path = [];
     form.innerHTML = "";
-    form.addEventListener('click', function(e) {
-        console.log("clicked form");
+    document.addEventListener('click', function(e) {
+        console.log("clicked document");
         if (e.target.type == "radio" && e.target.name == "path") {
             var coords = [[startx, starty], [endx, endy]];
             // console.log(markerArr);
             // console.log(polylineArr);
             //마커 및 폴리라인 초기화
-            console.log("clicked radio, " + e.target.value);
+            console.log("clicked radio, " + e.target.value );
             pubtranspath.deleteMarkers();
             pubtranspath.deletePolylines();
             if (result["searchType"] == 0) //도시 내 경로
