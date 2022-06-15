@@ -1,0 +1,120 @@
+<!-- map.js와 travel.js를 사용해 지도와 관광지를 출력해주는 html-->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+    <script type="module" src="./JS/map.js"></script>
+    <script type="module" src="./JS/travel.js"></script>
+    <script type="module" src="./JS/pubtranspath.js"></script>
+    <script type="module">
+      import {pubtranspath} from "./JS/pubtranspath.js";
+      import {map} from "./JS/map.js";
+      import {startX} from "./JS/map.js";
+      import {startY} from "./JS/map.js";
+      import {endX} from "./JS/map.js";
+      import {endY} from "./JS/map.js";
+      $("#pubbutton").click(function(){
+        var form = document.getElementById("pub");
+        pubtranspath.searchPubTransPathAJAX(map, form, startY, startX, endY, endX);
+      });
+    </script>
+
+    <style>
+      #container{
+        width: 100%;
+        height: 77vh;
+      }
+      #container #map{
+        float: center;
+        width: 60%;
+        height: 100%;
+      }
+      #container #leftAside{
+        float: left;
+        overflow-y: scroll;
+        width: 19%;
+        height: 100%;
+      }
+      #container #rightAside{
+        float: right;
+        overflow-y: scroll;
+        width: 19%;
+        height: 100%;
+      }
+
+    </style>
+  </head>
+  <body onload="initTmap()" >
+    <script>
+      header();
+    </script>
+
+
+    <article id="container">
+      <aside id="leftAside">
+        <h2>여행 코스</h2>
+        <h3>지도를 클릭하여 출발지와 도착지를 정하세요.</h3>
+        <h3>원하는 지역을 선택하여 여행 코스를 추가하세요.</h3>
+
+        <p sytle="display: inline;"><여행 코스></p>
+        <p id="selectTravel" sytle="display: inline;"></p>
+
+        <h3>추천 여행지</h3>
+        <span class="detail_input_box">
+          <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
+            <script>
+              province();
+            </script>
+          </select>
+          <select class="detail_input3" name="목록2">
+            <option>도시 선택</option>
+          </select>
+        </span>
+
+        <div class="area_recommend">
+          <h2>추천 여행지</h2>
+          <input type='checkbox' name='trip' id="trip"><span></span>
+          <div class="recommend_box">
+            <div class="recommend_place">
+              <img>
+            </div>
+          </div>
+          <h3></h3>
+        </div>
+        <button class="AddTravel">관광지 코스에 추가 및 새로 고침</button>
+        <p>
+          여행지를 선택하고 상단 버튼을 누르면, 코스에 추가합니다.<br>
+          선택하지 않고 누르면, 새로고침됩니다.
+        </p>
+      </aside>
+
+
+      <div id="map"></div>
+
+
+      <aside id="rightAside">
+        <button id="pubbutton">대중교통 정보 새로고침</button>
+        <form id="pub"></form>
+        <select id="selectLevel">
+          <option value="0" selected="selected">교통최적+추천</option>
+          <option value="1" >교통최적+무료우선</option>
+          <option value="2" >교통최적+최소시간</option>
+          <option value="3" >교통최적+초보</option>
+        </select>
+        <button id="btn_select">경로탐색 적용하기</button>
+        <button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
+        <button id="deleteEndMarker">도착지 마커 제거 적용하기</button>
+      </aside>
+    </article>
+
+
+    <scrpt>
+      footer();
+    </script>
+  </body>
+</html>
