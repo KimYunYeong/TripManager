@@ -238,11 +238,10 @@ $("#btn_select").click(function () {
 	} else { // 대중교통 경로 지도에 표시
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
-				console.log(1);
+				
 			} else {
-				console.log(0);
 				var pathDiv = document.createElement('div');
-				document.appendChild(pathDiv);
+				document.body.appendChild(pathDiv);
 				pubtranspath.searchPubTransPathAJAX(map, pathDiv, startY, startX, endY, endX);
 			}
 		} else {
