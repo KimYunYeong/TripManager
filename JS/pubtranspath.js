@@ -1,8 +1,7 @@
 /* Test like next comment */
 /*
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"><script>
-<script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"><script>
-<script src="./JS/walkpath.js"><script>
+<script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+<script src="./JS/walkpath.js"></script>
 <div id="map" style="width:100%;height:400px;"></div>
 <form id="path_list"></form>
 <script>
@@ -10,25 +9,11 @@
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
     };
-
     var map = new Tmapv2.Map('map', mapOptions);
-
-    // 부산 성모병원
-    var startx = 129.10931110382123;
-    var starty = 35.110455394312034;
-    // 해운대 센텀 두산위브 아파트
-    var endx = 129.1397666931156;
-    var endy = 35.173831704236115;
-
-    //부산 메가마트 문현점
-    var startx = 129.07257986068768;
-    var starty = 35.13775979703992;
-    //광주 북구 종합운동장
-    var endx = 126.85687473842108;
-    var endy = 35.1972579922849;
-    //길찾기 API 호출
-    searchPubTransPathAJAX(startx, starty, endx, endy);
-<script>
+    var form = document.getElementById('form');
+    var startx, starty, endx, endy;
+    searchPubTransPathAJAX(map, form, startx, starty, endx, endy);
+</script>
 */
 export var pubtranspath = {};
 var subwayLineColor = {
