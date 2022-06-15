@@ -252,7 +252,8 @@ $("#btn_select").click(function () {
 				pathDiv.push(document.createElement('div'));
 				document.body.appendChild(pathDiv[pathDiv.length - 1]);
 				pubtranspath.searchPubTransPathAJAX(map, pathDiv[pathDiv.length - 1], 
-					parseFloat(viaPointsList[pathDiv.length - 1].viaX), parseFloat(viaPointsList[pathDiv.length - 1].viaY), 
+					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
+					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
 					endY, endX);
 			} else {
 				var pathDiv = document.createElement('div');
