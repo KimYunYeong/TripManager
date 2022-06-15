@@ -236,25 +236,27 @@ $("#btn_select").click(function () {
 			}
 		});
 	} else { // 대중교통 경로 지도에 표시
+		pubtranspath.deleteMarkers();
+		pubtranspath.deletePolylines();
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
 				var pathDiv = [];
 				pathDiv.push(document.createElement('div'));
 				document.body.appendChild(pathDiv[0]);
 				pubtranspath.searchPubTransPathAJAX(map, pathDiv[0], startY, startX, 
-					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY));
+					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
 				for (var i = 0; i < viaPointsList.length - 1; i++) {
 					pathDiv.push(document.createElement('div'));
 					document.body.appendChild(pathDiv[i + 1]);
 					pubtranspath.searchPubTransPathAJAX(map, pathDiv[i], parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), 
-						parseFloat(viaPointsList[i + 1].viaX), parseFloat(viaPointsList[i + 1].viaY));
+						parseFloat(viaPointsList[i + 1].viaX), parseFloat(viaPointsList[i + 1].viaY), i + 1);
 				}
 				pathDiv.push(document.createElement('div'));
-				document.body.appendChild(pathDiv[pathDiv.length - 1]);
-				pubtranspath.searchPubTransPathAJAX(map, pathDiv[pathDiv.length - 1], 
+				document.body.appendChild(pathDiv[viaPointsList.length - 1]);
+				pubtranspath.searchPubTransPathAJAX(map, pathDiv[viaPointsList.length - 1], 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
-					endY, endX);
+					endY, endX, viaPointsList.length);
 			} else {
 				var pathDiv = document.createElement('div');
 				document.body.appendChild(pathDiv);
