@@ -61,40 +61,24 @@
               province();
             </script>
           </select>
-          <select class="detail_input3" name="목록2">
-            <option>도시 선택</option>
-          </select>
         </span>
 
-        <div class="area_recommend">
+        <div class="recommend_area">
           <h2>추천 여행지</h2>
-          <input type='checkbox' name='trip' id="trip"><span></span>
-          <div class="recommend_box">
-            <div class="recommend_place">
-              <img>
-            </div>
-          </div>
-          <h3></h3>
         </div>
-        <button class="AddTravel">관광지 코스에 추가 및 새로 고침</button>
+        <button class="AddTravel">관광지 코스에 추가</button>
         <p>
-          여행지를 선택하고 상단 버튼을 누르면, 코스에 추가합니다.<br>
-          선택하지 않고 누르면, 새로고침됩니다.
+          여행지를 선택하고 상단 버튼을 누르면, 코스에 추가합니다.
         </p>
       </aside>
-
-
       <div id="map"></div>
-
-
       <aside id="rightAside">
-        <button id="pubbutton">대중교통 정보 새로고침</button>
-        <form id="pub"></form>
         <select id="selectLevel">
           <option value="0" selected="selected">교통최적+추천</option>
           <option value="1" >교통최적+무료우선</option>
           <option value="2" >교통최적+최소시간</option>
           <option value="3" >교통최적+초보</option>
+          <option value="4" >대중교통</option>
         </select>
         <button id="btn_select">경로탐색 적용하기</button>
         <button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
@@ -102,22 +86,8 @@
       </aside>
     </article>
 
-
     <scrpt>
       footer();
-    </script>
-
-    <script type="module">
-      import {pubtranspath} from "./JS/pubtranspath.js";
-      import {map} from "./JS/map.js";
-      import {startX} from "./JS/map.js";
-      import {startY} from "./JS/map.js";
-      import {endX} from "./JS/map.js";
-      import {endY} from "./JS/map.js";
-      $("#pubbutton").click(function(){
-        var form = document.getElementById("pub");
-        pubtranspath.searchPubTransPathAJAX(map, form, startY, startX, endY, endX);
-      });
     </script>
   </body>
 </html>
