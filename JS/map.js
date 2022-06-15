@@ -12,19 +12,19 @@ export {endY};
 var startX, startY; //시작 x,y좌표담을 변수
 var endX, endY; // 끝 x,y좌표를 담을 변수
 var startMarker; //시작 마커 변수
-var endMarker; // 끝 마커 변수 			
+var endMarker; // 끝 마커 변수
 var map; // tmap정보를 담을 map 객체
 var marker,marker_p; //각 마커들의 정보들을 담을 marker 객체
 var start,end; //시작 끝 좌표를 정보를 포함할 객체
 var lonlat;  // 선택한 위치의 마커의 위치의 정보를 담을 객체
 var resultMarkerArr = []; //경로탐색시 마커를 담을 리스트
 var viaPointsList=[]; // 경유지 정보를 담을 리스트
-var drawInfoArr = [];  
+var drawInfoArr = [];
 var resultInfoArr = []; // 경유지 마커를 담을 리스트
 var markercheck=false; // 마커가 잘 그려졌는지 체크할때 사용
 
 
-//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
+//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행
 $("#deleteStartMarker").click(function(){
    startMarker.setMap(null);
    startMarker = null;
@@ -56,7 +56,7 @@ function setPoint(e){
       startY=start._lng;
       markercheck = true;
    }
-   
+
    else {
       marker = new Tmapv2.Marker({
          position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
@@ -106,7 +106,7 @@ function initTmap() {
 	resultMarkerArr = [];
 	// 1. 지도 띄우기
 
-	map = new Tmapv2.Map("map_div", {
+	map = new Tmapv2.Map("map", {
 
 		width: "100%",
 		height: "400px",
@@ -117,7 +117,7 @@ function initTmap() {
 	});
 	map.addListener("click", setPoint);
 
-	 
+
 }
 
 
@@ -181,7 +181,7 @@ $("#btn_select").click(function () {
 
 				if (geometry.type == "LineString") {
 					for (var j in geometry.coordinates) {
-						// 경로들의 결과값(구간)들을 포인트 객체로 변환 
+						// 경로들의 결과값(구간)들을 포인트 객체로 변환
 						var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 						// 포인트 객체를 받아 좌표값으로 변환
 						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
@@ -214,7 +214,7 @@ $("#btn_select").click(function () {
 						size = new Tmapv2.Size(8, 8);
 					}
 
-					// 경로들의 결과값들을 포인트 객체로 변환 
+					// 경로들의 결과값들을 포인트 객체로 변환
 					var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
 					// 포인트 객체를 받아 좌표값으로 다시 변환
 					var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
@@ -237,4 +237,3 @@ $("#btn_select").click(function () {
 });
 
 window.initTmap = initTmap;
-
