@@ -3,16 +3,16 @@
 <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
 <script src="./JS/walkpath.js"></script>
 <div id="map" style="width:100%;height:400px;"></div>
-<dom id="path_list"></dom>
+<element id="path_list"></element>
 <script>
     var mapOptions = {
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
     };
     var map = new Tmapv2.Map('map', mapOptions);
-    var dom = document.getElementById('dom');
+    var element = document.getElementById('element');
     var startx, starty, endx, endy;
-    searchPubTransPathAJAX(map, dom, startx, starty, endx, endy);
+    searchPubTransPathAJAX(map, element, startx, starty, endx, endy);
 </script>
 */
 export var pubtranspath = {};
@@ -73,7 +73,7 @@ var busRouteColor = {
 };
 var markerArr = [];
 var polylineArr = [];
-pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, endy, index) {
+pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, endx, endy, index) {
     var xhr = new XMLHttpRequest();
     markerArr[index] = [];
     polylineArr[index] = [];
@@ -104,7 +104,7 @@ pubtranspath.searchPubTransPathAJAX = function(map, dom, startx, starty, endx, e
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
             //노선 데이터 출력
-            pubtranspath.setPathList(map, dom, data["result"], startx, starty, endx, endy, index);
+            pubtranspath.setPathList(map, element, data["result"], startx, starty, endx, endy, index);
         }
     }
 }
@@ -281,9 +281,8 @@ pubtranspath.deletePolylines = function(index) {
 }
 
 //경로 목록 출력 함수
-pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy, index) {
+pubtranspath.setPathList = function(map, element, result, startx, starty, endx, endy, index) {
     var path = [];
-    dom.innerHTML = "";
     document.addEventListener('click', function(e) {
         console.log("clicked document");
         if (e.target.type == "radio" && e.target.name == "path" + index) {
@@ -322,10 +321,10 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
             subPath: []
         };
 
-        dom.setAttribute("line-height", 1.8);
+        element.setAttribute("line-height", 1.8);
         if (t == 0)
             path[t].radio.checked = true;
-        dom.appendChild(path[t].label);
+        element.appendChild(path[t].label);
         path[t].label.appendChild(path[t].radio);
         path[t].radio.type = "radio";
         path[t].radio.name = "path" + index;
@@ -441,7 +440,7 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
                     path[t].subList[i].appendChild(path[t].subPath[i]);
             }
         }
-        dom.innerHTML += "<br>";
+        element.innerHTML += "<br>";
     }
 }
 
