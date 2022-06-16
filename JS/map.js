@@ -25,6 +25,7 @@ var viaPointsList = []; // 경유지 정보를 담을 리스트
 var drawInfoArr = [];  
 var resultInfoArr = []; // 경유지 마커를 담을 리스트
 var markercheck = false; // 마커가 잘 그려졌는지 체크할때 사용
+var pathElements = []; // 대중교통 이용 경로 표시 시 html 요소를 저장하는 배열
 
 
 //id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
@@ -238,32 +239,57 @@ $("#btn_select").click(function () {
 	} else { // 대중교통 경로 지도에 표시
 		pubtranspath.deleteMarkers();
 		pubtranspath.deletePolylines();
+		for (var i = 0; i < pathElements.length; i++) {
+			pathElements[i].summary.remove();
+			pathElements[i].details.remove();
+		}
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
-				var pathDiv = [];
-				pathDiv.push(document.createElement('div'));
-				document.body.appendChild(pathDiv[0]);
-				pubtranspath.searchPubTransPathAJAX(map, pathDiv[0], startY, startX, 
+				pathElements.push({
+					details: document.createElement('details'),
+					summary: document.createElement('summary')
+				});
+				document.body.appendChild(pathElements[0].details);
+				pathElements[0].summary.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
+				pathElements[0].details.appendChild(summary);
+				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, 
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
-				for (var i = 0; i < viaPointsList.length - 1; i++) {
-					pathDiv.push(document.createElement('div'));
-					document.body.appendChild(pathDiv[i + 1]);
-					pubtranspath.searchPubTransPathAJAX(map, pathDiv[i], parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), 
-						parseFloat(viaPointsList[i + 1].viaX), parseFloat(viaPointsList[i + 1].viaY), i + 1);
+				for (var i = 1; i < viaPointsList.length; i++) {
+					pathElements.push({
+						details: document.createElement('details'),
+						summary: document.createElement('summary')
+					});
+					document.body.appendChild(pathElements[i].details);
+					pathElements[i].summary.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName;
+					pathElements[i].details.appendChild(pathElements[i].summary);
+					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details, 
+						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY), 
+						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
 				}
-				pathDiv.push(document.createElement('div'));
-				document.body.appendChild(pathDiv[viaPointsList.length]);
-				pubtranspath.searchPubTransPathAJAX(map, pathDiv[viaPointsList.length - 1], 
+				pathElements.push({
+					details: document.createElement('details'),
+					summary: document.createElement('summary')
+				});
+				document.body.appendChild(pathElements[viaPointsList.length]);
+				pathElements[viaPointsList.length].summary.innerText = 
+					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
+				pathElements[viaPointsList.lengthi].details.appendChild(pathElements[viaPointsList.length].summary);
+				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details, 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
 					endY, endX, viaPointsList.length);
 			} else {
-				var pathDiv = document.createElement('div');
-				document.body.appendChild(pathDiv);
-				pubtranspath.searchPubTransPathAJAX(map, pathDiv, startY, startX, endY, endX);
+				pathElements[0] = {
+					details: document.createElement('details'),
+					summary: document.createElement('summary')
+				};
+				document.body.appendChild(pathElements[0].details);
+				pathElements[0].summary.innerText = "시작점 -> 도착점";
+				pathElements[0].details.appendChild(pathElements[0].summary);
+				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, endY, endX, 0);
 			}
 		} else {
-			console.log("시작점과 끝점이 설정되지 않았습니다.");
+			console.log("시작점과 도착점이 설정되지 않았습니다.");
 		}
 	}
 });
