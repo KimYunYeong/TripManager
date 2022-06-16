@@ -252,7 +252,7 @@ $("#btn_select").click(function () {
 						parseFloat(viaPointsList[i + 1].viaX), parseFloat(viaPointsList[i + 1].viaY), i + 1);
 				}
 				pathDiv.push(document.createElement('div'));
-				document.body.appendChild(pathDiv[viaPointsList.length - 1]);
+				document.body.appendChild(pathDiv[viaPointsList.length]);
 				pubtranspath.searchPubTransPathAJAX(map, pathDiv[viaPointsList.length - 1], 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
