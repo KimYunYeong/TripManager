@@ -13,19 +13,19 @@ import {pubtranspath} from "./pubtranspath.js";
 
 //전역 변수
 var startX, startY; //시작 x,y좌표담을 변수
-var endX, endY; // 끝 x,y좌표를 담을 변수
+var endX, endY; //끝 x,y좌표를 담을 변수
 var startMarker; //시작 마커 변수
-var endMarker; // 끝 마커 변수 			
-var map; // tmap정보를 담을 map 객체
+var endMarker; //끝 마커 변수 			
+var map; //tmap정보를 담을 map 객체
 var marker,marker_p; //각 마커들의 정보들을 담을 marker 객체
 var start,end; //시작 끝 좌표를 정보를 포함할 객체
-var lonlat;  // 선택한 위치의 마커의 위치의 정보를 담을 객체
+var lonlat;  //선택한 위치의 마커의 위치의 정보를 담을 객체
 var resultMarkerArr = []; //경로탐색시 마커를 담을 리스트
-var viaPointsList = []; // 경유지 정보를 담을 리스트
+var viaPointsList = []; //경유지 정보를 담을 리스트
 var drawInfoArr = [];  
-var resultInfoArr = []; // 경유지 마커를 담을 리스트
-var markercheck = false; // 마커가 잘 그려졌는지 체크할때 사용
-var pathElements = []; // 대중교통 이용 경로 표시 시 html 요소를 저장하는 배열
+var resultInfoArr = []; //경유지 마커를 담을 리스트
+var markercheck = false; //마커가 잘 그려졌는지 체크할때 사용
+var pathElements = []; //대중교통 이용 경로 표시 시 html 요소를 저장하는 배열
 
 
 //id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
@@ -38,6 +38,20 @@ $("#deleteStartMarker").click(function() {
 $("#deleteEndMarker").click(function() {
 	endMarker.setMap(null);
 	endMarker = null;
+});
+
+//경로 초기화
+$("#reset_path").click(function() {
+	//자동차 경로 초기화
+	if (resultInfoArr.length > 0) {
+		for (var i in resultInfoArr) {
+			resultInfoArr[i].setMap(null);
+		}
+		resultInfoArr = [];
+	}
+	//대중교통 경로 초기화
+	pubtranspath.deleteMarkers();
+	pubtranspath.deletePolylines();
 });
 
 //출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
@@ -80,7 +94,7 @@ function setPoint(e) {
 	}
 }
 
-// travel.js의 id값이 addTravel인 버튼의 메소드와 연동해서 사용한다. 경로 객체 만들어서 리스트에 추가하는 코드
+//travel.js의 id값이 addTravel인 버튼의 메소드와 연동해서 사용한다. 경로 객체 만들어서 리스트에 추가하는 코드
 function makeViaPoint(latitude, longitude, i, name) {
 	var viaPoints = {
 		"viaPointId": "test0" + i,
@@ -104,7 +118,7 @@ function drawStop(x1, y1, i) {
 
 function initTmap() {
 	resultMarkerArr = [];
-	// 1. 지도 띄우기
+	//지도 띄우기
 	map = new Tmapv2.Map("map_div", {
 		width: "100%",
 		height: "400px",
@@ -135,6 +149,10 @@ function setBoundary() {
 $("#btn_select").click(function () {
 	var searchOption = $("#selectLevel").val();
 	if (searchOption < 4) { // 자동차 경로 지도에 표시
+		// 대중교통 경로 초기화
+		pubtranspath.deleteMarkers();
+		pubtranspath.deletePolylines();
+
 		var headers = {};
 		headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
 		headers["Content-Type"] = "application/json";
@@ -163,12 +181,12 @@ $("#btn_select").click(function () {
 			success: function (response) {
 				var resultData = response.properties;
 				var resultFeatures = response.features;
-				// 결과 출력
+				//결과 출력
 				var tDistance = "총 거리 : " + (resultData.totalDistance / 1000).toFixed(1) + "km,  ";
 				var tTime = "총 시간 : " + (resultData.totalTime / 60).toFixed(0) + "분,  ";
 				var tFare = "총 요금 : " + resultData.totalFare + "원";
 				$("#result").text(tDistance + tTime + tFare);
-				//기존  라인 초기화
+				//기존 라인 초기화
 				if (resultInfoArr.length > 0) {
 					for (var i in resultInfoArr) {
 						resultInfoArr[i].setMap(null);
@@ -183,11 +201,11 @@ $("#btn_select").click(function () {
 					drawInfoArr = [];
 					if (geometry.type == "LineString") {
 						for (var j in geometry.coordinates) {
-							// 경로들의 결과값(구간)들을 포인트 객체로 변환 
+							//경로들의 결과값(구간)들을 포인트 객체로 변환 
 							var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
-							// 포인트 객체를 받아 좌표값으로 변환
+							//포인트 객체를 받아 좌표값으로 변환
 							var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-							// 포인트객체의 정보로 좌표값 변환 객체로 저장
+							//포인트객체의 정보로 좌표값 변환 객체로 저장
 							var convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
 
 							drawInfoArr.push(convertChange);
@@ -203,7 +221,7 @@ $("#btn_select").click(function () {
 
 					} else {
 						var markerImg = "";
-						var size = "";			//아이콘 크기 설정합니다.
+						var size = "";			//아이콘 크기 설정
 
 						if (properties.pointType == "S") {	//출발지 마커
 							markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
@@ -216,9 +234,9 @@ $("#btn_select").click(function () {
 							size = new Tmapv2.Size(8, 8);
 						}
 
-						// 경로들의 결과값들을 포인트 객체로 변환 
+						//경로들의 결과값들을 포인트 객체로 변환 
 						var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
-						// 포인트 객체를 받아 좌표값으로 다시 변환
+						//포인트 객체를 받아 좌표값으로 다시 변환
 						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
 
 						marker_p = new Tmapv2.Marker({
@@ -236,7 +254,15 @@ $("#btn_select").click(function () {
 				console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		});
-	} else { // 대중교통 경로 지도에 표시
+	} else { //대중교통 경로 지도에 표시
+		//자동차 경로 초기화
+		if (resultInfoArr.length > 0) {
+			for (var i in resultInfoArr) {
+				resultInfoArr[i].setMap(null);
+			}
+			resultInfoArr = [];
+		}
+		//대중교통 경로 초기화
 		pubtranspath.deleteMarkers();
 		pubtranspath.deletePolylines();
 		for (var i = 0; i < pathElements.length; i++) {
