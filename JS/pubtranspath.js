@@ -191,7 +191,7 @@ pubtranspath.drawTmapMarker = function(map, x, y, color, text, index) {
 
 //마커 초기화 함수
 pubtranspath.deleteMarkers = function(index) {
-    if (index) {
+    if (index != null) {
         if (markerArr[index].length != 0) {
             for (var i = 0; i < markerArr[index].length; i++)
                 markerArr[index][i].setMap(null);
@@ -264,7 +264,7 @@ pubtranspath.drawTmapPolyLine = function(map, data, index) {
 
 //폴리라인 초기화 함수
 pubtranspath.deletePolylines = function(index) {
-    if (index) {
+    if (index != null) {
         if (polylineArr[index].length != 0) {
             for (var i = 0; i < polylineArr[index].length; i++)
                 polylineArr[index][i].setMap(null);
