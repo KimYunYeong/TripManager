@@ -286,7 +286,7 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
     dom.innerHTML = "";
     document.addEventListener('click', function(e) {
         console.log("clicked document");
-        if (e.target.type == "radio" && e.target.name == "path") {
+        if (e.target.type == "radio" && e.target.name == "path" + index) {
             var coords = [[startx, starty], [endx, endy]];
             // console.log(markerArr);
             // console.log(polylineArr);
