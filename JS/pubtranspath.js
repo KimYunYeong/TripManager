@@ -315,7 +315,7 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
             label: document.createElement('label'),
             radio: document.createElement('input'),
             details: document.createElement('details'),
-            title: document.createElement('summary'),
+            summary: document.createElement('summary'),
             list: document.createElement('ul'),
             subList: [],
             subPath: []
@@ -331,31 +331,31 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
         path[t].radio.value = t;
         path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
         path[t].label.appendChild(path[t].details);
-        path[t].details.appendChild(path[t].title);
+        path[t].details.appendChild(path[t].summary);
         path[t].details.appendChild(path[t].list);
         switch (result["path"][t]["pathType"]) {
             case 1:
-                path[t].title.innerText = "지하철";
+                path[t].summary.innerText = "지하철";
                 break;
             case 2:
-                path[t].title.innerText = "버스";
+                path[t].summary.innerText = "버스";
                 break;
             case 3:
-                path[t].title.innerText = "지하철 + 버스";
+                path[t].summary.innerText = "지하철 + 버스";
                 break;
             case 11:
-                path[t].title.innerText = "열차";
+                path[t].summary.innerText = "열차";
                 break;
             case 12:
-                path[t].title.innerText = "고속 / 시외버스";
+                path[t].summary.innerText = "고속 / 시외버스";
                 break;
             case 13:
-                path[t].title.innerText = "항공";
+                path[t].summary.innerText = "항공";
                 break;
             case 20:
-                path[t].title.innerText = "시외교통 복합(열차 + 고속버스 등)";
+                path[t].summary.innerText = "시외교통 복합(열차 + 고속버스 등)";
         }
-        path[t].title.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
+        path[t].summary.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
         for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
             switch (result["path"][t]["subPath"][i]["trafficType"]) {
                 case 1: //지하철
