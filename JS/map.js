@@ -273,7 +273,7 @@ $("#btn_select").click(function () {
 				document.body.appendChild(pathElements[viaPointsList.length].details);
 				pathElements[viaPointsList.length].summary.innerText = 
 					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
-				pathElements[viaPointsList.lengthi].details.appendChild(pathElements[viaPointsList.length].summary);
+				pathElements[viaPointsList.length].details.appendChild(pathElements[viaPointsList.length].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details, 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
