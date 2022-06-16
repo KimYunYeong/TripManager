@@ -251,7 +251,7 @@ $("#btn_select").click(function () {
 				});
 				document.body.appendChild(pathElements[0].details);
 				pathElements[0].summary.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
-				pathElements[0].details.appendChild(summary);
+				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, 
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
 				for (var i = 1; i < viaPointsList.length; i++) {
