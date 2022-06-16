@@ -270,7 +270,7 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
-				document.body.appendChild(pathElements[viaPointsList.length]);
+				document.body.appendChild(pathElements[viaPointsList.length].details);
 				pathElements[viaPointsList.length].summary.innerText = 
 					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
 				pathElements[viaPointsList.lengthi].details.appendChild(pathElements[viaPointsList.length].summary);
