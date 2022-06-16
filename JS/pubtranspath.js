@@ -328,7 +328,7 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
         dom.appendChild(path[t].label);
         path[t].label.appendChild(path[t].radio);
         path[t].radio.type = "radio";
-        path[t].radio.name = "path";
+        path[t].radio.name = "path" + index;
         path[t].radio.value = t;
         path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
         path[t].label.appendChild(path[t].details);
