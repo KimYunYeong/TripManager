@@ -291,12 +291,12 @@ pubtranspath.setPathList = function(map, dom, result, startx, starty, endx, endy
             // console.log(markerArr);
             // console.log(polylineArr);
             //마커 및 폴리라인 초기화
-            console.log("clicked radio, " + e.target.value);
+            console.log("clicked radio, " + index + ", " + e.target.value);
             pubtranspath.deleteMarkers(index);
             pubtranspath.deletePolylines(index);
-            if (result["searchType"] == 0) //도시 내 경로
+            if (result["searchType"] == 0); //도시 내 경로
                 //노선그래픽 데이터 호출
-                pubtranspath.callMapObjApiAJAX(map, result['path'][e.target.value].info.mapObj, startx, starty, endx, endy, index);
+                //pubtranspath.callMapObjApiAJAX(map, result['path'][e.target.value].info.mapObj, startx, starty, endx, endy, index);
             //walkPath(path["subPath"]);
             else { //도시 간 경로
                 // pubtranspath.drawTmapMarker(map, startx, starty, "r", "s");			// 출발지 마커 표시
