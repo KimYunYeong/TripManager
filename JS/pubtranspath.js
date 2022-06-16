@@ -3,14 +3,14 @@
 <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
 <script src="./JS/walkpath.js"></script>
 <div id="map" style="width:100%;height:400px;"></div>
-<element id="path_list"></element>
+<div id="path_list"></div>
 <script>
     var mapOptions = {
         center: new Tmapv2.LatLng(37.3595704, 127.105399), // 지도 중앙 설정
         zoom: 10
     };
     var map = new Tmapv2.Map('map', mapOptions);
-    var element = document.getElementById('element');
+    var element = document.getElementById('path_list');
     var startx, starty, endx, endy;
     searchPubTransPathAJAX(map, element, startx, starty, endx, endy);
 </script>
