@@ -52,6 +52,10 @@ $("#reset_path").click(function() {
 	//대중교통 경로 초기화
 	pubtranspath.deleteMarkers();
 	pubtranspath.deletePolylines();
+	for (var i = 0; i < pathElements.length; i++) {
+		pathElements[i].summary.remove();
+		pathElements[i].details.remove();
+	}
 });
 
 //출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
@@ -152,6 +156,10 @@ $("#btn_select").click(function () {
 		// 대중교통 경로 초기화
 		pubtranspath.deleteMarkers();
 		pubtranspath.deletePolylines();
+		for (var i = 0; i < pathElements.length; i++) {
+			pathElements[i].summary.remove();
+			pathElements[i].details.remove();
+		}
 
 		var headers = {};
 		headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
