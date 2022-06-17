@@ -15,20 +15,20 @@ import {pubtranspath} from "./pubtranspath.js";
 var startX, startY; //시작 x,y좌표담을 변수
 var endX, endY; //끝 x,y좌표를 담을 변수
 var startMarker; //시작 마커 변수
-var endMarker; //끝 마커 변수 			
+var endMarker; //끝 마커 변수
 var map; //tmap정보를 담을 map 객체
 var marker,marker_p; //각 마커들의 정보들을 담을 marker 객체
 var start,end; //시작 끝 좌표를 정보를 포함할 객체
 var lonlat;  //선택한 위치의 마커의 위치의 정보를 담을 객체
 var resultMarkerArr = []; //경로탐색시 마커를 담을 리스트
 var viaPointsList = []; //경유지 정보를 담을 리스트
-var drawInfoArr = [];  
+var drawInfoArr = [];
 var resultInfoArr = []; //경유지 마커를 담을 리스트
 var markercheck = false; //마커가 잘 그려졌는지 체크할때 사용
 var pathElements = []; //대중교통 이용 경로 표시 시 html 요소를 저장하는 배열
 
 
-//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행 
+//id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행
 $("#deleteStartMarker").click(function() {
 	startMarker.setMap(null);
 	startMarker = null;
@@ -78,7 +78,7 @@ function setPoint(e) {
 		startY = start._lng;
 		markercheck = true;
 	}
-	
+
 	else {
 		marker = new Tmapv2.Marker({
 			position: new Tmapv2.LatLng(lonlat.lat(),lonlat.lng()), //Marker의 중심좌표 설정.
@@ -124,8 +124,6 @@ function initTmap() {
 	resultMarkerArr = [];
 	//지도 띄우기
 	map = new Tmapv2.Map("map_div", {
-		width: "100%",
-		height: "400px",
 		center: new Tmapv2.LatLng(35.133948400981225, 129.10343170166053),
 		zoom: 14,
 		zoomControl: true,
@@ -209,7 +207,7 @@ $("#btn_select").click(function () {
 					drawInfoArr = [];
 					if (geometry.type == "LineString") {
 						for (var j in geometry.coordinates) {
-							//경로들의 결과값(구간)들을 포인트 객체로 변환 
+							//경로들의 결과값(구간)들을 포인트 객체로 변환
 							var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 							//포인트 객체를 받아 좌표값으로 변환
 							var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
@@ -242,7 +240,7 @@ $("#btn_select").click(function () {
 							size = new Tmapv2.Size(8, 8);
 						}
 
-						//경로들의 결과값들을 포인트 객체로 변환 
+						//경로들의 결과값들을 포인트 객체로 변환
 						var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
 						//포인트 객체를 받아 좌표값으로 다시 변환
 						var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
@@ -286,7 +284,7 @@ $("#btn_select").click(function () {
 				document.body.appendChild(pathElements[0].details);
 				pathElements[0].summary.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
 				pathElements[0].details.appendChild(pathElements[0].summary);
-				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, 
+				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
 				for (var i = 1; i < viaPointsList.length; i++) {
 					pathElements.push({
@@ -296,8 +294,8 @@ $("#btn_select").click(function () {
 					document.body.appendChild(pathElements[i].details);
 					pathElements[i].summary.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName;
 					pathElements[i].details.appendChild(pathElements[i].summary);
-					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details, 
-						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY), 
+					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
+						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
 						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
 				}
 				pathElements.push({
@@ -305,12 +303,12 @@ $("#btn_select").click(function () {
 					summary: document.createElement('summary')
 				});
 				document.body.appendChild(pathElements[viaPointsList.length].details);
-				pathElements[viaPointsList.length].summary.innerText = 
+				pathElements[viaPointsList.length].summary.innerText =
 					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
 				pathElements[viaPointsList.length].details.appendChild(pathElements[viaPointsList.length].summary);
-				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details, 
-					parseFloat(viaPointsList[viaPointsList.length - 1].viaX), 
-					parseFloat(viaPointsList[viaPointsList.length - 1].viaY), 
+				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details,
+					parseFloat(viaPointsList[viaPointsList.length - 1].viaX),
+					parseFloat(viaPointsList[viaPointsList.length - 1].viaY),
 					endY, endX, viaPointsList.length);
 			} else {
 				pathElements[0] = {
@@ -329,4 +327,3 @@ $("#btn_select").click(function () {
 });
 
 window.initTmap = initTmap;
-
