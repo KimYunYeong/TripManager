@@ -8,6 +8,9 @@ document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 function header(){
   document.write(
     '<header>'+
+      '<div id="logo">'+
+        '<a href="./index.html"><img src="./media/logo.gif" height="100%" width="100%"></a>'+
+      '</div>'+
       '<ul>'+
         '<li><a href="./index.html">Home</a></li>'+
         '<li><a href="./typeIndicator.html">여행 유형 테스트</a></li>'+
@@ -20,7 +23,7 @@ function header(){
 function footer(){
   document.write(
     '<footer>'+
-      '<img src="./media/logo.jpg">'+
+      '<a href="./index.html"><img src="./media/logo.gif"></a>'+
       '<ul>'+
         '<li>부산광역시 남구 용소로 45</li>'+
         '<li>부경대학교 컴퓨터공학과 웹프로그래밍 10조</li>'+

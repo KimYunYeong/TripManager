@@ -29,12 +29,17 @@ header{
   display: grid;
   height: 20vh;
   width: 100%;
+  grid-template-columns: 1fr 5fr;
+}
+header #logo{
+  height: 90%;
+  width: 80%;
+  margin-left: 10%;
 }
 header ul{
   padding: 0;
-  margin: 10px;
-  margin-top: 2%;
-  margin-right: 40px;
+  margin-top: 3%;
+  margin-right: 3%;
   text-align: right;
   font-size: 16px;
 }
