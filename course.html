@@ -3,15 +3,13 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8">
-    <title>Course - Trip Manager</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
+    <script type="text/javascript"
+    src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
     <script type="module" src="./JS/map.js"></script>
-    <script type="module" src="./JS/travel.js"></script>
-    <script type="module" src="./JS/pubtranspath.js"></script>
     <script src="./JS/script.js"></script>
 
     <style>
@@ -20,7 +18,7 @@
         height: 77vh;
       }
       #container #map{
-        float: center;
+        float: left;
         width: 60%;
         height: 100%;
       }
@@ -72,7 +70,7 @@
           여행지를 선택하고 상단 버튼을 누르면, 코스에 추가합니다.
         </p>
       </aside>
-      <div id="map"></div>
+      <div id="map_div"></div>
       <aside id="rightAside">
         <select id="selectLevel">
           <option value="0" selected="selected">교통최적+추천</option>
@@ -81,14 +79,21 @@
           <option value="3" >교통최적+초보</option>
           <option value="4" >대중교통</option>
         </select>
+        <br>
         <button id="btn_select">경로탐색 적용하기</button>
         <button id="deleteStartMarker">출발지 마커 제거 적용하기</button>
         <button id="deleteEndMarker">도착지 마커 제거 적용하기</button>
+        <br>
+        <button id="reset_path">경로 초기화</button>
       </aside>
     </article>
     <form id="pub"></form>
-    <scrpt>
+
+    <script>
       footer();
     </script>
+
+    <script type="module" src="./JS/travel.js"></script>
+    <script type="module" src="./JS/pubtranspath.js"></script>
   </body>
 </html>
