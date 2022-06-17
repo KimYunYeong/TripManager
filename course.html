@@ -25,16 +25,16 @@
       #container #leftAside{
         float: left;
         overflow-y: scroll;
-        width: 16%;
+        width: 18%;
         height: 100%;
-        padding: 2%;
+        padding: 1%;
       }
       #container #rightAside{
         float: right;
         overflow-y: scroll;
-        width: 16%;
+        width: 18%;
         height: 100%;
-        padding: 2%;
+        padding: 1%;
       }
 
     </style>
@@ -55,14 +55,17 @@
         <p id="selectTravel" sytle="display: inline;"></p>
 
         <h3>추천 여행지</h3>
-        <span class="detail_input_box">
+        <div class="detail_input_box">
           <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
-            <script type="module">
+            <!-- <script type="module">
               import {province} from "./JS/travel.js";
+              province();
+            </script> -->
+            <script>
               province();
             </script>
           </select>
-        </span>
+        </div>
 
         <div class="recommend_area">
           <h2>추천 여행지</h2>

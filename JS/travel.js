@@ -5,16 +5,16 @@ import {drawStop} from './map.js';
 import {makeViaPoint} from './map.js';
 import {setBoundary} from './map.js';
 
-//전역 변수 
+//전역 변수
 var dinput = document.querySelector('.detail_input');
 var add = document.querySelector(".AddTravel"); // class값이 AddTravel에 해당
 var destination = {
     longitude: [], //경도에 해당하는 변수
     latitude: [], // 위도에 해당하는 변수
-    travelname: [], //선택한 관광지의 이름이 담길 변수 
+    travelname: [], //선택한 관광지의 이름이 담길 변수
     recommend: []
 };
-var index = 1; 
+var index = 1;
 var destNameList = []; //선택한 관광지가 담길 리스트
 var checkedList = []; //체크박스 체크 정보를 저장할 리스트
 
@@ -45,7 +45,7 @@ dinput.addEventListener('change', function() {
 });
 
 // select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
-function recommendapi(area) { 
+function recommendapi(area) {
     var xhr = new XMLHttpRequest();
     var url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'; /*URL*/
     var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'yX8wx5nzKb42wtBThegyX7gb6G3xUCPCMfbzNYF1Gf0p0nSUn9ZeynPzokq9GNLvrFLmqQVbU9%2FQz9LckJpQLw%3D%3D'; /*Service Key*/
@@ -110,7 +110,7 @@ function displayPage(area, xml, page) {
         if (image[i + (10 * (page - 1))])
             destination.recommend[i].image.setAttribute("src", image[i + (10 * (page - 1))].innerHTML);
         if (addr1[i + (10 * (page - 1))])
-            destination.recommend[i].address.textContent = addr1[i + (10 * (page - 1))].textContent; 
+            destination.recommend[i].address.textContent = addr1[i + (10 * (page - 1))].textContent;
         if (addr2[i + (10 * (page - 1))])
             destination.recommend[i].address.textContent += addr2[i + (10 * (page - 1))].textContent;
         destination.recommend[i].details.appendChild(destination.recommend[i].summary);
@@ -146,4 +146,28 @@ function displayPage(area, xml, page) {
             displayPage(area, xml, page + 1);
         }
     });
+}
+
+// 팔도 refactoring
+function province(){
+  document.write(
+    '<option value="0">지역</option>'+
+    '<option value="1">서울</option>'+
+    '<option value="6">부산</option>'+
+    '<option value="2">인천</option>'+
+    '<option value="4">대구</option>'+
+    '<option value="5">광주</option>'+
+    '<option value="3">대전</option>'+
+    '<option value="7">울산</option>'+
+    '<option value="8">세종</option>'+
+    '<option value="31">경기</option>'+
+    '<option value="32">강원</option>'+
+    '<option value="33">충북</option>'+
+    '<option value="34">충남</option>'+
+    '<option value="35">경북</option>'+
+    '<option value="36">경남</option>'+
+    '<option value="37">전북</option>'+
+    '<option value="38">전남</option>'+
+    '<option value="39">제주</option>'
+  );
 }
