@@ -147,27 +147,3 @@ function displayPage(area, xml, page) {
         }
     });
 }
-
-// 팔도 refactoring
-function province(){
-  document.write(
-    '<option value="0">지역</option>'+
-    '<option value="1">서울</option>'+
-    '<option value="6">부산</option>'+
-    '<option value="2">인천</option>'+
-    '<option value="4">대구</option>'+
-    '<option value="5">광주</option>'+
-    '<option value="3">대전</option>'+
-    '<option value="7">울산</option>'+
-    '<option value="8">세종</option>'+
-    '<option value="31">경기</option>'+
-    '<option value="32">강원</option>'+
-    '<option value="33">충북</option>'+
-    '<option value="34">충남</option>'+
-    '<option value="35">경북</option>'+
-    '<option value="36">경남</option>'+
-    '<option value="37">전북</option>'+
-    '<option value="38">전남</option>'+
-    '<option value="39">제주</option>'
-  );
-}
