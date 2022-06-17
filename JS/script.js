@@ -5,21 +5,6 @@ document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
 '<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">');
 
-function indexHeader(){
-  document.write(
-    '<header id="indexHeader">'+
-      '<div id="logo">'+
-        '<a href="./index.html"><img src="./media/logo.gif" height="100%" width="100%"></a>'+
-      '</div>'+
-      '<ul>'+
-        '<li><a href="./index.html">Home</a></li>'+
-        '<li><a href="./typeIndicator.html">여행 유형 테스트</a></li>'+
-        '<li><a href="./destination.html">여행지</a></li>'+
-        '<li><a href="./course.html">여행코스</a></li>'+
-      '</ul>'+
-    '</header>');
-}
-
 function header(){
   document.write(
     '<header>'+

@@ -34,14 +34,14 @@
         float: left;
         overflow-y: scroll;
         width: 18%;
-        height: 100%;
+        height: 98%;
         padding: 1%;
       }
       #container #rightAside{
         float: right;
         overflow-y: scroll;
         width: 18%;
-        height: 100%;
+        height: 98%;
         padding: 1%;
       }
 
@@ -56,36 +56,31 @@
     <article id="container">
       <aside id="leftAside">
         <h2>여행 코스</h2>
-        <h3>지도를 클릭하여 출발지와 도착지를 정하세요.</h3>
-        <h3>원하는 지역을 선택하여 여행 코스를 추가하세요.</h3>
-
-        <p sytle="display: inline;"><여행 코스></p>
-        <p id="selectTravel" sytle="display: inline;"></p>
-
+        <h3>지도를 클릭하여 출발지와 도착지를 정하세요.<br>
+        원하는 지역을 선택하여 여행 코스를 추가하세요.</h3>
+        <br>
         <h3>추천 여행지</h3>
-        <!-- <div class="detail_input_box"> -->
-          <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
-            <option value="0">지역</option>
-            <option value="1">서울</option>
-            <option value="6">부산</option>
-            <option value="2">인천</option>
-            <option value="4">대구</option>
-            <option value="5">광주</option>
-            <option value="3">대전</option>
-            <option value="7">울산</option>
-            <option value="8">세종</option>
-            <option value="31">경기</option>
-            <option value="32">강원</option>
-            <option value="33">충북</option>
-            <option value="34">충남</option>
-            <option value="35">경북</option>
-            <option value="36">경남</option>
-            <option value="37">전북</option>
-            <option value="38">전남</option>
-            <option value="39">제주</option>
-          </select>
-        <!-- </div> -->
-
+        <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
+          <option value="0">지역</option>
+          <option value="1">서울</option>
+          <option value="6">부산</option>
+          <option value="2">인천</option>
+          <option value="4">대구</option>
+          <option value="5">광주</option>
+          <option value="3">대전</option>
+          <option value="7">울산</option>
+          <option value="8">세종</option>
+          <option value="31">경기</option>
+          <option value="32">강원</option>
+          <option value="33">충북</option>
+          <option value="34">충남</option>
+          <option value="35">경북</option>
+          <option value="36">경남</option>
+          <option value="37">전북</option>
+          <option value="38">전남</option>
+          <option value="39">제주</option>
+        </select>
+        <br>
         <h2>추천 여행지</h2>
         <button class="AddTravel">관광지를 지도에 추가해보세요.</button>
         <p>여행지를 선택하고 상단 버튼을 누르면, 코스에 추가합니다.</p>
@@ -100,13 +95,14 @@
           <option value="4">대중교통</option>
         </select>
         <button id="btn_select">경로탐색 적용하기</button>
+        <button id="reset_path">경로 초기화</button>
+        <br>
         <button id="deleteStartMarker">출발지 마커 제거하기</button>
         <button id="deleteEndMarker">도착지 마커 제거하기</button>
         <br>
-        <button id="reset_path">경로 초기화</button>
+        <form id="pub"></form>
       </aside>
     </article>
-    <form id="pub"></form>
 
     <script>
       footer();

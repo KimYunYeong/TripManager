@@ -25,14 +25,7 @@ a{
 }
 
 /*                                   header                                   */
-#indexHeader{
-  display: grid;
-  height: 20vh;
-  width: 100%;
-  grid-template-columns: 1fr 5fr;
-}
 header{
-  background-color: #EAFFD0;
   display: grid;
   height: 20vh;
   width: 100%;
