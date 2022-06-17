@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
-        <script 
+        <script
         src="//code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript"
         src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
@@ -26,7 +26,7 @@
         <br>
         <button id="reset_path">경로 초기화</button>
         <div id="map_wrap" class="map_wrap">
-            <div id="map_div"></div>
+            <div id="map_div" style="width: 100%; height: 400px"></div>
             <p id="result"></p>
 
             <article class="search_page">
@@ -34,8 +34,8 @@
                     <h2 class="search_topic">어디로 여행을 떠나시고 싶나요?</h2>
                     <h3>출발지와 도착지를 지도를 클릭하여 설정해주세요.</h3>
                     <h3>그 후 원하시는 지역을 선택하여 관광지를 살펴본 후 여행 코스를 알아보세요</h3>
-                    <h4>선택한 관광지</h4>   
-                    <div id="selectTravel"></div> 
+                    <h4>선택한 관광지</h4>
+                    <div id="selectTravel"></div>
                     <span class="detail_input_box">
                         <select class="detail_input" name="목록"> <!-- 선택시 value값에 따라 travel.js의 inputapi v값이 달라진다.-->
                             <option value="0">지역</option>
