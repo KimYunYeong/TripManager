@@ -147,7 +147,7 @@ function displayPage(area, xml, page) {
     }
     if (page > 1) {
         var prevButton = document.createElement('button');
-        prevButton.innerText = "이전 페이지";
+        prevButton.innerText = "이전";
         prevButton.id = "prev";
         recommendArea.appendChild(prevButton);
     }
@@ -156,7 +156,7 @@ function displayPage(area, xml, page) {
     recommendArea.appendChild(currentPage);
     if (page < Math.floor((totalCount + 1) / 10) + 1) {
         var nextButton = document.createElement('button');
-        nextButton.innerText = "다음 페이지";
+        nextButton.innerText = "다음";
         nextButton.id = "next";
         recommendArea.appendChild(nextButton);
     }
