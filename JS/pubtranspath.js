@@ -314,6 +314,7 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
         path[t] = {
             label: document.createElement('label'),
             radio: document.createElement('input'),
+            title: document.createElement('span'),
             details: document.createElement('details'),
             summary: document.createElement('summary'),
             list: document.createElement('ul'),
@@ -329,7 +330,8 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
         path[t].radio.type = "radio";
         path[t].radio.name = "path" + index;
         path[t].radio.value = t;
-        path[t].label.innerHTML += "경로 " + (t + 1);
+        path[t].title.innerText = "경로 " + (t + 1);
+        path[t].label.appendChild(path[t].title);
         path[t].label.appendChild(path[t].details);
         path[t].details.appendChild(path[t].summary);
         path[t].details.appendChild(path[t].list);
@@ -355,7 +357,6 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
             case 20:
                 path[t].summary.innerText = "시외교통 복합(열차 + 고속버스 등)";
         }
-        //path[t].summary.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
         for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
             switch (result["path"][t]["subPath"][i]["trafficType"]) {
                 case 1: //지하철
@@ -440,7 +441,7 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                     path[t].subList[i].appendChild(path[t].subPath[i]);
             }
         }
-        element.innerHTML += "<br>";
+        var br = document.createElement('br');
+        element.appendChilde(br);
     }
 }
-
