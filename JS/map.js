@@ -10,8 +10,7 @@ export {endY};
 
 //대중교통 경로 정보를 위해 pubtranspath import, 경유지 정보를 위해 checkedList import
 import {pubtranspath} from "./pubtranspath.js";
-import {checkedList} from "./travel.js";
-import {destination} from "./travel.js";
+import {resetWaypoints} from "./travel.js";
 
 //전역 변수
 var startX, startY; //시작 x,y좌표담을 변수
@@ -51,11 +50,8 @@ $("#deleteWaypointMarker").click(function() {
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
-	for (var i = 0; i < checkedList.length; i++)
-		checkedList[i] = null;
-	checkedList = [];
-	for (var i = 0; i < destination.recommend[i].length; i++)
-		destination.recommend[i].checkBox.checked = false;
+	viaPointsList = [];
+	resetWaypoints();
 });
 
 //id값이 deleteAllMarker에 해당하는 버튼 클릭시 모든 마커를 지우는 이벤트 실행
@@ -71,11 +67,8 @@ $("#deleteAllMarker").click(function() {
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
-	for (var i = 0; i < checkedList.length; i++)
-		checkedList[i] = null;
-	checkedList = [];
-	for (var i = 0; i < destination.recommend[i].length; i++)
-		destination.recommend[i].checkBox.checked = false;
+	viaPointsList = [];
+	resetWaypoints();
 });
 
 //경로 초기화
