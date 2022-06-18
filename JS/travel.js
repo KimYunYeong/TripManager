@@ -22,7 +22,6 @@ var checkedList = []; //체크박스 체크 정보를 저장할 리스트
 add.addEventListener('click', function() {
     //recommendapi(dinput.value);
     for (var i = 0; i < destination.recommend.length; i++) {
-        console.log(i + ", " + destination.recommend[i].checkBox.checked);
         if (dinput.value != 0 && destination.recommend[i].checkBox.checked) {
             if (!checkedList[dinput.value][destination.recommend[i].checkBox.value]) {
                 destNameList.push(destination.travelname[i] + "\n");
@@ -91,20 +90,21 @@ function displayPage(area, xml, page) {
     destination.recommend = [];
     for (var i = 0; i < max; i++) {
         destination.recommend[i] = {
+            label: document.createElement('label'),
             checkBox: document.createElement('input'),
             details: document.createElement('details'),
             summary: document.createElement('summary'),
             image: document.createElement('img'),
             address: document.createElement('p')
         };
+        recommendArea.appendChild(destination.recommend[i].label);
         destination.recommend[i].checkBox.type = 'checkbox';
         destination.recommend[i].checkBox.name = 'destination';
         destination.recommend[i].checkBox.value = i + (10 * (page - 1));
         if (checkedList[area][i + (10 * (page - 1))])
             destination.recommend[i].checkBox.checked = true;
-        recommendArea.appendChild(destination.recommend[i].checkBox);
-        recommendArea.innerHTML += "여행지 " + (i + (10 * (page - 1)) + 1);
-        recommendArea.appendChild(destination.recommend[i].details);
+        destination.recommend[i].label.appendChild(destination.recommend[i].checkBox);
+        destination.recommend[i].label.appendChild(destination.recommend[i].details);
         if (names[i + (10 * (page - 1))])
             destination.recommend[i].summary.textContent = names[i + (10 * (page - 1))].textContent;
         if (image[i + (10 * (page - 1))])
@@ -116,7 +116,6 @@ function displayPage(area, xml, page) {
         destination.recommend[i].details.appendChild(destination.recommend[i].summary);
         destination.recommend[i].details.appendChild(destination.recommend[i].image);
         destination.recommend[i].details.appendChild(destination.recommend[i].address);
-        recommendArea.innerHTML += "<br>";
         if (x[i + (10 * (page - 1))])
             destination.longitude[i] = parseFloat(x[i + (10 * (page - 1))].textContent);
         if (y[i + (10 * (page - 1))])
