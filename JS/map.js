@@ -277,6 +277,7 @@ $("#btn_select").click(function () {
 			pathElements[i].summary.remove();
 			pathElements[i].details.remove();
 		}
+		pubPathList.innerHTML = "<b>대중교통 경로</b><br>";
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
 				pathElements.push({
