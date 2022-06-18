@@ -145,7 +145,11 @@ function setBoundary() {
 	for (var i = 0; i < viaPointsList.length; i++) {
 		coords.push([parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY)]);
 	}
-	pubtranspath.setTmapBoundary(map, coords);
+	if (coords[0]) {
+		pubtranspath.setTmapBoundary(map, coords);
+	} else {
+		console.log("마커가 존재하지 않습니다.");
+	}
 }
 
 //btn_select버튼을 누를시 경로탐색 API 사용요청
