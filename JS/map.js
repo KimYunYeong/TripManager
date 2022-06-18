@@ -51,6 +51,8 @@ $("#deleteWaypointMarker").click(function() {
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
+	for (var i = 0; i < checkedList.length; i++)
+		checkedList[i] = null;
 	checkedList = [];
 	for (var i = 0; i < destination.recommend[i].length; i++)
 		destination.recommend[i].checkBox.checked = false;
@@ -69,6 +71,8 @@ $("#deleteAllMarker").click(function() {
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
+	for (var i = 0; i < checkedList.length; i++)
+		checkedList[i] = null;
 	checkedList = [];
 	for (var i = 0; i < destination.recommend[i].length; i++)
 		destination.recommend[i].checkBox.checked = false;
