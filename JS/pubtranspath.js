@@ -314,6 +314,7 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
         path[t] = {
             label: document.createElement('label'),
             radio: document.createElement('input'),
+            title: document.createElement('span'),
             details: document.createElement('details'),
             summary: document.createElement('summary'),
             list: document.createElement('ul'),
@@ -321,7 +322,6 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
             subPath: []
         };
 
-        element.setAttribute("line-height", 1.8);
         if (t == 0)
             path[t].radio.checked = true;
         element.appendChild(path[t].label);
@@ -329,7 +329,8 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
         path[t].radio.type = "radio";
         path[t].radio.name = "path" + index;
         path[t].radio.value = t;
-        path[t].label.innerHTML += "<strong>경로 " + (t + 1) + "</strong>";
+        path[t].title.innerText = "경로 " + (t + 1);
+        path[t].label.appendChild(path[t].title);
         path[t].label.appendChild(path[t].details);
         path[t].details.appendChild(path[t].summary);
         path[t].details.appendChild(path[t].list);
@@ -355,7 +356,6 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
             case 20:
                 path[t].summary.innerText = "시외교통 복합(열차 + 고속버스 등)";
         }
-        //path[t].summary.innerText += " (총 " + result["path"][t]["info"]["totalTime"] + "분)";
         for (var i = 0; i < result["path"][t]["subPath"].length; i++) {
             switch (result["path"][t]["subPath"][i]["trafficType"]) {
                 case 1: //지하철
@@ -365,8 +365,11 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["stationCount"] + "개 역, " + result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
-                        path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                    for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++) {
+                        var li = document.createElement('li');
+                        li.innerText = result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"];
+                        path[t].subPath[i].appendChild(li);
+                    }
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
                 case 2: //버스
@@ -381,13 +384,18 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++)
-                        path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"] + "</li>";
+                    for (var k = 0; k < result["path"][t]["subPath"][i]["passStopList"]["stations"].length; k++) {
+                        var li = document.createElement('li');
+                        li.innerText = result["path"][t]["subPath"][i]["passStopList"]["stations"][k]["stationName"];
+                        path[t].subPath[i].appendChild(li);
+                    }
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
                 case 3: //도보
-                    path[t].list.innerHTML += "<li>도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
-                        result["path"][t]["subPath"][i]["sectionTime"] + "분)</li>";
+                    var li = document.createElement('li');
+                    li.innerText = "도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" + 
+                        result["path"][t]["subPath"][i]["sectionTime"] + "분)";
+                    path[t].list.appendChild(li);
                     break;
                 case 4: //열차
                     var trainName = {
@@ -405,8 +413,10 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
-                        result["path"][t]["subPath"][i]["endName"] + "</li>";
+                    var li = document.createElement('li');
+                    li.innerText = result["path"][t]["subPath"][i]["startName"] + "->" +
+                        result["path"][t]["subPath"][i]["endName"];
+                    path[t].subPath[i].appendChild(li);
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
                 case 5: //고속버스
@@ -415,8 +425,10 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
-                        result["path"][t]["subPath"][i]["endName"] + "</li>";
+                    var li = document.createElement('li');
+                    li.innerText = result["path"][t]["subPath"][i]["startName"] + "->" +
+                        result["path"][t]["subPath"][i]["endName"];
+                    path[t].subPath[i].appendChild(li);
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
                 case 6: //시외버스
@@ -425,8 +437,10 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
-                        result["path"][t]["subPath"][i]["endName"] + "</li>";
+                    var li = document.createElement('li');
+                    li.innerText = result["path"][t]["subPath"][i]["startName"] + "->" +
+                        result["path"][t]["subPath"][i]["endName"];
+                    path[t].subPath[i].appendChild(li);
                     path[t].subList[i].appendChild(path[t].subPath[i]);
                     break;
                 case 7: //항공
@@ -435,11 +449,14 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(path[t].subList[i]);
                     path[t].subPath[i] = document.createElement("ul");
-                    path[t].subPath[i].innerHTML += "<li>" + result["path"][t]["subPath"][i]["startName"] + "->" +
-                        result["path"][t]["subPath"][i]["endName"] + "</li>";
+                    var li = document.createElement('li');
+                    li.innerText = result["path"][t]["subPath"][i]["startName"] + "->" +
+                        result["path"][t]["subPath"][i]["endName"];
+                    path[t].subPath[i].appendChild(li);
                     path[t].subList[i].appendChild(path[t].subPath[i]);
             }
         }
-        element.innerHTML += "<br>";
+        var br = document.createElement('br');
+        element.appendChild(br);
     }
 }
