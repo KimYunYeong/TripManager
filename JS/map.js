@@ -34,6 +34,9 @@ $("#deleteStartMarker").click(function() {
 	if (startMarker) {
 		startMarker.setMap(null);
 		startMarker = null;
+		startX = null;
+		startY = null;
+		start = null;
 	}
 });
 
@@ -42,6 +45,9 @@ $("#deleteEndMarker").click(function() {
 	if (endMarker) {
 		endMarker.setMap(null);
 		endMarker = null;
+		endX = null;
+		endY = null;
+		end = null;
 	}
 });
 
@@ -59,10 +65,16 @@ $("#deleteAllMarker").click(function() {
 	if (startMarker) {
 		startMarker.setMap(null);
 		startMarker = null;
+		startX = null;
+		startY = null;
+		start = null;
 	}
 	if (endMarker) {
 		endMarker.setMap(null);
 		endMarker = null;
+		endX = null;
+		endY = null;
+		end = null;
 	}
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
