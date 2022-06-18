@@ -103,7 +103,7 @@ function displayPage(area, xml, page) {
         destination.recommend[i].checkBox.name = 'destination';
         destination.recommend[i].checkBox.value = i + (10 * (page - 1));
         //test
-        destination.recomment[i].checkBox.checked = true;
+        destination.recommend[i].checkBox.checked = true;
         if (checkedList[area][i + (10 * (page - 1))])
             destination.recommend[i].checkBox.checked = true;
         destination.recommend[i].label.appendChild(destination.recommend[i].checkBox);
