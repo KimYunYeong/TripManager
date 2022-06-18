@@ -99,7 +99,7 @@ pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, end
                     pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "g", i + 1, index);
                     pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "g", i + 1, index);
                 }
-                pubtranspath.setTmapBoundary(coords);
+                pubtranspath.setTmapBoundary(map, coords);
             }
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
