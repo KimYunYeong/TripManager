@@ -1,8 +1,7 @@
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
 
-//경유지 정보 초기화를 위해 checkedList, destination export
-export {checkedList};
-export {destination};
+//경유지 정보 초기화를 위해 resetWaypoints export
+export {resetWaypoints};
 
 //map.js의 drawstop, makeViaPoint, setBoundary 메소드를 사용하기 위해 import
 import {drawStop} from './map.js';
@@ -47,6 +46,15 @@ dinput.addEventListener('change', function() {
         recommendapi(v);
     }
 });
+
+// 경유지 초기화 함수
+function resetWaypoints() {
+    for (var i = 0; i < checkedList.length; i++)
+		checkedList[i] = null;
+	checkedList = [];
+	for (var i = 0; i < destination.recommend[i].length; i++)
+		destination.recommend[i].checkBox.checked = false;
+}
 
 // select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
 function recommendapi(area) {
