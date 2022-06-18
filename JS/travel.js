@@ -145,20 +145,22 @@ function displayPage(area, xml, page) {
         if (names[i + (10 * (page - 1))])
             destination.travelname[i] = names[i + (10 * (page - 1))].textContent;
     }
-    if (page > 1) {
-        var prevButton = document.createElement('button');
-        prevButton.innerText = "이전";
-        prevButton.id = "prev";
-        recommendArea.appendChild(prevButton);
-    }
+    var prevButton = document.createElement('button');
+    prevButton.innerText = "이전";
+    prevButton.id = "prev";
+    recommendArea.appendChild(prevButton);
     var currentPage = document.createElement('span');
     currentPage.innerText = " <" + page + "> ";
     recommendArea.appendChild(currentPage);
-    if (page < Math.floor((totalCount + 1) / 10) + 1) {
-        var nextButton = document.createElement('button');
-        nextButton.innerText = "다음";
-        nextButton.id = "next";
-        recommendArea.appendChild(nextButton);
+    var nextButton = document.createElement('button');
+    nextButton.innerText = "다음";
+    nextButton.id = "next";
+    recommendArea.appendChild(nextButton);
+    if (page <= 1) {
+        prevButton.disabled = true;
+    }
+    if (page >= Math.floor((totalCount + 1) / 10) + 1) {
+        prevButton.disabled = true;
     }
     recommendArea.addEventListener('click', function(e) {
         if (e.target.id == "prev") {
