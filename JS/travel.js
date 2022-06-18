@@ -50,10 +50,12 @@ dinput.addEventListener('change', function() {
 // 경유지 초기화 함수
 function resetWaypoints() {
     for (var i = 0; i < checkedList.length; i++)
-		checkedList[i] = null;
-	checkedList = [];
-	for (var i = 0; i < destination.recommend[i].length; i++)
-		destination.recommend[i].checkBox.checked = false;
+	checkedList[i] = null;
+    checkedList = [];
+    for (var i = 0; i < destination.recommend[i].length; i++)
+	destination.recommend[i].checkBox.checked = false;
+    destNameList = [];
+    index = 1;
 }
 
 // select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
