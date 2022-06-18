@@ -5,7 +5,7 @@ document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
 '<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">');
 //                              thumbnail img
-document.write('<meta content="./media/logo.gif" property="og:img">');
+// document.write('<meta content="./media/logo.gif" property="og:img">');
 
 function header(){
   document.write(
