@@ -102,10 +102,12 @@ function displayPage(area, xml, page) {
         destination.recommend[i].checkBox.type = 'checkbox';
         destination.recommend[i].checkBox.name = 'destination';
         destination.recommend[i].checkBox.value = i + (10 * (page - 1));
+        //test
+        destination.recomment[i].checkBox.checked = true;
         if (checkedList[area][i + (10 * (page - 1))])
             destination.recommend[i].checkBox.checked = true;
         destination.recommend[i].label.appendChild(destination.recommend[i].checkBox);
-        //destination.recommend[i].label.innerHTML += "여행지 " + (i + (10 * (page - 1)) + 1);
+        destination.recommend[i].label.innerHTML += "여행지 " + (i + (10 * (page - 1)) + 1);
         destination.recommend[i].label.appendChild(destination.recommend[i].details);
         if (names[i + (10 * (page - 1))])
             destination.recommend[i].summary.textContent = names[i + (10 * (page - 1))].textContent;
