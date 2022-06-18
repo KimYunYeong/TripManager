@@ -40,6 +40,28 @@ $("#deleteEndMarker").click(function() {
 	endMarker = null;
 });
 
+//id값이 deleteWaypointMarker에 해당하는 버튼 클릭시 경유지 마커를 지우는 이벤트 실행
+$("#deleteEndMarker").click(function() {
+	for (var i = 0; i < resultMarkerArr.length; i++) {
+		resultMarkerArr[i].setMap(null);
+		resultMarkerArr[i] = null;
+	}
+	resultMarkerArr = [];
+});
+
+//id값이 deleteAllMarker에 해당하는 버튼 클릭시 모든 마커를 지우는 이벤트 실행
+$("#deleteEndMarker").click(function() {
+	startMarker.setMap(null);
+	startMarker = null;
+	endMarker.setMap(null);
+	endMarker = null;
+	for (var i = 0; i < resultMarkerArr.length; i++) {
+		resultMarkerArr[i].setMap(null);
+		resultMarkerArr[i] = null;
+	}
+	resultMarkerArr = [];
+});
+
 //경로 초기화
 $("#reset_path").click(function() {
 	//자동차 경로 초기화
