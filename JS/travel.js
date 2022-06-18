@@ -111,7 +111,9 @@ function displayPage(area, xml, page) {
         if (names[i + (10 * (page - 1))])
             destination.recommend[i].summary.textContent = names[i + (10 * (page - 1))].textContent;
         if (image[i + (10 * (page - 1))])
-            destination.recommend[i].image.setAttribute("src", image[i + (10 * (page - 1))].innerHTML);
+            destination.recommend[i].image.setAttribute('src', image[i + (10 * (page - 1))].innerHTML);
+        destination.recommend[i].image.setAttribute('width', '100%');
+        destination.recommend[i].image.setAttribute('height', '100%');
         if (addr1[i + (10 * (page - 1))])
             destination.recommend[i].address.textContent = addr1[i + (10 * (page - 1))].textContent;
         if (addr2[i + (10 * (page - 1))])
