@@ -96,10 +96,10 @@ pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, end
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "g", i + 1, index);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "g", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1, index);
                 }
-                pubtranspath.setTmapBoundary(map, coords);
+                pubtranspath.setTmapBoundary(coords);
             }
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
@@ -303,8 +303,8 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                 for (var i = 0; i < result['path'][e.target.value]["subPath"].length; i++) {
                     coords.push([result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"]]);
                     coords.push([result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "g", i + 1, index);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "g", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "b", i + 1, index);
                 }
                 pubtranspath.setTmapBoundary(map, coords);
             }

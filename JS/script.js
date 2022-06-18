@@ -4,6 +4,8 @@ document.write('<link rel="stylesheet" href="./CSS/style.css">');
 document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
 '<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">');
+//                              thumbnail img
+<meta content="./media/logo.gif" property="og:img">
 
 function header(){
   document.write(
