@@ -267,6 +267,8 @@ $("#btn_select").click(function () {
 		});
 	} else { //대중교통 경로 지도에 표시
 		var pubPathList = document.getElementById('pub');
+		var mainTitle = document.createElement('strong');
+		var br = document.createElement('br');
 		//자동차 경로 초기화
 		if (resultInfoArr.length > 0) {
 			for (var i in resultInfoArr) {
@@ -281,39 +283,48 @@ $("#btn_select").click(function () {
 			pathElements[i].summary.remove();
 			pathElements[i].details.remove();
 		}
-		pubPathList.innerHTML = "<strong>대중교통 경로</strong><br><br>";
+		mainTitle.innerText = "대중교통 경로";
+		pubPathList.appendChild(mainTitle);
+		pubPathList.appendChild(br);
+		pubPathList.appendChild(br);
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
+				var strong;
 				pathElements.push({
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
 				pubPathList.appendChild(pathElements[0].details);
-				pathElements[0].summary.innerHTML = "<strong>시작점 -> " + viaPointsList[0].viaPointName + "</strong>";
+				strong = document.createElement('strong');
+				strong.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
+				pathElements[0].summary.appendChild(strong);
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
-				pubPathList.innerHTML += "<br>";
+				pubPathList.appendChild(br);
 				for (var i = 1; i < viaPointsList.length; i++) {
 					pathElements.push({
 						details: document.createElement('details'),
 						summary: document.createElement('summary')
 					});
 					pubPathList.appendChild(pathElements[i].details);
-					pathElements[i].summary.innerHTML = "<strong>" + viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName + "</strong>";
+					strong = document.createElement('strong');
+					strong.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName
+					pathElements[i].summary.appendChild(strong);
 					pathElements[i].details.appendChild(pathElements[i].summary);
 					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
 						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
 						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
-					pubPathList.innerHTML += "<br>";
+					pubPathList.appendChild(br);
 				}
 				pathElements.push({
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
 				pubPathList.appendChild(pathElements[viaPointsList.length].details);
-				pathElements[viaPointsList.length].summary.innerHTML =
-					"<strong>" + viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점</strong>";
+				strong = document.createElement('strong');
+				strong.innerText = viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
+				pathElements[viaPointsList.length].summary.appendChild(strong);
 				pathElements[viaPointsList.length].details.appendChild(pathElements[viaPointsList.length].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details,
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX),
@@ -324,8 +335,10 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				};
+				var strong = document.createElement('strong');
 				pubPathList.appendChild(pathElements[0].details);
-				pathElements[0].summary.innerHTML = "<strong>시작점 -> 도착점</strong>";
+				strong.innerText = "시작점 -> 도착점";
+				pathElements[0].summary.appendChild(strong);
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, endY, endX, 0);
 			}
