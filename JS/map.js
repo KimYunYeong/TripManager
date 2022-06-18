@@ -27,6 +27,7 @@ var drawInfoArr = [];
 var resultInfoArr = []; //경유지 마커를 담을 리스트
 var markercheck = false; //마커가 잘 그려졌는지 체크할때 사용
 var pathElements = []; //대중교통 이용 경로 표시 시 html 요소를 저장하는 배열
+var fieldset; //대중교통 경로 표시 시 이용할 fieldset 태그
 
 
 //id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행
@@ -84,10 +85,8 @@ $("#reset_path").click(function() {
 	//대중교통 경로 초기화
 	pubtranspath.deleteMarkers();
 	pubtranspath.deletePolylines();
-	for (var i = 0; i < pathElements.length; i++) {
-		pathElements[i].summary.remove();
-		pathElements[i].details.remove();
-	}
+	if (fieldset)
+		fieldset.remove();
 });
 
 //출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
@@ -190,10 +189,8 @@ $("#btn_select").click(function () {
 		// 대중교통 경로 초기화
 		pubtranspath.deleteMarkers();
 		pubtranspath.deletePolylines();
-		for (var i = 0; i < pathElements.length; i++) {
-			pathElements[i].summary.remove();
-			pathElements[i].details.remove();
-		}
+		if (fieldset)
+			fieldset.remove();
 
 		var headers = {};
 		headers["appKey"] = "l7xx3dc390d857ce47b799654e151dcbefe7";
@@ -298,7 +295,7 @@ $("#btn_select").click(function () {
 		});
 	} else { //대중교통 경로 지도에 표시
 		var pubPathList = document.getElementById('pub');
-		var fieldset = document.createElement('fieldset');
+		fieldset = document.createElement('fieldset');
 		var legend = document.createElement('legend');
 		var mainTitle = document.createElement('strong');
 		var br = document.createElement('br');
@@ -312,10 +309,8 @@ $("#btn_select").click(function () {
 		//대중교통 경로 초기화
 		pubtranspath.deleteMarkers();
 		pubtranspath.deletePolylines();
-		for (var i = 0; i < pathElements.length; i++) {
-			pathElements[i].summary.remove();
-			pathElements[i].details.remove();
-		}
+		if (fieldset)
+			fieldset.remove();
 		mainTitle.innerText = "대중교통 경로";
 		pubPathList.appendChild(fieldset);
 		fieldset.appendChild(legend);
