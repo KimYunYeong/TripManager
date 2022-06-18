@@ -22,6 +22,7 @@ var checkedList = []; //체크박스 체크 정보를 저장할 리스트
 add.addEventListener('click', function() {
     //recommendapi(dinput.value);
     for (var i = 0; i < destination.recommend.length; i++) {
+        console.log(i + ", " + destination.recommend[i].checkBox.checked);
         if (dinput.value != 0 && destination.recommend[i].checkBox.checked) {
             if (!checkedList[dinput.value][destination.recommend[i].checkBox.value]) {
                 destNameList.push(destination.travelname[i] + "\n");
