@@ -78,7 +78,7 @@ pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, end
     markerArr[index] = [];
     polylineArr[index] = [];
     //ODsay apiKey 입력
-    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" + 
+    var url = "https://api.odsay.com/v1/api/searchPubTransPathT?SX=" +
     startx + "&SY=" + starty + "&EX=" + endx + "&EY=" + endy + "&apiKey=eeggkE1bO4hafaPrhL%2BROg";
     xhr.open("GET", url, true);
     xhr.send();
@@ -96,10 +96,10 @@ pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, end
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "b", i + 1, index);
-                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"], "g", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"], "g", i + 1, index);
                 }
-                pubtranspath.setTmapBoundary(coords);
+                pubtranspath.setTmapBoundary(map, coords);
             }
             //var subPath = data["result"]["path"][0]["subPath"];
             //walkPath(subPath, startx, starty, endx, endy);
@@ -303,8 +303,8 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                 for (var i = 0; i < result['path'][e.target.value]["subPath"].length; i++) {
                     coords.push([result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"]]);
                     coords.push([result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"]]);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "b", i + 1, index);
-                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "b", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"], "g", i + 1, index);
+                    pubtranspath.drawTmapMarker(map, result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"], "g", i + 1, index);
                 }
                 pubtranspath.setTmapBoundary(map, coords);
             }
@@ -393,7 +393,7 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                     break;
                 case 3: //도보
                     var li = document.createElement('li');
-                    li.innerText = "도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" + 
+                    li.innerText = "도보 " + result["path"][t]["subPath"][i]["distance"] + "m (" +
                         result["path"][t]["subPath"][i]["sectionTime"] + "분)";
                     path[t].list.appendChild(li);
                     break;
