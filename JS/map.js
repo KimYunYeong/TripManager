@@ -293,6 +293,8 @@ $("#btn_select").click(function () {
 		});
 	} else { //대중교통 경로 지도에 표시
 		var pubPathList = document.getElementById('pub');
+		var fieldset = document.createElement('fieldset');
+		var legend = document.createElement('legend');
 		var mainTitle = document.createElement('strong');
 		var br = document.createElement('br');
 		//자동차 경로 초기화
@@ -310,11 +312,9 @@ $("#btn_select").click(function () {
 			pathElements[i].details.remove();
 		}
 		mainTitle.innerText = "대중교통 경로";
-		pubPathList.appendChild(mainTitle);
-		br = document.createElement('br');
-		pubPathList.appendChild(br);
-		br = document.createElement('br');
-		pubPathList.appendChild(br);
+		pubPathList.appendChild(fieldset);
+		fieldset.appendChild(legend);
+		legend.appendChild(mainTitle);
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
 				var strong;
@@ -322,7 +322,7 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
-				pubPathList.appendChild(pathElements[0].details);
+				fieldset.appendChild(pathElements[0].details);
 				strong = document.createElement('strong');
 				strong.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
 				pathElements[0].summary.appendChild(strong);
@@ -330,13 +330,13 @@ $("#btn_select").click(function () {
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
 				br = document.createElement('br');
-				pubPathList.appendChild(br);
+				fieldset.appendChild(br);
 				for (var i = 1; i < viaPointsList.length; i++) {
 					pathElements.push({
 						details: document.createElement('details'),
 						summary: document.createElement('summary')
 					});
-					pubPathList.appendChild(pathElements[i].details);
+					fieldset.appendChild(pathElements[i].details);
 					strong = document.createElement('strong');
 					strong.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName
 					pathElements[i].summary.appendChild(strong);
@@ -345,13 +345,13 @@ $("#btn_select").click(function () {
 						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
 						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
 					br = document.createElement('br');
-					pubPathList.appendChild(br);
+					fieldset.appendChild(br);
 				}
 				pathElements.push({
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
-				pubPathList.appendChild(pathElements[viaPointsList.length].details);
+				fieldset.appendChild(pathElements[viaPointsList.length].details);
 				strong = document.createElement('strong');
 				strong.innerText = viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
 				pathElements[viaPointsList.length].summary.appendChild(strong);
@@ -366,7 +366,7 @@ $("#btn_select").click(function () {
 					summary: document.createElement('summary')
 				};
 				var strong = document.createElement('strong');
-				pubPathList.appendChild(pathElements[0].details);
+				fieldset.appendChild(pathElements[0].details);
 				strong.innerText = "시작점 -> 도착점";
 				pathElements[0].summary.appendChild(strong);
 				pathElements[0].details.appendChild(pathElements[0].summary);
