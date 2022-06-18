@@ -285,7 +285,7 @@ $("#btn_select").click(function () {
 					summary: document.createElement('summary')
 				});
 				pubPathList.appendChild(pathElements[0].details);
-				pathElements[0].summary.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
+				pathElements[0].summary.innerHTML = "<strong>시작점 -> " + viaPointsList[0].viaPointName + "</strong>";
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
@@ -295,7 +295,7 @@ $("#btn_select").click(function () {
 						summary: document.createElement('summary')
 					});
 					pubPathList.appendChild(pathElements[i].details);
-					pathElements[i].summary.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName;
+					pathElements[i].summary.innerHTML = "<strong>" + viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName + "</strong>";
 					pathElements[i].details.appendChild(pathElements[i].summary);
 					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
 						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
@@ -306,8 +306,8 @@ $("#btn_select").click(function () {
 					summary: document.createElement('summary')
 				});
 				pubPathList.appendChild(pathElements[viaPointsList.length].details);
-				pathElements[viaPointsList.length].summary.innerText =
-					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
+				pathElements[viaPointsList.length].summary.innerHTML =
+					"<strong>" + viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점</strong>";
 				pathElements[viaPointsList.length].details.appendChild(pathElements[viaPointsList.length].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[viaPointsList.length].details,
 					parseFloat(viaPointsList[viaPointsList.length - 1].viaX),
@@ -319,7 +319,7 @@ $("#btn_select").click(function () {
 					summary: document.createElement('summary')
 				};
 				pubPathList.appendChild(pathElements[0].details);
-				pathElements[0].summary.innerText = "시작점 -> 도착점";
+				pathElements[0].summary.innerHTML = "<strong>시작점 -> 도착점</strong>";
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, endY, endX, 0);
 			}
