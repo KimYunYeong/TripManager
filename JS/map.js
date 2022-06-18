@@ -45,14 +45,14 @@ $("#deleteEndMarker").click(function() {
 });
 
 //id값이 deleteWaypointMarker에 해당하는 버튼 클릭시 경유지 마커를 지우는 이벤트 실행
-$("#deleteEndMarker").click(function() {
+$("#deleteWaypointMarker").click(function() {
 	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
 });
 
 //id값이 deleteAllMarker에 해당하는 버튼 클릭시 모든 마커를 지우는 이벤트 실행
-$("#deleteEndMarker").click(function() {
+$("#deleteAllMarker").click(function() {
 	if (startMarker) {
 		startMarker.setMap(null);
 		startMarker = null;
