@@ -56,6 +56,7 @@ function resetWaypoints() {
 	destination.recommend[i].checkBox.checked = false;
     destNameList = [];
     index = 1;
+    document.getElementById("selectTravel").innerHTML = "";
 }
 
 // select 값 변경시 해당 지역의 관광지에 대한 api 호출 함수
