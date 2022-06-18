@@ -285,7 +285,9 @@ $("#btn_select").click(function () {
 		}
 		mainTitle.innerText = "대중교통 경로";
 		pubPathList.appendChild(mainTitle);
+		br = document.createElement('br');
 		pubPathList.appendChild(br);
+		br = document.createElement('br');
 		pubPathList.appendChild(br);
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
@@ -301,6 +303,7 @@ $("#btn_select").click(function () {
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
+				br = document.createElement('br');
 				pubPathList.appendChild(br);
 				for (var i = 1; i < viaPointsList.length; i++) {
 					pathElements.push({
@@ -315,6 +318,7 @@ $("#btn_select").click(function () {
 					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
 						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
 						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
+					br = document.createElement('br');
 					pubPathList.appendChild(br);
 				}
 				pathElements.push({
