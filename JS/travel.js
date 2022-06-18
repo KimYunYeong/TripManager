@@ -117,6 +117,7 @@ function displayPage(area, xml, page) {
         destination.recommend[i].details.appendChild(destination.recommend[i].summary);
         destination.recommend[i].details.appendChild(destination.recommend[i].image);
         destination.recommend[i].details.appendChild(destination.recommend[i].address);
+        recommendArea.innerHTML += "<br>";
         if (x[i + (10 * (page - 1))])
             destination.longitude[i] = parseFloat(x[i + (10 * (page - 1))].textContent);
         if (y[i + (10 * (page - 1))])
