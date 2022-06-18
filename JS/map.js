@@ -48,6 +48,7 @@ $("#reset_path").click(function() {
 			resultInfoArr[i].setMap(null);
 		}
 		resultInfoArr = [];
+		$("#result").text("");
 	}
 	//대중교통 경로 초기화
 	pubtranspath.deleteMarkers();
