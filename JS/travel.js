@@ -1,7 +1,8 @@
 // 공공데이터 api를 이용하여 원하는 지역의 관광지 받아와 출력해주는 기능
 
-//경유지 정보 초기화를 위해 checkedList export
+//경유지 정보 초기화를 위해 checkedList, destination export
 export {checkedList};
+export {destination};
 
 //map.js의 drawstop, makeViaPoint, setBoundary 메소드를 사용하기 위해 import
 import {drawStop} from './map.js';
