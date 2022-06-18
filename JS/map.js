@@ -30,35 +30,39 @@ var pathElements = []; //대중교통 이용 경로 표시 시 html 요소를 �
 
 //id값이 deleteStartMarker에 해당하는 버튼 클릭시 start마커를 지우는 이벤트 실행
 $("#deleteStartMarker").click(function() {
-	startMarker.setMap(null);
-	startMarker = null;
+	if (startMarker) {
+		startMarker.setMap(null);
+		startMarker = null;
+	}
 });
 
 //id값이 deleteEndMarker에 해당하는 버튼 클릭시 end마커를 지우는 이벤트 실행
 $("#deleteEndMarker").click(function() {
-	endMarker.setMap(null);
-	endMarker = null;
+	if (endMarker) {
+		endMarker.setMap(null);
+		endMarker = null;
+	}
 });
 
 //id값이 deleteWaypointMarker에 해당하는 버튼 클릭시 경유지 마커를 지우는 이벤트 실행
 $("#deleteEndMarker").click(function() {
-	for (var i = 0; i < resultMarkerArr.length; i++) {
+	for (var i = 0; i < resultMarkerArr.length; i++)
 		resultMarkerArr[i].setMap(null);
-		resultMarkerArr[i] = null;
-	}
 	resultMarkerArr = [];
 });
 
 //id값이 deleteAllMarker에 해당하는 버튼 클릭시 모든 마커를 지우는 이벤트 실행
 $("#deleteEndMarker").click(function() {
-	startMarker.setMap(null);
-	startMarker = null;
-	endMarker.setMap(null);
-	endMarker = null;
-	for (var i = 0; i < resultMarkerArr.length; i++) {
-		resultMarkerArr[i].setMap(null);
-		resultMarkerArr[i] = null;
+	if (startMarker) {
+		startMarker.setMap(null);
+		startMarker = null;
 	}
+	if (endMarker) {
+		endMarker.setMap(null);
+		endMarker = null;
+	}
+	for (var i = 0; i < resultMarkerArr.length; i++)
+		resultMarkerArr[i].setMap(null);
 	resultMarkerArr = [];
 });
 
