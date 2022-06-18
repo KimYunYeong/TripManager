@@ -91,22 +91,20 @@ function displayPage(area, xml, page) {
     destination.recommend = [];
     for (var i = 0; i < max; i++) {
         destination.recommend[i] = {
-            label: document.createElement('label'),
             checkBox: document.createElement('input'),
             details: document.createElement('details'),
             summary: document.createElement('summary'),
             image: document.createElement('img'),
             address: document.createElement('p')
         };
-        recommendArea.appendChild(destination.recommend[i].label);
         destination.recommend[i].checkBox.type = 'checkbox';
         destination.recommend[i].checkBox.name = 'destination';
         destination.recommend[i].checkBox.value = i + (10 * (page - 1));
         if (checkedList[area][i + (10 * (page - 1))])
             destination.recommend[i].checkBox.checked = true;
-        destination.recommend[i].label.appendChild(destination.recommend[i].checkBox);
-        destination.recommend[i].label.innerHTML += "여행지 " + (i + (10 * (page - 1)) + 1);
-        destination.recommend[i].label.appendChild(destination.recommend[i].details);
+        recommendArea.appendChild(destination.recommend[i].checkBox);
+        recommendArea.innerHTML += "여행지 " + (i + (10 * (page - 1)) + 1);
+        recommendArea.appendChild(destination.recommend[i].details);
         if (names[i + (10 * (page - 1))])
             destination.recommend[i].summary.textContent = names[i + (10 * (page - 1))].textContent;
         if (image[i + (10 * (page - 1))])
