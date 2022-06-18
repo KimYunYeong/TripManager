@@ -3,7 +3,7 @@ document.write('<link rel="stylesheet" href="./CSS/style.css">');
 //                               Google Fonts
 document.write('<link rel="preconnect" href="https://fonts.googleapis.com">'+
 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'+
-'<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">');
+'<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">');
 
 function header(){
   document.write(

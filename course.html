@@ -7,11 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="여행을 가고싶을때 여행지 를 검색할수 있는 사이트 입니다">
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript"
-    src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3dc390d857ce47b799654e151dcbefe7"></script>
     <script type="module" src="./JS/map.js"></script>
     <script src="./JS/script.js"></script>
 
@@ -30,16 +26,22 @@
       #container{
         width: 100%;
         height: 77vh;
+        border-width: 3px 0;
+        border-color: black;
+        border-style: solid;
       }
       #container #map_div{
         float: left;
         width: 60%;
         height: 100%;
+        border-width: 0 3px;
+        border-color: black;
+        border-style: solid;
       }
       aside{
         overflow-y: scroll;
-        width: calc(20% - 10px);
-        height: calc(100% - 10px);
+        width: calc(20% - 13px);
+        height: calc(100% - 13px);
         padding: 5px;
       }
       #container #leftAside{
