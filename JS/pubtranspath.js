@@ -91,8 +91,6 @@ pubtranspath.searchPubTransPathAJAX = function(map, element, startx, starty, end
                 pubtranspath.callMapObjApiAJAX(map, data["result"]["path"][0].info.mapObj, startx, starty, endx, endy, index);
             else { //도시 간 경로
                 var coords = [[startx, starty], [endx, endy]];
-                pubtranspath.drawTmapMarker(map, startx, starty, "r", "s", index); //출발지 마커 표시
-                pubtranspath.drawTmapMarker(map, endx, endy, "r", "e", index); //도착지 마커 표시
                 for (var i = 0; i < data["result"]["path"][0]["subPath"].length; i++) {
                     coords.push([data["result"]["path"][0]["subPath"][i]["startX"], data["result"]["path"][0]["subPath"][i]["startY"]]);
                     coords.push([data["result"]["path"][0]["subPath"][i]["endX"], data["result"]["path"][0]["subPath"][i]["endY"]]);
@@ -298,8 +296,6 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
                 pubtranspath.callMapObjApiAJAX(map, result['path'][e.target.value].info.mapObj, startx, starty, endx, endy, index);
             //walkPath(path["subPath"]);
             else { //도시 간 경로
-                // pubtranspath.drawTmapMarker(map, startx, starty, "r", "s");			// 출발지 마커 표시
-                // pubtranspath.drawTmapMarker(map, endx, endy, "r", "e");				// 도착지 마커 표시
                 for (var i = 0; i < result['path'][e.target.value]["subPath"].length; i++) {
                     coords.push([result['path'][e.target.value]["subPath"][i]["startX"], result['path'][e.target.value]["subPath"][i]["startY"]]);
                     coords.push([result['path'][e.target.value]["subPath"][i]["endX"], result['path'][e.target.value]["subPath"][i]["endY"]]);
