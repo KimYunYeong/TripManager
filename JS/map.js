@@ -262,6 +262,7 @@ $("#btn_select").click(function () {
 			}
 		});
 	} else { //대중교통 경로 지도에 표시
+		var pubPathList = document.getElementById('pub');
 		//자동차 경로 초기화
 		if (resultInfoArr.length > 0) {
 			for (var i in resultInfoArr) {
@@ -282,7 +283,7 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
-				document.body.appendChild(pathElements[0].details);
+				pubPathList.appendChild(pathElements[0].details);
 				pathElements[0].summary.innerText = "시작점 -> " + viaPointsList[0].viaPointName;
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
@@ -292,7 +293,7 @@ $("#btn_select").click(function () {
 						details: document.createElement('details'),
 						summary: document.createElement('summary')
 					});
-					document.body.appendChild(pathElements[i].details);
+					pubPathList.appendChild(pathElements[i].details);
 					pathElements[i].summary.innerText = viaPointsList[i - 1].viaPointName + " -> " + viaPointsList[i].viaPointName;
 					pathElements[i].details.appendChild(pathElements[i].summary);
 					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
@@ -303,7 +304,7 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				});
-				document.body.appendChild(pathElements[viaPointsList.length].details);
+				pubPathList.appendChild(pathElements[viaPointsList.length].details);
 				pathElements[viaPointsList.length].summary.innerText =
 					viaPointsList[viaPointsList.length - 1].viaPointName + " -> 도착점";
 				pathElements[viaPointsList.length].details.appendChild(pathElements[viaPointsList.length].summary);
@@ -316,7 +317,7 @@ $("#btn_select").click(function () {
 					details: document.createElement('details'),
 					summary: document.createElement('summary')
 				};
-				document.body.appendChild(pathElements[0].details);
+				pubPathList.appendChild(pathElements[0].details);
 				pathElements[0].summary.innerText = "시작점 -> 도착점";
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX, endY, endX, 0);
