@@ -50,8 +50,7 @@ dinput.addEventListener('change', function() {
 // 경유지 초기화 함수
 function resetWaypoints() {
     for (var i = 0; i < checkedList.length; i++)
-	checkedList[i] = null;
-    checkedList = [];
+	checkedList[i] = [];
     for (var i = 0; i < destination.recommend[i].length; i++)
 	destination.recommend[i].checkBox.checked = false;
     destNameList = [];
