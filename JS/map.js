@@ -277,7 +277,7 @@ $("#btn_select").click(function () {
 			pathElements[i].summary.remove();
 			pathElements[i].details.remove();
 		}
-		pubPathList.innerHTML = "<b>대중교통 경로</b><br>";
+		pubPathList.innerHTML = "<strong>대중교통 경로</strong><br><br>";
 		if (startX && startY && endX && endY) {
 			if (viaPointsList[0]) {
 				pathElements.push({
@@ -289,6 +289,7 @@ $("#btn_select").click(function () {
 				pathElements[0].details.appendChild(pathElements[0].summary);
 				pubtranspath.searchPubTransPathAJAX(map, pathElements[0].details, startY, startX,
 					parseFloat(viaPointsList[0].viaX), parseFloat(viaPointsList[0].viaY), 0);
+				pubPathList.innerHTML += "<br>";
 				for (var i = 1; i < viaPointsList.length; i++) {
 					pathElements.push({
 						details: document.createElement('details'),
@@ -300,6 +301,7 @@ $("#btn_select").click(function () {
 					pubtranspath.searchPubTransPathAJAX(map, pathElements[i].details,
 						parseFloat(viaPointsList[i - 1].viaX), parseFloat(viaPointsList[i - 1].viaY),
 						parseFloat(viaPointsList[i].viaX), parseFloat(viaPointsList[i].viaY), i);
+					pubPathList.innerHTML += "<br>";
 				}
 				pathElements.push({
 					details: document.createElement('details'),
