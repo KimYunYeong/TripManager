@@ -442,6 +442,6 @@ pubtranspath.setPathList = function(map, element, result, startx, starty, endx, 
             }
         }
         var br = document.createElement('br');
-        element.appendChilde(br);
+        element.appendChild(br);
     }
 }
