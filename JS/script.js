@@ -14,8 +14,7 @@ function header(){
       '<ul>'+
         '<li><a href="./index.html">Home</a></li>'+
         '<li><a href="./typeIndicator.html">여행 유형 테스트</a></li>'+
-        '<li><a href="./destination.html">여행지</a></li>'+
-        '<li><a href="./course.html">여행코스</a></li>'+
+        '<li><a href="./course.html">여행지 및 코스</a></li>'+
       '</ul>'+
     '</header>');
 }
