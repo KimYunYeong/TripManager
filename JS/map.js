@@ -97,10 +97,8 @@ $("#reset_path").click(function() {
 	//대중교통 경로 초기화
 	pubtranspath.deleteMarkers();
 	pubtranspath.deletePolylines();
-	for (var i = 0; i < pathElements.length; i++) {
-		pathElements[i].summary.remove();
-		pathElements[i].details.remove();
-	}
+	if (fieldset)
+		fieldset.remove();
 });
 
 //출발지.도착지 마커를 생성하고 위도경도를 변수에 담는 메소드
